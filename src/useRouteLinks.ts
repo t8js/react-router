@@ -1,5 +1,5 @@
-import {type RefObject, useContext, useEffect} from 'react';
 import type {ContainerElement, Route} from '@t8/router';
+import {type RefObject, useContext, useEffect} from 'react';
 import {RouteContext} from './RouteContext';
 
 /**
@@ -21,9 +21,6 @@ export function useRouteLinks(
     let route = useContext(RouteContext);
 
     useEffect(() => {
-        return route.observe(
-            () => containerRef.current,
-            elements,
-        );
+        return route.observe(() => containerRef.current, elements);
     }, [route, elements, containerRef]);
 }

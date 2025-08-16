@@ -1,11 +1,11 @@
-import {useCallback, useMemo} from 'react';
 import {
+    getMatchState,
     type LocationValue,
     type MatchState,
     type NavigationMode,
     type URLData,
-    getMatchState,
 } from '@t8/router';
+import {useCallback, useMemo} from 'react';
 import {useRoute} from './useRoute';
 import {compileHref} from './utils/compileHref';
 

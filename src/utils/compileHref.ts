@@ -1,5 +1,5 @@
+import {isLocationObject, type LocationValue, type URLData} from '@t8/router';
 import {QuasiURL} from 'quasiurl';
-import {type LocationValue, type URLData, isLocationObject} from '@t8/router';
 
 export function compileHref<T extends LocationValue>(
     location: T | undefined,
