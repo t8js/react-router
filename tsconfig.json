@@ -1,0 +1,15 @@
+{
+    "include": [
+        "index.ts",
+        "src/**/*"
+    ],
+    "compilerOptions": {
+        "lib": ["ESNext", "DOM", "DOM.Iterable"],
+        "target": "ESNext",
+        "outDir": "dist",
+        "moduleResolution": "node",
+        "strict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true
+    }
+}

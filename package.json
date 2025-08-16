@@ -1,0 +1,39 @@
+{
+  "name": "@t8/react-router",
+  "version": "0.1.0",
+  "description": "Straightforward and minimalist router for React apps",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "npx npm-run-all clean compile",
+    "clean": "node -e \"require('node:fs').rmSync('dist', {force: true, recursive: true});\"",
+    "compile": "npx esbuild index.ts --bundle --outdir=dist --platform=neutral --external:react",
+    "prepublishOnly": "npm run build",
+    "preversion": "npx npm-run-all shape build",
+    "shape": "npx codeshape"
+  },
+  "keywords": [
+    "react",
+    "react router",
+    "router",
+    "route",
+    "spa",
+    "history",
+    "link"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/t8dev/react-router.git"
+  },
+  "author": "axtk",
+  "license": "ISC",
+  "peerDependencies": {
+    "react": ">=16.8"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.10"
+  },
+  "dependencies": {
+    "@t8/router": "^1.0.2"
+  }
+}
