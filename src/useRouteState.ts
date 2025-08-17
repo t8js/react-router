@@ -7,7 +7,6 @@ import {
 } from '@t8/router';
 import {useCallback, useMemo} from 'react';
 import {useRoute} from './useRoute';
-import {compileHref} from './utils/compileHref';
 
 type SetState<T extends LocationValue> = (
     update: URLData<T> | ((state: MatchState<T>) => URLData<T>),
@@ -33,13 +32,10 @@ export function useRouteState<T extends LocationValue>(
 
     let setState = useCallback<SetState<T>>(
         update => {
-            let data =
+            let state =
                 typeof update === 'function' ? update(getState()) : update;
 
-            let nextLocation = compileHref<T>(location, data);
-
-            if (navigationMode === 'replace') route.replace(nextLocation);
-            else route.assign(nextLocation);
+            route._navigate(route.compile(location, state), navigationMode);
         },
         [location, route, navigationMode, getState],
     );

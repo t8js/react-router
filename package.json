@@ -34,6 +34,6 @@
     "@types/react": "^19.1.10"
   },
   "dependencies": {
-    "@t8/router": "^1.0.2"
+    "@t8/router": "^1.0.4"
   }
 }
