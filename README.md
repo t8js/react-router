@@ -4,9 +4,9 @@
 
 *Straightforward and minimalist router for React apps*
 
-- Single way to match routes with components and prop values
-- Similar to native APIs
+- Consistent route matching in components and prop values
 - Decoupled routes: no hierarchy as a prerequisite
+- Similar to native navigation APIs
 - Straightforward middleware hooks, lazy routes, compatibility with CSR and SSR
 - Progressive type-safe routing and typed URL parameters
 - Utility hook to convert HTML links to SPA route links
@@ -15,7 +15,7 @@ Installation: `npm i @t8/react-router`
 
 ## Route matching
 
-Routescape offers a simple and consistent way to render both components and prop values in a single manner (unlike component-, config-, or file-based approaches) based on the current location:
+In `@t8/react-router`, route-based rendering is similar to conditional rendering with the ternary operator `matchesRoutePattern ? x : y`, applicable to both components and prop values. This is a contrast to the disunity of the component-, config-, or file-based route matching which is typically only applicable to component rendering, while route-based prop values have to be handled differently.
 
 ```jsx
 import {useRoute} from '@t8/react-router';
@@ -49,8 +49,6 @@ let App = () => {
 
 Note that both the header's `className` prop and the `<main>` component are rendered in a single way using the same route-matching function.
 
-(With the component-based, config-based, or file-based route matching adopted by some routers, conditionally rendering a component and a prop value have to be handled differently.)
-
 🔹 The ternary route-matching function `withRoute(routePattern, x, y)` returned from the `useRoute()` hook has the semantics similar to the ternary conditional operator `matchesRoutePattern ? x : y`, commonly seen with the conditional rendering pattern, which reflects the fact that route-based rendering also falls under this category.
 
 🔹 `withRoute()` doesn't impose any route hierarchy by default, as it can be used with any route pattern anywhere in the app's components, offering sufficient flexibility to handle an arbitrary route-based logic.
@@ -59,7 +57,7 @@ Note that both the header's `className` prop and the `<main>` component are rend
 
 ## Route navigation
 
-The Routescape's route navigation API is largely aligned with the similar native APIs familiar to most web developers, such as `<a href="/x">` and `window.location`, which helps reduce cognitive load and shorten the migration path from the native APIs:
+The route navigation API of `@t8/react-router` is largely aligned with the similar native APIs familiar to most web developers, such as `<a href="/x">` and `window.location`, which helps reduce cognitive load and shorten the migration path from the native APIs:
 
 ```diff
 + import {A, useRoute} from '@t8/react-router';
@@ -137,7 +135,7 @@ The interface of the `route` object consists of the following parts:
 
 ## Routing middleware
 
-The Routescape's hooks `useNavigationStart()` and `useNavigationComplete()` define routing *middleware*, that is intermediate actions to be done before and after the route navigation occurs:
+The `useNavigationStart()` and `useNavigationComplete()` hooks define routing *middleware*, that is intermediate actions to be done before and after the route navigation occurs:
 
 ```jsx
 import {useNavigationComplete, useNavigationStart} from '@t8/react-router';
@@ -361,9 +359,9 @@ let Section = () => {
 
 ## Type-safe routing
 
-As an optional enhancement, Routescape supports progressive schema-based route type safety.
+As an optional enhancement, `@t8/react-router` supports progressive schema-based route type safety.
 
-Type-safe routing is enabled by Routescape's support of routes created with a type-safe URL builder like `url-shape` coupled with a schema created with `zod` or `yup`. This approach allows for gradual or partial adoption of type-safe routing in an application.
+Type-safe routing is enabled by supporting route patterns created with a type-safe URL builder like `url-shape` coupled with a schema created with `zod` or `yup`. This approach allows for gradual or partial adoption of type-safe routing in an application.
 
 ```tsx
 import {A, useRoute} from '@t8/react-router';
