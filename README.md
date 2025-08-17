@@ -15,7 +15,7 @@ Installation: `npm i @t8/react-router`
 
 ## Route matching
 
-In `@t8/react-router`, route-based rendering is similar to conditional rendering with the ternary operator `matchesRoutePattern ? x : y`, applicable to both components and prop values. This is a contrast to the disunity of the component-, config-, or file-based route matching which is typically only applicable to component rendering, while route-based prop values have to be handled differently.
+In `@t8/react-router`, route-based rendering is similar to conditional rendering with the ternary operator `matchesRoutePattern ? x : y`, applicable to both components and prop values. This is a contrast to the apparent inconsistency of the component-, config-, or file-based route matching which is typically only applicable to component rendering, while route-based prop values have to be handled differently.
 
 ```jsx
 import {useRoute} from '@t8/react-router';
