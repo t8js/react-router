@@ -127,11 +127,10 @@ This particular example is somewhat contrived since it could have been composed 
 The interface of the `route` object consists of the following parts:
 
 - SPA navigation via the History API:
-    - `.assign()`, `.replace()`, `.reload()`, and readonly properties: `.href`, `.pathname`, `.search`, `.hash`, semantically similar to `window.location`;
+    - `.assign()`, `.replace()`, `.reload()`, `.href`, `.pathname`, `.search`, `.hash`, semantically similar to `window.location`;
     - `.back()`, `.forward()`, `.go(delta)`, corresponding to the [`history` methods](https://developer.mozilla.org/en-US/docs/Web/API/History#instance_methods);
 - route matching:
-    - `.matches(value)`, checking whether the current location matches the given `value`;
-    - `.match(value)`, accepting various types of location patterns (`string | RegExp | (string | RegExp)[]`) and returning an object containing the matched parameters or `null` if the current location doesn't match the `value`.
+    - `.match(pattern)`, accepting various types of location patterns (`string | RegExp | (string | RegExp)[]`) and returning an object containing the matched parameters and a flag indicating whether the current location matches the given `pattern`.
 
 ## Routing middleware
 
