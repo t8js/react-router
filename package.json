@@ -8,7 +8,8 @@
     "build": "npx npm-run-all clean compile",
     "clean": "node -e \"require('node:fs').rmSync('dist', {force: true, recursive: true});\"",
     "compile": "npx esbuild index.ts --bundle --outdir=dist --platform=neutral --external:react",
-    "prepublishOnly": "npm run build",
+    "gh-pages": "npx ghstage --color-scheme=steelblue --ymid=103784239 --backstory=https://axtk.github.io/x/t8_react_router",
+    "prepublishOnly": "npx npm-run-all build gh-pages",
     "preversion": "npx npm-run-all shape build",
     "shape": "npx codeshape"
   },
