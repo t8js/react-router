@@ -51,7 +51,7 @@ Note that both the header's `className` prop and the `<main>` component are rend
 
 🔹 The ternary route-matching function `withRoute(routePattern, x, y)` returned from the `useRoute()` hook has the semantics similar to the ternary conditional operator `matchesRoutePattern ? x : y`, commonly seen with the conditional rendering pattern, which reflects the fact that route-based rendering also falls under this category.
 
-🔹 `withRoute()` doesn't impose any route hierarchy by default, as it can be used with any route pattern anywhere in the app's components, offering sufficient flexibility to handle an arbitrary route-based logic.
+🔹 `withRoute()` doesn't impose any route hierarchy by default, as it can be used with any route pattern anywhere in the app's components, offering sufficient flexibility to handle arbitrary route-based logic.
 
 🔹 `withRoute()` accepts route patterns of various types: `string | RegExp | (string | RegExp)[]`. The parameters of a regular expression route pattern (or of the first `RegExp` match in the array) are passed to the second and the third parameter of `withRoute()` if they are functions, as shown in the example above.
 
@@ -102,7 +102,7 @@ let Nav = () => (
 
 #### Navigation mode
 
-By default, after the link navigation occurs, the user can navigate back by pressing the browser's *back* button. Optionally, by setting `data-navigation-mode="replace"`, a route link component can be configured to replace the navigation history entry, which will prevent the user from returning to the previous location by clicking the browser's *back* button.
+By setting `data-navigation-mode="replace"` on a route link component `<A>` or `<Area>`, it can be configured to replace the navigation history entry when clicked, which will prevent the user from returning to the previous location by pressing the browser's *back* button. By default, after a link component is clicked, the user can navigate back by pressing the browser's *back* button.
 
 ### Imperative route navigation
 
