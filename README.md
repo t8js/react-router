@@ -7,8 +7,9 @@
 - Consistent route matching in components and prop values
 - Decoupled routes: no hierarchy as a prerequisite
 - Similar to native navigation APIs
-- Straightforward middleware hooks, lazy routes, compatibility with CSR and SSR
-- Progressive type-safe routing and typed URL parameters
+- Straightforward middleware hooks and lazy routes
+- Type-safe routing and typed URL parameters
+- Straightforward compatibility with SSR and CSR
 - Utility hook to convert HTML links to SPA route links
 
 Installation: `npm i @t8/react-router`
