@@ -24,7 +24,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/t8dev/react-router.git"
+    "url": "git://github.com/t8dash/react-router.git"
   },
   "author": "axtk",
   "license": "ISC",
@@ -35,6 +35,6 @@
     "@types/react": "^19.1.10"
   },
   "dependencies": {
-    "@t8/router": "^1.0.4"
+    "@t8/router": "^1.0.7"
   }
 }
