@@ -26,7 +26,7 @@
     "type": "git",
     "url": "git://github.com/t8js/react-router.git"
   },
-  "homepage": "https://t8js.github.io/react-router",
+  "homepage": "https://t8.js.org/react-router",
   "author": "axtk",
   "license": "ISC",
   "peerDependencies": {
