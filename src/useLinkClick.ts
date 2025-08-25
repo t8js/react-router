@@ -20,9 +20,7 @@ export function useLinkClick(props: UseLinkClickParams) {
                 isRouteEvent(event, {href, target})
             ) {
                 event.preventDefault();
-
-                if (navigationMode === 'replace') route.replace(href);
-                else route.assign(href);
+                route._navigate(href, navigationMode);
             }
         },
         [route, href, target, onClick, navigationMode],
