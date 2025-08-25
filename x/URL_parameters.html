@@ -1,0 +1,31 @@
+---
+layout: section
+id: "URL_parameters"
+title: "URL parameters"
+prev:
+    id: "Lazy_routes"
+    title: "Lazy routes"
+next:
+    id: "Type-safe_routing"
+    title: "Type-safe routing"
+---
+
+<h2 id="url-parameters">URL parameters</h2>
+<p>There are two partially overlapping hooks to deal with URL parameters, such as path parameters and query parameters.</p>
+<p>🔹 Both hooks accept typed URL patterns covered in the <a href="{{site.github.baseurl}}/x/Type-safe_routing">Type-safe routing</a> section to deal with typed URL parameters.</p>
+<p>🔹 <code>useRouteMatch(location)</code> can be used to read URL parameters from a fixed route, a <code>RegExp</code> pattern, or an array thereof.</p>
+<pre><code class="language-js">import {useRouteMatch} from '@t8/react-router';
+
+let Section = () =&gt; {
+    let {params, query} = useRouteMatch(/^\/sections\/(?&lt;id&gt;\d+)\/?$/);
+
+    return (
+        &lt;section className={params.id === '1' ? 'cover' : 'regular'}&gt;
+            {/* content */}
+        &lt;/section&gt;
+    );
+};
+</code></pre>
+<p>🔹 <code>useRouteState(location)</code> can be used to read and update URL parameters of a fixed route. Similarly to React's <code>useState()</code>, the hook returns <code>[state, setState]</code> to manipulate the URL's <code>{params, query}</code> (which can be regarded as a form of app state).</p>
+<p>🔹 To make sure the current location actually matches the given pattern, the boolean <code>state.ok</code> flag from <code>let state = useRouteMatch(location);</code> or <code>let [state, setState] = useRouteState(location);</code> can be used.</p>
+<p>🔹 With the <code>location</code> parameter omitted, both hooks assume that the current location is implied.</p>

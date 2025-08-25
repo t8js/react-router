@@ -1,0 +1,45 @@
+---
+layout: section
+id: "Routing_middleware"
+title: "Routing middleware"
+prev:
+    id: "Route_navigation"
+    title: "Route navigation"
+next:
+    id: "Converting_HTML_links_to_SPA_route_links"
+    title: "Converting HTML links to SPA route links"
+---
+
+<h2 id="routing-middleware">Routing middleware</h2>
+<p>The <code>useNavigationStart()</code> and <code>useNavigationComplete()</code> hooks define routing <em>middleware</em>, that is intermediate actions to be done before and after the route navigation occurs:</p>
+<pre><code class="language-jsx">import {useNavigationComplete, useNavigationStart} from '@t8/react-router';
+
+function setTitle(href) {
+    if (href === '/intro')
+        document.title = 'Intro';
+}
+
+let App = () =&gt; {
+    let {route} = useRoute();
+    let [hasUnsavedChanges, setUnsavedChanges] = useState(false);
+
+    let handleNavigationStart = useCallback(nextHref =&gt; {
+        if (hasUnsavedChanges)
+            return false; // prevents navigation
+
+        if (nextHref === '/intro') {
+            route.assign('/'); // redirection
+            return false;
+        }
+    }, [hasUnsavedChanges, route]);
+
+    useNavigationStart(handleNavigationStart);
+    useNavigationComplete(setTitle);
+
+    return (
+        // app content
+    );
+};
+</code></pre>
+<p>This example shows some common examples of what can be handled with routing middleware: preventing navigation with unsaved user input, redirecting to another location, setting the page title based on the current location.</p>
+<p>🔹 The callback of both hooks is first called when the component gets mounted if the route is already in the navigation-complete state.</p>
