@@ -1,0 +1,33 @@
+---
+layout: section
+id: "Converting_HTML_links_to_SPA_route_links"
+title: "Converting HTML links to SPA route links"
+prev:
+    id: "Routing_middleware"
+    title: "Routing middleware"
+next:
+    id: "Router"
+    title: "<code>&lt;Router&gt;</code>"
+---
+
+<h2 id="converting-html-links-to-spa-route-links">Converting HTML links to SPA route links</h2>
+<p>A chunk of static HTML content is an example where the route link component can't be directly used but it still might be desirable to make plain HTML links in that content behave as SPA route links. The <code>useRouteLinks()</code> hook can be helpful here:</p>
+<pre><code class="language-jsx">import {useRef} from 'react';
+import {useRouteLinks} from '@t8/react-router';
+
+let Content = ({value}) =&gt; {
+    let containerRef = useRef(null);
+
+    useRouteLinks(containerRef);
+
+    return (
+        &lt;div ref={containerRef}&gt;
+            {value}
+        &lt;/div&gt;
+    );
+};
+</code></pre>
+<p>In this example, the <code>useRouteLinks()</code> hook makes all HTML links inside the container referenced by <code>containerRef</code> act as SPA route links.</p>
+<p>To be more specific as to which elements in the container should be converted to route links, a selector, or an HTML element, or a collection thereof, can be passed as the second parameter of <code>useRouteLinks()</code>:</p>
+<pre><code class="language-js">useRouteLinks(containerRef, '.content a');
+</code></pre>

@@ -1,0 +1,53 @@
+---
+layout: section
+id: "Unknown_routes"
+title: "Unknown routes"
+prev:
+    id: "Router"
+    title: "<code>&lt;Router&gt;</code>"
+next:
+    id: "Lazy_routes"
+    title: "Lazy routes"
+---
+
+<h2 id="unknown-routes">Unknown routes</h2>
+<p>The fallback parameter of the route-matching function <code>withRoute(routePattern, x, y)</code> can be used as a way to handle unknown routes:</p>
+<pre><code class="language-jsx">import {A, useRoute} from '@t8/react-router';
+
+const routeMap = {
+    intro: '/intro',
+    sections: /^\/sections\/(?&lt;id&gt;\d+)\/?$/,
+};
+
+const knownRoutes = Object.values(routeMap);
+
+let App = () =&gt; {
+    let {withRoute} = useRoute();
+
+    return (
+        &lt;&gt;
+            &lt;nav&gt;
+                &lt;A href={routeMap.intro}&gt;Intro&lt;/A&gt;
+            &lt;/nav&gt;
+            {withRoute(routeMap.intro, (
+                &lt;main&gt;
+                    &lt;h1&gt;Intro&lt;/h1&gt;
+                &lt;/main&gt;
+            ))}
+            {withRoute(routeMap.sections, ({params}) =&gt; (
+                &lt;main&gt;
+                    &lt;h1&gt;Section {params.id}&lt;/h1&gt;
+                &lt;/main&gt;
+            ))}
+            {withRoute(knownRoutes, null, (
+                &lt;main className="error"&gt;
+                    &lt;h1&gt;404 Not found&lt;/h1&gt;
+                &lt;/main&gt;
+            ))}
+        &lt;/&gt;
+    );
+};
+</code></pre>
+<p>The last <code>withRoute()</code> in this example results in <code>null</code> (that is no content) for all known routes and renders the error content for the rest unknown routes.</p>
+<p>🔹 <code>withRoute()</code> calls don't have to maintain a specific order, and the unknown route handling <code>withRoute()</code> doesn't have to be the last.</p>
+<p>🔹 <code>withRoute()</code> calls don't have to be grouped side by side like in the example above, their collocation is not a requirement. <code>withRoute()</code> calls are not coupled together, they can be split across separate components and files (like any other conditionally rendered components).</p>

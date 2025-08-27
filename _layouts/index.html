@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="t8">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>@t8/react-router | Straightforward and minimalist router for React apps</title>
+<link rel="stylesheet" href="https://unpkg.com/ghstage@2.2/dist/css/base.css">
+<link rel="stylesheet" href="https://unpkg.com/ghstage@2.2/dist/css/index.css">
+<link rel="icon" type="image/png" href="/assets/logo.png">
+<link rel="prefetch" href="{{site.github.baseurl}}/start">
+<link rel="prefetch" href="{{site.github.baseurl}}/x/Route_matching">
+</head>
+<body>
+<div class="layout">
+<main>
+{{content}}
+</main>
+</div>
+
+{% if content contains '<pre><code ' %}<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/base16/material.min.css">
+<link rel="stylesheet" href="https://unpkg.com/ghstage@2.2/dist/css/code.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+<script>hljs.highlightAll()</script>{% elsif content contains '<pre ' %}<link rel="stylesheet" href="https://unpkg.com/ghstage@2.2/dist/css/code.lightbulb.css">
+{% endif %}
+<script>
+(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+m[i].l=1*new Date();
+for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+(window, document, "script", "https://mc.yandex.com/metrika/tag.js", "ym");
+ym(103784239, "init", {clickmap: true, trackLinks: true, accurateTrackBounce: true});
+</script>
+<noscript><div><img src="https://mc.yandex.com/watch/103784239" style="position:absolute;left:-9999px;" alt=""></div></noscript>
+</body>
+</html>

@@ -1,0 +1,45 @@
+---
+layout: section
+id: "Route_matching"
+title: "Route matching"
+prev:
+    id: ""
+    title: ""
+next:
+    id: "Route_navigation"
+    title: "Route navigation"
+---
+
+<h2 id="route-matching">Route matching</h2>
+<p>Rendering based on the URL with <code>@t8/react-router</code> is similar to conditional rendering with the ternary operator <code>matchesRoutePattern ? x : y</code>, equally applicable to components and prop values and resulting in a single consistent approach for both. This is a contrast to the component-, config-, or file-based route matching which are typically focused on component rendering, while route-based prop values have to be handled differently.</p>
+<pre><code class="language-jsx">import {useRoute} from '@t8/react-router';
+
+let App = () =&gt; {
+    let {withRoute} = useRoute();
+
+    // `withRoute(routePattern, x, y)` acts similarly to
+    // `matchesRoutePattern ? x : y`
+    return (
+        &lt;&gt;
+            &lt;header className={withRoute('/', 'full', 'compact')}&gt;
+                &lt;h1&gt;App&lt;/h1&gt;
+            &lt;/header&gt;
+            {withRoute('/', (
+                &lt;main&gt;
+                    &lt;h1&gt;Intro&lt;/h1&gt;
+                &lt;/main&gt;
+            ))}
+            {withRoute(/^\/sections\/(?&lt;id&gt;\d+)\/?$/, ({params}) =&gt; (
+                &lt;main&gt;
+                    &lt;h1&gt;Section {params.id}&lt;/h1&gt;
+                &lt;/main&gt;
+            ))}
+        &lt;/&gt;
+    );
+};
+</code></pre>
+<p><a href="https://codesandbox.io/p/sandbox/kqn8wr?file=%252Fsrc%252FApp.tsx" target="_blank">Live demo</a></p>
+<p>Note that both the header's <code>className</code> prop and the <code>&lt;main&gt;</code> component are rendered in a single way using the same route-matching function.</p>
+<p>🔹 The ternary route-matching function <code>withRoute(routePattern, x, y)</code> returned from the <code>useRoute()</code> hook has the semantics similar to the ternary conditional operator <code>matchesRoutePattern ? x : y</code>, commonly seen with the conditional rendering pattern, which reflects the fact that route-based rendering also falls under this category.</p>
+<p>🔹 <code>withRoute()</code> doesn't impose any route hierarchy by default, as it can be used with any route pattern anywhere in the app's components, offering sufficient flexibility to handle arbitrary route-based logic.</p>
+<p>🔹 <code>withRoute()</code> accepts route patterns of various types: <code>string | RegExp | (string | RegExp)[]</code>. The parameters of a regular expression route pattern (or of the first <code>RegExp</code> match in the array) are passed to the second and the third parameter of <code>withRoute()</code> if they are functions, as shown in the example above.</p>

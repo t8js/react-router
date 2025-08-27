@@ -1,0 +1,35 @@
+---
+layout: section
+id: "Router"
+title: "<code>&lt;Router&gt;</code>"
+prev:
+    id: "Converting_HTML_links_to_SPA_route_links"
+    title: "Converting HTML links to SPA route links"
+next:
+    id: "Unknown_routes"
+    title: "Unknown routes"
+---
+
+<h2 id="router"><code>&lt;Router&gt;</code></h2>
+<p>Server-side rendering and unit tests are the examples of the environments lacking a global location (such as <code>window.location</code>). They are the prime use cases for the location provider, <code>&lt;Router&gt;</code>.</p>
+<p>Let's consider an <em>express</em> application route as an example:</p>
+<pre><code class="language-jsx">import {renderToString} from 'react-dom/server';
+import {Router} from '@t8/react-router';
+
+app.get('/', (req, res) =&gt; {
+    let html = renderToString(
+        &lt;Router location={req.originalUrl}&gt;
+            &lt;App/&gt;
+        &lt;/Router&gt;,
+    );
+
+    res.send(html);
+});
+</code></pre>
+<p>The value passed to the router's <code>location</code> prop can be accessed via the <code>useRoute()</code> hook:</p>
+<pre><code class="language-jsx">let {route, withRoute} = useRoute();
+
+console.log(route.href); // returns the router's `location`
+</code></pre>
+<p>Both <code>route</code> and <code>withRoute()</code> returned from <code>useRoute()</code> operate based on the router's <code>location</code>.</p>
+<p><code>&lt;Router&gt;</code> can be used with client-side rendering as well. In most cases, it is unnecessary since by default the route context takes the global location from <code>window.location</code> if it's available.</p>

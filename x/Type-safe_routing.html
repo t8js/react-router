@@ -1,0 +1,81 @@
+---
+layout: section
+id: "Type-safe_routing"
+title: "Type-safe routing"
+prev:
+    id: "URL_parameters"
+    title: "URL parameters"
+next:
+    id: ""
+    title: ""
+---
+
+<h2 id="type-safe-routing">Type-safe routing</h2>
+<p>As an optional enhancement, <code>@t8/react-router</code> supports progressive schema-based route type safety.</p>
+<p>Type-safe routing is enabled by supporting route patterns created with a type-safe URL builder like <code>url-shape</code> coupled with a schema created with <code>zod</code> or <code>yup</code>. This approach allows for gradual or partial adoption of type-safe routing in an application.</p>
+<pre><code class="language-tsx">import {A, useRoute} from '@t8/react-router';
+import {createURLSchema} from 'url-shape';
+import {z} from 'zod';
+
+const {url} = createURLSchema({
+    '/': null, // goes without parameters
+    '/sections/:id': {
+        params: z.object({
+            id: z.coerce.number(),
+        }),
+    },
+    '/search': {
+        query: z.object({
+            term: z.string(),
+            lang: z.optional(z.enum(['current', 'all'])),
+        }),
+    },
+});
+
+let App = () =&gt; {
+    let {withRoute} = useRoute();
+
+    // `withRoute(routePattern, x, y)` acts similarly to
+    // `matchesRoutePattern ? x : y`
+    return (
+        &lt;&gt;
+            &lt;header className={withRoute(url('/'), 'full', 'compact')}&gt;
+                &lt;h1&gt;App&lt;/h1&gt;
+                &lt;nav&gt;
+                    &lt;A href={url('/')}&gt;
+                        Intro
+                    &lt;/A&gt;
+                    {' | '}
+                    &lt;A href={url('/sections/:id', {params: {id: 1}})}&gt;
+                        Start
+                    &lt;/A&gt;
+                &lt;/nav&gt;
+            &lt;/header&gt;
+            {withRoute(url('/'), (
+                &lt;main&gt;
+                    &lt;h1&gt;Intro&lt;/h1&gt;
+                &lt;/main&gt;
+            ))}
+            {withRoute(url('/sections/:id'), ({params}) =&gt; (
+                &lt;main&gt;
+                    &lt;h1&gt;Section {params.id}&lt;/h1&gt;
+                &lt;/main&gt;
+            ))}
+        &lt;/&gt;
+    );
+};
+</code></pre>
+<p><a href="https://codesandbox.io/p/sandbox/vgt64k?file=%2Fsrc%2FApp.tsx" target="_blank">Live demo</a></p>
+<p>🔹 The <code>url()</code> function is a type-safe URL builder. It creates a URL with a URL pattern defined in the schema and typed parameters that are prevalidated against the given schema: typos and type mismatches are highlighted in a type-aware code editor.</p>
+<p>🔹 For more details on the output of the <code>createURLSchema()</code>, such as <code>url()</code>, <code>match()</code>, <code>validate()</code>, and the <code>null</code>-schema mode, see the <a href="https://github.com/axtk/url-shape#readme" target="_blank">description of <code>url-shape</code></a>.</p>
+<p>🔹 A URL schema doesn't have to cover the entire app. Standalone portions of an app can have their own URL schemas.</p>
+<p>🔹 Stricter type safety can be achieved by disallowing URLs and URL patterns other than provided by the URL builder (the <code>url()</code> function in the example above) throughout the app:</p>
+<pre><code class="language-ts">declare module '@t8/react-router' {
+    interface Config {
+        strict: true;
+    }
+}
+</code></pre>
+<p>Adding this type declaration to an app effectively disallows using <code>string</code> and <code>RegExp</code> values for routes and route patterns (such as in the route link <code>href</code> prop, <code>route.assign(location)</code>, and the ternary route-matching function <code>withRoute(routePattern, x, y)</code>), only allowing values returned from the URL builder with the same routing APIs.</p>
+<p>🔹 A URL builder pattern (like <code>url('/sections/:id')</code>) can also be used with <code>useRouteMatch(pattern)</code> and <code>useRouteState(pattern)</code> to manipulate <a href="{{site.github.baseurl}}/x/URL_parameters">URL parameters</a> in a type-safe manner.</p>
+<p><a href="https://codesandbox.io/p/sandbox/qnd87w?file=%2Fsrc%2FShapeSection.tsx" target="_blank">Typed URL parameters state demo</a></p>

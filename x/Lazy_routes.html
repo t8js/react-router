@@ -1,0 +1,50 @@
+---
+layout: section
+id: "Lazy_routes"
+title: "Lazy routes"
+prev:
+    id: "Unknown_routes"
+    title: "Unknown routes"
+next:
+    id: "URL_parameters"
+    title: "URL parameters"
+---
+
+<h2 id="lazy-routes">Lazy routes</h2>
+<p>Lazy routes are routes whose content is loaded on demand, when the route is visited.</p>
+<p>Enabling lazy routes doesn't require a specific routing setup. It's a combination of the <a href="{{site.github.baseurl}}/x/Route_matching">route matching</a> and lazily loaded React components (with <code>React.lazy()</code> and React's <code>&lt;Suspense&gt;</code>), processed by a code-splitting-capable build tool (like Esbuild, Webpack, Rollup, Vite):</p>
+<pre><code class="language-diff">+ import {Suspense} from 'react';
+  import {A, useRoute} from '@t8/react-router';
+  import {Intro} from './Intro';
+- import {Projects} from './Projects';
++ import {Projects} from './Projects.lazy';
+
+  export const App = () =&gt; {
+      let {withRoute} = useRoute();
+
+      return (
+          &lt;&gt;
+              &lt;nav&gt;
+                  &lt;A href="/"&gt;Intro&lt;/A&gt;
+                  &lt;A href="/projects"&gt;Projects&lt;/A&gt;
+              &lt;/nav&gt;
+              {withRoute('/', (
+                  &lt;Intro/&gt;
+              ))}
+              {withRoute('/projects', (
+-                 &lt;Projects/&gt;
++                 &lt;Suspense fallback={&lt;p&gt;Loading...&lt;/p&gt;}&gt;
++                     &lt;Projects/&gt;
++                 &lt;/Suspense&gt;
+              ))}
+          &lt;/&gt;
+      );
+  };
+</code></pre>
+<pre><code class="language-diff">+ // Projects.lazy.js
++ import {lazy} from 'react';
++
++ export const Projects = lazy(() =&gt; import('./Projects'));
+</code></pre>
+<p><a href="https://codesandbox.io/p/sandbox/x75p5w?file=%2Fsrc%2FApp.jsx" target="_blank">Live demo</a></p>
+<p>In this example, the <code>&lt;Projects&gt;</code> component isn't loaded until the corresponding <code>/projects</code> route is visited. When it's first visited, while the component is being fetched, <code>&lt;p&gt;Loading...&lt;/p&gt;</code> shows up, as specified with the <code>fallback</code> prop of <code>&lt;Suspense&gt;</code>.</p>
