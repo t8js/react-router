@@ -1,6 +1,5 @@
-import {useMemo} from 'react';
 import {Route} from '@t8/router';
-import {createElement, type ReactNode, useEffect} from 'react';
+import {createElement, type ReactNode, useEffect, useMemo} from 'react';
 import {RouteContext} from './RouteContext';
 
 export type RouterProps = {
