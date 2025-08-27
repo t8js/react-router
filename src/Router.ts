@@ -1,3 +1,4 @@
+import {useMemo} from 'react';
 import {Route} from '@t8/router';
 import {createElement, type ReactNode, useEffect} from 'react';
 import {RouteContext} from './RouteContext';
@@ -8,12 +9,12 @@ export type RouterProps = {
 };
 
 export const Router = ({location, children}: RouterProps) => {
-    let route: Route;
-
-    if (location instanceof Route) route = location;
-    else if (location === undefined || typeof location === 'string')
-        route = new Route(location);
-    else throw new Error('Router location of unsupported type');
+    let route = useMemo(() => {
+        if (location instanceof Route) return location;
+        else if (location === undefined || typeof location === 'string')
+            return new Route(location);
+        else throw new Error('Router location of unsupported type');
+    }, [location]);
 
     useEffect(() => () => route.disconnect(), [route]);
 
