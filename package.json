@@ -38,6 +38,6 @@
     "typescript": "^5.9.2"
   },
   "dependencies": {
-    "@t8/router": "^1.0.9"
+    "@t8/router": "^1.0.10"
   }
 }
