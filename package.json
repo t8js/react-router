@@ -10,8 +10,9 @@
     "compile": "npx esbuild index.ts --bundle --outdir=dist --platform=neutral --external:react",
     "gh-pages": "npx ghstage --theme=t8 --ymid=103784239 --backstory=https://axtk.github.io/x/t8_react_router",
     "prepublishOnly": "npx npm-run-all build gh-pages",
-    "preversion": "npx npm-run-all shape build",
-    "shape": "npx codeshape"
+    "preversion": "npx npm-run-all typecheck shape build",
+    "shape": "npx codeshape",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [
     "react",
@@ -33,7 +34,8 @@
     "react": ">=16.8"
   },
   "devDependencies": {
-    "@types/react": "^19.1.10"
+    "@types/react": "^19.1.10",
+    "typescript": "^5.9.2"
   },
   "dependencies": {
     "@t8/router": "^1.0.9"
