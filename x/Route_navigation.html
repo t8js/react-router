@@ -1,0 +1,77 @@
+---
+layout: section
+id: "Route_navigation"
+title: "Route navigation"
+prev:
+    id: "Route_matching"
+    title: "Route matching"
+next:
+    id: "Routing_middleware"
+    title: "Routing middleware"
+---
+
+<h2 id="route-navigation">Route navigation</h2>
+<p>The route navigation API of <code>@t8/react-router</code> is largely aligned with the similar native APIs familiar to most web developers, such as <code>&lt;a href="/x"&gt;</code> and <code>window.location</code>, which helps reduce cognitive load and shorten the migration path from the native APIs:</p>
+<pre><code class="language-diff">+ import {A, useRoute} from '@t8/react-router';
+
+  let UserNav = ({signedIn}) =&gt; {
++     let {route} = useRoute();
+
+      let handleClick = () =&gt; {
+-         window.location.assign(signedIn ? '/profile' : '/login');
++         route.assign(signedIn ? '/profile' : '/login');
+      };
+
+      return (
+          &lt;nav&gt;
+-             &lt;a href="/"&gt;Home&lt;/a&gt;
++             &lt;A href="/"&gt;Home&lt;/A&gt;
+              &lt;button onClick={handleClick}&gt;Profile&lt;/button&gt;
+          &lt;/nav&gt;
+      );
+  };
+</code></pre>
+<h3 id="route-link-component">Route link component</h3>
+<h4 id="a"><code>&lt;A&gt;</code></h4>
+<p>The route link component <code>&lt;A&gt;</code> enabling SPA navigation has the same props as the HTML link tag <code>&lt;a&gt;</code>. Apart from reducing some cognitive load, sticking to the similar API allows to quickly migrate from plain HTML links to route links (or the other way around).</p>
+<pre><code class="language-jsx">import {A} from '@t8/react-router';
+
+let Nav = () =&gt; (
+    &lt;nav&gt;
+        &lt;A href="/intro"&gt;Intro&lt;/A&gt;
+    &lt;/nav&gt;
+);
+</code></pre>
+<h4 id="area"><code>&lt;Area&gt;</code></h4>
+<p><code>&lt;Area&gt;</code>, the image map route link component, has the same props and semantics as the HTML image map tag <code>&lt;area&gt;</code>, with the SPA navigation enabled.</p>
+<h4 id="navigation-mode">Navigation mode</h4>
+<p>By setting <code>data-navigation-mode="replace"</code> on a route link component <code>&lt;A&gt;</code> or <code>&lt;Area&gt;</code>, it can be configured to replace the navigation history entry when clicked, which will prevent the user from returning to the previous location by pressing the browser's <em>back</em> button. By default, after a link component is clicked, the user can navigate back by pressing the browser's <em>back</em> button.</p>
+<h3 id="imperative-route-navigation">Imperative route navigation</h3>
+<p>To jump to another route programmatically, there's the <code>route</code> object returned from the <code>useRoute()</code> hook:</p>
+<pre><code class="language-jsx">import {useRoute} from '@t8/react-router';
+
+let ProfileButton = ({signedIn}) =&gt; {
+    let {route} = useRoute();
+
+    let handleClick = () =&gt; {
+        route.assign(signedIn ? '/profile' : '/login');
+    };
+
+    return &lt;button onClick={handleClick}&gt;Profile&lt;/button&gt;;
+};
+</code></pre>
+<p>This particular example is somewhat contrived since it could have been composed in a declarative fashion using the route link component <code>&lt;A&gt;</code>. Still, it demonstrates how the <code>route</code> object can be used in use cases where the imperative navigation is the only reasonable way to go.</p>
+<p>The interface of the <code>route</code> object consists of the following parts:</p>
+<ul>
+<li>SPA navigation via the History API:
+<ul>
+<li><code>.assign()</code>, <code>.replace()</code>, <code>.reload()</code>, <code>.href</code>, <code>.pathname</code>, <code>.search</code>, <code>.hash</code>, semantically similar to <code>window.location</code>;</li>
+<li><code>.back()</code>, <code>.forward()</code>, <code>.go(delta)</code>, corresponding to the <a href="https://developer.mozilla.org/en-US/docs/Web/API/History#instance_methods" target="_blank"><code>history</code> methods</a>;</li>
+</ul>
+</li>
+<li>route matching:
+<ul>
+<li><code>.match(pattern)</code>, accepting various types of location patterns (<code>string | RegExp | (string | RegExp)[]</code>) and returning an object containing the matched parameters and a flag indicating whether the current location matches the given <code>pattern</code>.</li>
+</ul>
+</li>
+</ul>
