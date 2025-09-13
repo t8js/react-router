@@ -54,6 +54,10 @@ Note that both the header's `className` prop and the `<main>` component are rend
 
 🔹 `withRoute()` doesn't impose any route hierarchy by default, as it can be used with any route pattern anywhere in the app's components, offering sufficient flexibility to handle arbitrary route-based logic.
 
+🔹 `withRoute()` calls are independent from each other, they don't have to maintain a certain order, they shouldn't be necessarily grouped in a single component (although they can be, as in the example above). Components with route-based logic can be split like any other components.
+
+[Split components live demo](https://codesandbox.io/p/sandbox/63xzd4?file=%252Fsrc%252FApp.tsx)
+
 🔹 `withRoute()` accepts route patterns of various types: `string | RegExp | (string | RegExp)[]`. The parameters of a regular expression route pattern (or of the first `RegExp` match in the array) are passed to the second and the third parameter of `withRoute()` if they are functions, as shown in the example above.
 
 ## Route navigation
@@ -325,7 +329,7 @@ Enabling lazy routes doesn't require a specific routing setup. It's a combinatio
 + export const Projects = lazy(() => import('./Projects'));
 ```
 
-[Live demo](https://codesandbox.io/p/sandbox/x75p5w?file=%2Fsrc%2FApp.jsx)
+[Lazy routes live demo](https://codesandbox.io/p/sandbox/x75p5w?file=%2Fsrc%2FApp.jsx)
 
 In this example, the `<Projects>` component isn't loaded until the corresponding `/projects` route is visited. When it's first visited, while the component is being fetched, `<p>Loading...</p>` shows up, as specified with the `fallback` prop of `<Suspense>`.
 
@@ -417,7 +421,7 @@ let App = () => {
 };
 ```
 
-[Live demo](https://codesandbox.io/p/sandbox/vgt64k?file=%2Fsrc%2FApp.tsx)
+[Type-safe routing live demo](https://codesandbox.io/p/sandbox/vgt64k?file=%2Fsrc%2FApp.tsx)
 
 🔹 The `url()` function is a type-safe URL builder. It creates a URL with a URL pattern defined in the schema and typed parameters that are prevalidated against the given schema: typos and type mismatches are highlighted in a type-aware code editor.
 
