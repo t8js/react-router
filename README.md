@@ -335,11 +335,11 @@ In this example, the `<Projects>` component isn't loaded until the corresponding
 
 ## URL parameters
 
-There are two partially overlapping hooks to deal with URL parameters, such as path parameters and query parameters.
+There are two partially overlapping hooks to deal with URL parameters, such as path parameters and query parameters: `useRouteMatch(location)` and `useRouteState(location)`.
 
 🔹 Both hooks accept typed URL patterns covered in the [Type-safe routing](#type-safe-routing) section to deal with typed URL parameters.
 
-🔹 `useRouteMatch(location)` can be used to read URL parameters from a fixed route, a `RegExp` pattern, or an array thereof.
+🔹 `useRouteMatch(location)` can be used to *read* URL parameters from a fixed route, typed route pattern, `RegExp` pattern, or an array thereof.
 
 ```js
 import {useRouteMatch} from '@t8/react-router';
@@ -355,7 +355,7 @@ let Section = () => {
 };
 ```
 
-🔹 `useRouteState(location)` can be used to read and update URL parameters of a fixed route. Similarly to React's `useState()`, the hook returns `[state, setState]` to manipulate the URL's `{params, query}` (which can be regarded as a form of app state).
+🔹 `useRouteState(location)` can be used to *read and update* URL parameters of a fixed route or a typed route pattern. Similarly to React's `useState()`, the hook returns `[state, setState]` to manipulate the URL's `{params, query}` (which can be regarded as a form of app state).
 
 🔹 To make sure the current location actually matches the given pattern, the boolean `state.ok` flag from `let state = useRouteMatch(location);` or `let [state, setState] = useRouteState(location);` can be used.
 
@@ -444,3 +444,5 @@ Adding this type declaration to an app effectively disallows using `string` and 
 🔹 A URL builder pattern (like `url('/sections/:id')`) can also be used with `useRouteMatch(pattern)` and `useRouteState(pattern)` to manipulate [URL parameters](#url-parameters) in a type-safe manner.
 
 [Typed URL parameters state demo](https://codesandbox.io/p/sandbox/qnd87w?file=%2Fsrc%2FShapeSection.tsx)
+
+🔹 Recap: It's using a typed URL pattern (like with `url()` from `url-shape`) that enables type-safe route handling, which is an optional enhancement. Plain `string` routes and `RegExp` route patterns are handled with more generic typing as a baseline sufficient in many cases.
