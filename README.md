@@ -198,7 +198,39 @@ let Section = () => {
 };
 ```
 
-🔹 `useRouteState(location)` can be used to *read and update* URL parameters of a fixed route or a typed route pattern. Similarly to React's `useState()`, the hook returns `[state, setState]` to manipulate the URL's `{params, query}` (which can be regarded as a form of app state).
+🔹 `useRouteState(location)` can be used to *read and update* URL parameters of a fixed route or a typed route pattern. Similarly to React's `useState()`, the hook returns `[state, setState]` to manipulate the URL's `{params, query}`, which can be regarded as a form of app state.
+
+```diff
++ import {useRouteState} from '@t8/react-router';
+
+  let App = () => {
+-     let [{coords}, setState] = useState({coords: {}});
++     let [{query}, setState] = useRouteState('/');
+
+      let setPosition = () => {
+          setState(state => ({
+              ...state,
+-             coords: {
++             query: {
+                  x: Math.random(),
+                  y: Math.random(),
+              },
+          });
+      };
+
+      return (
+          <>
+              <h1>Shape</h1>
+-             <Shape x={coords.x} y={coords.y}/>
++             <Shape x={query.x} y={query.y}/>
+              <p><button onClick={setPosition}>Move</button></p>
+          </>
+      );
+  };
+```
+
+[Route state live demo](https://codesandbox.io/p/sandbox/sgvdfg?file=%252Fsrc%252FApp.tsx)<br>
+[Typed route state live demo](https://codesandbox.io/p/sandbox/qnd87w?file=%2Fsrc%2FShapeSection.tsx)
 
 🔹 To make sure the current location actually matches the given pattern, the boolean `state.ok` flag from `let state = useRouteMatch(location);` or `let [state, setState] = useRouteState(location);` can be used.
 
