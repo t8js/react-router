@@ -176,34 +176,119 @@ This example shows some common examples of what can be handled with routing midd
 
 🔹 The callback of both hooks is first called when the component gets mounted if the route is already in the navigation-complete state.
 
-## Converting HTML links to SPA route links
+## URL parameters
 
-A chunk of static HTML content is an example where the route link component can't be directly used but it still might be desirable to make plain HTML links in that content behave as SPA route links. The `useRouteLinks()` hook can be helpful here:
+There are two partially overlapping hooks to deal with URL parameters, such as path parameters and query parameters: `useRouteMatch(location)` and `useRouteState(location)`.
 
-```jsx
-import {useRef} from 'react';
-import {useRouteLinks} from '@t8/react-router';
+🔹 Both hooks accept typed URL patterns covered in the [Type-safe routing](#type-safe-routing) section to deal with typed URL parameters.
 
-let Content = ({value}) => {
-    let containerRef = useRef(null);
+🔹 `useRouteMatch(location)` can be used to *read* URL parameters from a fixed route, typed route pattern, `RegExp` pattern, or an array thereof.
 
-    useRouteLinks(containerRef);
+```js
+import {useRouteMatch} from '@t8/react-router';
+
+let Section = () => {
+    let {params, query} = useRouteMatch(/^\/sections\/(?<id>\d+)\/?$/);
 
     return (
-        <div ref={containerRef}>
-            {value}
-        </div>
+        <section className={params.id === '1' ? 'cover' : 'regular'}>
+            {/* content */}
+        </section>
     );
 };
 ```
 
-In this example, the `useRouteLinks()` hook makes all HTML links inside the container referenced by `containerRef` act as SPA route links.
+🔹 `useRouteState(location)` can be used to *read and update* URL parameters of a fixed route or a typed route pattern. Similarly to React's `useState()`, the hook returns `[state, setState]` to manipulate the URL's `{params, query}` (which can be regarded as a form of app state).
 
-To be more specific as to which elements in the container should be converted to route links, a selector, or an HTML element, or a collection thereof, can be passed as the second parameter of `useRouteLinks()`:
+🔹 To make sure the current location actually matches the given pattern, the boolean `state.ok` flag from `let state = useRouteMatch(location);` or `let [state, setState] = useRouteState(location);` can be used.
 
-```js
-useRouteLinks(containerRef, '.content a');
+🔹 With the `location` parameter omitted, both hooks assume that the current location is implied.
+
+## Type-safe routing
+
+As an optional enhancement, `@t8/react-router` supports progressive schema-based route type safety.
+
+Type-safe routing is enabled by supporting route patterns created with a type-safe URL builder like `url-shape` coupled with a schema created with `zod` or `yup`. This approach allows for gradual or partial adoption of type-safe routing in an application.
+
+```tsx
+import {A, useRoute} from '@t8/react-router';
+import {createURLSchema} from 'url-shape';
+import {z} from 'zod';
+
+const {url} = createURLSchema({
+    '/': null, // goes without parameters
+    '/sections/:id': {
+        params: z.object({
+            id: z.coerce.number(),
+        }),
+    },
+    '/search': {
+        query: z.object({
+            term: z.string(),
+            lang: z.optional(z.enum(['current', 'all'])),
+        }),
+    },
+});
+
+let App = () => {
+    let {withRoute} = useRoute();
+
+    // `withRoute(routePattern, x, y)` acts similarly to
+    // `matchesRoutePattern ? x : y`
+    return (
+        <>
+            <header className={withRoute(url('/'), 'full', 'compact')}>
+                <h1>App</h1>
+                <nav>
+                    <A href={url('/')}>
+                        Intro
+                    </A>
+                    {' | '}
+                    <A href={url('/sections/:id', {params: {id: 1}})}>
+                        Start
+                    </A>
+                </nav>
+            </header>
+            {withRoute(url('/'), (
+                <main>
+                    <h1>Intro</h1>
+                </main>
+            ))}
+            {withRoute(url('/sections/:id'), ({params}) => (
+                <main>
+                    <h1>Section {params.id}</h1>
+                </main>
+            ))}
+        </>
+    );
+};
 ```
+
+[Type-safe routing live demo](https://codesandbox.io/p/sandbox/vgt64k?file=%2Fsrc%2FApp.tsx)
+
+🔹 The `url()` function is a type-safe URL builder. It creates a URL with a URL pattern defined in the schema and typed parameters that are prevalidated against the given schema: typos and type mismatches are highlighted in a type-aware code editor.
+
+🔹 For more details on the output of the `createURLSchema()`, such as `url()`, `match()`, `validate()`, and the `null`-schema mode, see the [description of `url-shape`](https://github.com/axtk/url-shape#readme).
+
+🔹 A URL schema doesn't have to cover the entire app. Standalone portions of an app can have their own URL schemas.
+
+🔹 Stricter type safety can be achieved by disallowing URLs and URL patterns other than provided by the URL builder (the `url()` function in the example above) throughout the app:
+
+```ts
+declare module '@t8/react-router' {
+    interface Config {
+        strict: true;
+    }
+}
+```
+
+Adding this type declaration to an app effectively disallows using `string` and `RegExp` values for routes and route patterns (such as in the route link `href` prop, `route.assign(location)`, and the ternary route-matching function `withRoute(routePattern, x, y)`), only allowing values returned from the URL builder with the same routing APIs.
+
+🔹 A URL builder pattern (like `url('/sections/:id')`) can also be used with `useRouteMatch(pattern)` and `useRouteState(pattern)` to manipulate [URL parameters](#url-parameters) in a type-safe manner.
+
+[Typed URL parameters state demo](https://codesandbox.io/p/sandbox/qnd87w?file=%2Fsrc%2FShapeSection.tsx)
+
+🔹 Recap: It's using a typed URL pattern (like with `url()` from `url-shape`) that enables type-safe route handling, which is an optional enhancement. Plain `string` routes and `RegExp` route patterns are handled with more generic typing as a baseline sufficient in many cases.
 
 ## `<Router>`
 
@@ -333,116 +418,31 @@ Enabling lazy routes doesn't require a specific routing setup. It's a combinatio
 
 In this example, the `<Projects>` component isn't loaded until the corresponding `/projects` route is visited. When it's first visited, while the component is being fetched, `<p>Loading...</p>` shows up, as specified with the `fallback` prop of `<Suspense>`.
 
-## URL parameters
+## Converting HTML links to SPA route links
 
-There are two partially overlapping hooks to deal with URL parameters, such as path parameters and query parameters: `useRouteMatch(location)` and `useRouteState(location)`.
+A chunk of static HTML content is an example where the route link component can't be directly used but it still might be desirable to make plain HTML links in that content behave as SPA route links. The `useRouteLinks()` hook can be helpful here:
 
-🔹 Both hooks accept typed URL patterns covered in the [Type-safe routing](#type-safe-routing) section to deal with typed URL parameters.
+```jsx
+import {useRef} from 'react';
+import {useRouteLinks} from '@t8/react-router';
 
-🔹 `useRouteMatch(location)` can be used to *read* URL parameters from a fixed route, typed route pattern, `RegExp` pattern, or an array thereof.
+let Content = ({value}) => {
+    let containerRef = useRef(null);
+
+    useRouteLinks(containerRef);
+
+    return (
+        <div ref={containerRef}>
+            {value}
+        </div>
+    );
+};
+```
+
+In this example, the `useRouteLinks()` hook makes all HTML links inside the container referenced by `containerRef` act as SPA route links.
+
+To be more specific as to which elements in the container should be converted to route links, a selector, or an HTML element, or a collection thereof, can be passed as the second parameter of `useRouteLinks()`:
 
 ```js
-import {useRouteMatch} from '@t8/react-router';
-
-let Section = () => {
-    let {params, query} = useRouteMatch(/^\/sections\/(?<id>\d+)\/?$/);
-
-    return (
-        <section className={params.id === '1' ? 'cover' : 'regular'}>
-            {/* content */}
-        </section>
-    );
-};
+useRouteLinks(containerRef, '.content a');
 ```
-
-🔹 `useRouteState(location)` can be used to *read and update* URL parameters of a fixed route or a typed route pattern. Similarly to React's `useState()`, the hook returns `[state, setState]` to manipulate the URL's `{params, query}` (which can be regarded as a form of app state).
-
-🔹 To make sure the current location actually matches the given pattern, the boolean `state.ok` flag from `let state = useRouteMatch(location);` or `let [state, setState] = useRouteState(location);` can be used.
-
-🔹 With the `location` parameter omitted, both hooks assume that the current location is implied.
-
-## Type-safe routing
-
-As an optional enhancement, `@t8/react-router` supports progressive schema-based route type safety.
-
-Type-safe routing is enabled by supporting route patterns created with a type-safe URL builder like `url-shape` coupled with a schema created with `zod` or `yup`. This approach allows for gradual or partial adoption of type-safe routing in an application.
-
-```tsx
-import {A, useRoute} from '@t8/react-router';
-import {createURLSchema} from 'url-shape';
-import {z} from 'zod';
-
-const {url} = createURLSchema({
-    '/': null, // goes without parameters
-    '/sections/:id': {
-        params: z.object({
-            id: z.coerce.number(),
-        }),
-    },
-    '/search': {
-        query: z.object({
-            term: z.string(),
-            lang: z.optional(z.enum(['current', 'all'])),
-        }),
-    },
-});
-
-let App = () => {
-    let {withRoute} = useRoute();
-
-    // `withRoute(routePattern, x, y)` acts similarly to
-    // `matchesRoutePattern ? x : y`
-    return (
-        <>
-            <header className={withRoute(url('/'), 'full', 'compact')}>
-                <h1>App</h1>
-                <nav>
-                    <A href={url('/')}>
-                        Intro
-                    </A>
-                    {' | '}
-                    <A href={url('/sections/:id', {params: {id: 1}})}>
-                        Start
-                    </A>
-                </nav>
-            </header>
-            {withRoute(url('/'), (
-                <main>
-                    <h1>Intro</h1>
-                </main>
-            ))}
-            {withRoute(url('/sections/:id'), ({params}) => (
-                <main>
-                    <h1>Section {params.id}</h1>
-                </main>
-            ))}
-        </>
-    );
-};
-```
-
-[Type-safe routing live demo](https://codesandbox.io/p/sandbox/vgt64k?file=%2Fsrc%2FApp.tsx)
-
-🔹 The `url()` function is a type-safe URL builder. It creates a URL with a URL pattern defined in the schema and typed parameters that are prevalidated against the given schema: typos and type mismatches are highlighted in a type-aware code editor.
-
-🔹 For more details on the output of the `createURLSchema()`, such as `url()`, `match()`, `validate()`, and the `null`-schema mode, see the [description of `url-shape`](https://github.com/axtk/url-shape#readme).
-
-🔹 A URL schema doesn't have to cover the entire app. Standalone portions of an app can have their own URL schemas.
-
-🔹 Stricter type safety can be achieved by disallowing URLs and URL patterns other than provided by the URL builder (the `url()` function in the example above) throughout the app:
-
-```ts
-declare module '@t8/react-router' {
-    interface Config {
-        strict: true;
-    }
-}
-```
-
-Adding this type declaration to an app effectively disallows using `string` and `RegExp` values for routes and route patterns (such as in the route link `href` prop, `route.assign(location)`, and the ternary route-matching function `withRoute(routePattern, x, y)`), only allowing values returned from the URL builder with the same routing APIs.
-
-🔹 A URL builder pattern (like `url('/sections/:id')`) can also be used with `useRouteMatch(pattern)` and `useRouteState(pattern)` to manipulate [URL parameters](#url-parameters) in a type-safe manner.
-
-[Typed URL parameters state demo](https://codesandbox.io/p/sandbox/qnd87w?file=%2Fsrc%2FShapeSection.tsx)
-
-🔹 Recap: It's using a typed URL pattern (like with `url()` from `url-shape`) that enables type-safe route handling, which is an optional enhancement. Plain `string` routes and `RegExp` route patterns are handled with more generic typing as a baseline sufficient in many cases.
