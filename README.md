@@ -355,6 +355,14 @@ Both `route` and `withRoute()` returned from `useRoute()` operate based on the r
 
 `<Router>` can be used with client-side rendering as well. In most cases, it is unnecessary since by default the route context takes the global location from `window.location` if it's available.
 
+### Custom routing behavior
+
+[Custom routing behavior live demo](https://codesandbox.io/p/sandbox/w7rsjl?file=%252Fsrc%252FApp.tsx)
+
+In this example, we've got a kind of a browser-in-browser with its routing based on a text input rather than the URL. It's enabled by passing an instance of a custom extension of the `Route` class, `InputRoute`, to the `<Router>` component, configured to interact with a text input.
+
+This example also shows how the same routing code (of the `<Content>` component) can interact with either the URL or the text input element based on the closest `<Router>` component up the component tree.
+
 ## Unknown routes
 
 The fallback parameter of the route-matching function `withRoute(routePattern, x, y)` can be used as a way to handle unknown routes:
