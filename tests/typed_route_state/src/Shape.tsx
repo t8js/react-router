@@ -1,19 +1,13 @@
 import { getRandomShape } from "./getRandomShape";
-import { toNumber } from "./toNumber";
-
-const n = 10;
 
 export type ShapeProps = {
-  x?: number | string;
-  y?: number | string;
-  r?: number | string;
+  n: number;
+  x?: number;
+  y?: number;
+  r?: number;
 };
 
-export const Shape = (props: ShapeProps) => {
-  let x = toNumber(props.x, 50);
-  let y = toNumber(props.y, 50);
-  let r = toNumber(props.r, 30);
-
+export const Shape = ({ n, x = 50, y = 50, r = 30 }: ShapeProps) => {
   return (
     <div className="shape">
       <svg viewBox="0 0 100 100" height="240">
@@ -25,7 +19,8 @@ export const Shape = (props: ShapeProps) => {
           fill="none"
           stroke="black"
           strokeWidth=".5"
-          strokeOpacity=".1"
+          strokeOpacity=".2"
+          strokeDasharray="1 2"
         />
         <path
           d={getRandomShape(n, x, y, r)}

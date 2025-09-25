@@ -1,0 +1,12 @@
+#app {
+  max-width: 20em;
+}
+h1 {
+  margin: 0.5em 0 0.75em;
+}
+.shape {
+  font-size: 0;
+  display: inline-block;
+  color: mediumpurple;
+  background: lavender;
+}

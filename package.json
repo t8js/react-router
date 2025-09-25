@@ -42,9 +42,11 @@
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.9",
     "react-dom": "^19.1.1",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "url-shape": "^1.2.5",
+    "zod": "^4.1.11"
   },
   "dependencies": {
-    "@t8/router": "^1.0.21"
+    "@t8/router": "^1.0.22"
   }
 }
