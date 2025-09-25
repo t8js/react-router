@@ -1,49 +1,48 @@
 import {
-    getMatchState,
-    type LocationValue,
-    type MatchState,
-    type NavigationMode,
-    type URLData,
-} from '@t8/router';
-import {useCallback, useMemo} from 'react';
-import {useRoute} from './useRoute';
+  getMatchState,
+  type LocationValue,
+  type MatchState,
+  type NavigationMode,
+  type URLData,
+} from "@t8/router";
+import { useCallback, useMemo } from "react";
+import { useRoute } from "./useRoute";
 
 type SetState<T extends LocationValue> = (
-    update: URLData<T> | ((state: MatchState<T>) => URLData<T>),
+  update: URLData<T> | ((state: MatchState<T>) => URLData<T>),
 ) => void;
 
 export function useRouteState<T extends LocationValue>(
-    location?: T,
-    navigationMode?: NavigationMode,
+  location?: T,
+  navigationMode?: NavigationMode,
 ) {
-    let {route} = useRoute();
+  let { route } = useRoute();
 
-    let getState = useCallback(
-        (href?: string) => {
-            let resolvedHref = href ?? route.href;
+  let getState = useCallback(
+    (href?: string) => {
+      let resolvedHref = href ?? route.href;
 
-            return getMatchState(
-                location === undefined ? resolvedHref : location,
-                resolvedHref,
-            ) as MatchState<T>;
-        },
-        [location, route],
-    );
+      return getMatchState(
+        location === undefined ? resolvedHref : location,
+        resolvedHref,
+      ) as MatchState<T>;
+    },
+    [location, route],
+  );
 
-    let setState = useCallback<SetState<T>>(
-        update => {
-            let state =
-                typeof update === 'function' ? update(getState()) : update;
+  let setState = useCallback<SetState<T>>(
+    (update) => {
+      let state = typeof update === "function" ? update(getState()) : update;
 
-            route._navigate(route.compile(location, state), navigationMode);
-        },
-        [location, route, navigationMode, getState],
-    );
+      route._navigate(route.compile(location, state), navigationMode);
+    },
+    [location, route, navigationMode, getState],
+  );
 
-    let state = useMemo(
-        () => getState(route.href),
-        [getState, route.href],
-    ) as MatchState<T>;
+  let state = useMemo(
+    () => getState(route.href),
+    [getState, route.href],
+  ) as MatchState<T>;
 
-    return [state, setState] as [typeof state, SetState<T>];
+  return [state, setState] as [typeof state, SetState<T>];
 }
