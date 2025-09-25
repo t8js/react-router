@@ -1,0 +1,51 @@
+.browser {
+  --gap: 0.35rem;
+  --r: 0.25rem;
+
+  max-width: 20em;
+  background: #d3d3d3;
+  box-shadow: 0 0 0.1rem 0 #999;
+  border-radius: var(--r);
+  overflow: hidden;
+  padding: var(--gap);
+  margin: 1.5em 0;
+}
+.browser > .navbar {
+  display: flex;
+  align-items: center;
+  font: normal 100%/1.1 system-ui, sans-serif;
+  color: #787878;
+  background: #e3e3e3;
+  box-shadow: 0 0 0.1em 0 #999;
+  border-radius: var(--r);
+  overflow: hidden;
+}
+.browser > .navbar > span {
+  display: inline-block;
+  white-space: nowrap;
+  padding: 0.1rem 0.35rem 0.2rem;
+}
+.browser > .navbar input {
+  width: 100%;
+  font: inherit;
+  color: black;
+  background: white;
+  border: none;
+  padding: 0.1rem 0.35rem 0.2rem;
+  box-sizing: border-box;
+}
+.browser > .navbar input:focus {
+  outline: none;
+  box-shadow: inset 0 0 0.1rem 0 blue;
+}
+.browser > .content {
+  font-size: 0.75em;
+  height: 10rem;
+  background: white;
+  border-radius: var(--r);
+  overflow: auto;
+  padding: 0 0.5rem;
+  margin-top: var(--gap);
+  box-shadow: 0 0 0.1em 0 #999;
+  box-sizing: border-box;
+}

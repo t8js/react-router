@@ -1,0 +1,14 @@
+:root {
+  color: black;
+  background: #f0f0f0;
+}
+body {
+  padding: 0.25em 1.25em;
+  margin: 0;
+}
+a,
+a:hover,
+a:visited,
+a:active {
+  color: #36d;
+}
