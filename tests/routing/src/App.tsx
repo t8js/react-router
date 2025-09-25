@@ -19,7 +19,7 @@ export const App = () => {
         "/",
         <main>
           <h2>Intro</h2>
-        </main>
+        </main>,
       )}
       {withRoute(/^\/sections\/(?<id>\d+)\/?$/, ({ params }) => (
         <main>

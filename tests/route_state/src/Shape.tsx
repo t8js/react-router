@@ -17,8 +17,9 @@ export const Shape = (props: ShapeProps) => {
   return (
     <div className="shape">
       <svg viewBox="0 0 100 100" height="240">
+        <title>Shape</title>
         <circle
-          id="circum"
+          data-id="circum"
           cx={x}
           cy={y}
           r={r}
@@ -33,7 +34,7 @@ export const Shape = (props: ShapeProps) => {
           fill="currentColor"
           fillOpacity=".3"
         />
-        <circle id="center" cx={x} cy={y} r="1.5" fill="red" stroke="none" />
+        <circle cx={x} cy={y} r="1.5" fill="red" stroke="none" />
       </svg>
     </div>
   );

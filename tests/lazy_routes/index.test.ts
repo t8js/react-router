@@ -1,5 +1,5 @@
 import { expect, type Page, test } from "@playwright/test";
-import { serve, type Server } from "@t8/serve";
+import { type Server, serve } from "@t8/serve";
 
 class Playground {
   readonly page: Page;
@@ -7,13 +7,17 @@ class Playground {
     this.page = page;
   }
   async hasPath(value: string) {
-    await expect(this.page).toHaveURL(({ pathname, search }) => pathname + search === value);
+    await expect(this.page).toHaveURL(
+      ({ pathname, search }) => pathname + search === value,
+    );
   }
   async clickLink(name: string) {
     await this.page.getByRole("link", { name }).click();
   }
   async showsLoadingStatus() {
-    await expect(this.page.locator("p", { hasText: "⌛ Loading..." })).toBeVisible();
+    await expect(
+      this.page.locator("p", { hasText: "⌛ Loading..." }),
+    ).toBeVisible();
   }
   async showsItemList() {
     await expect(this.page.locator("li", { hasText: "bed" })).toBeVisible();

@@ -1,6 +1,6 @@
-import { A, useRoute } from "../../..";
 import { createURLSchema } from "url-shape";
 import { z } from "zod";
+import { A, useRoute } from "../../..";
 
 let { url } = createURLSchema({
   "/": null, // goes without parameters
@@ -30,7 +30,7 @@ export const App = () => {
         url("/"),
         <main>
           <h2>Intro</h2>
-        </main>
+        </main>,
       )}
       {withRoute(url("/sections/:id"), ({ params }) => (
         <main>

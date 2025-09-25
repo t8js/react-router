@@ -1,4 +1,4 @@
-import { useId, useMemo, type ReactNode } from "react";
+import { type ReactNode, useId, useMemo } from "react";
 import { Router } from "../../..";
 import { InputRoute } from "./InputRoute";
 import "./Browser.css";
@@ -18,7 +18,7 @@ export const Browser = ({
 
   let route = useMemo(
     () => new InputRoute(inputId, initialLocation),
-    [inputId, initialLocation]
+    [inputId, initialLocation],
   );
 
   return (

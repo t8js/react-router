@@ -1,6 +1,6 @@
-import { A, useRouteState } from "../../..";
 import { createURLSchema } from "url-shape";
 import { z } from "zod";
+import { A, useRouteState } from "../../..";
 import { Shape } from "./Shape";
 
 const { url } = createURLSchema({
@@ -13,7 +13,7 @@ const { url } = createURLSchema({
         x: z.coerce.number(),
         y: z.coerce.number(),
         r: z.coerce.number(),
-      })
+      }),
     ),
   },
 });

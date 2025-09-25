@@ -1,5 +1,5 @@
 import { expect, type Page, test } from "@playwright/test";
-import { serve, type Server } from "@t8/serve";
+import { type Server, serve } from "@t8/serve";
 
 class Playground {
   readonly page: Page;
@@ -13,20 +13,18 @@ class Playground {
     return this.getBrowser(n).locator(".navbar input");
   }
   async hasPath(value: string, n?: number) {
-    if (n)
-      await expect(this.getBrowserInput(n)).toHaveValue(value);
+    if (n) await expect(this.getBrowserInput(n)).toHaveValue(value);
     else
-      await expect(this.page).toHaveURL(({ pathname, search }) => pathname + search === value);
+      await expect(this.page).toHaveURL(
+        ({ pathname, search }) => pathname + search === value,
+      );
   }
   async hasTitle(value: string, n?: number) {
-    if (n)
-      await expect(this.getBrowser(n).locator("h1")).toHaveText(value);
-    else
-      await expect(this.page.locator("#app > section h1")).toHaveText(value);
+    if (n) await expect(this.getBrowser(n).locator("h1")).toHaveText(value);
+    else await expect(this.page.locator("#app > section h1")).toHaveText(value);
   }
   async clickLink(name: string, n?: number) {
-    if (n)
-      await this.getBrowser(n).getByRole("link", { name }).click();
+    if (n) await this.getBrowser(n).getByRole("link", { name }).click();
     else
       await this.page.locator("#app > nav").getByRole("link", { name }).click();
   }
@@ -36,9 +34,7 @@ class Playground {
 
       await input.fill(value);
       await input.press("Enter");
-    }
-    else
-      await this.page.goto(value);
+    } else await this.page.goto(value);
   }
 }
 

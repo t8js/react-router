@@ -13,7 +13,9 @@
 .browser > .navbar {
   display: flex;
   align-items: center;
-  font: normal 100%/1.1 system-ui, sans-serif;
+  font:
+    normal 100% / 1.1 system-ui,
+    sans-serif;
   color: #787878;
   background: #e3e3e3;
   box-shadow: 0 0 0.1em 0 #999;

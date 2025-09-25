@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { A, useRoute, useNavigationStart } from "../../..";
+import { A, useNavigationStart, useRoute } from "../../..";
 import { ShapeSection } from "./ShapeSection";
 
 export const App = () => {
@@ -12,7 +12,7 @@ export const App = () => {
         return false;
       }
     },
-    [route]
+    [route],
   );
 
   useNavigationStart(initialRedirect);
@@ -25,7 +25,7 @@ export const App = () => {
           <p>
             <A href="/shapes/1">Start</A>
           </p>
-        </main>
+        </main>,
       )}
       {withRoute(/^\/shapes\/\d+/, <ShapeSection />)}
     </>

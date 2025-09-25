@@ -1,4 +1,4 @@
-import { Route, type LocationValue } from "../../..";
+import { type LocationValue, Route } from "../../..";
 
 export class InputRoute extends Route {
   inputId: string;
@@ -16,7 +16,7 @@ export class InputRoute extends Route {
     if (location === undefined || location === null)
       return typeof window === "undefined"
         ? ""
-        : this._getElement()?.value ?? "";
+        : (this._getElement()?.value ?? "");
 
     return String(location);
   }

@@ -43,7 +43,7 @@ export const App = () => {
           <Browser initialLocation="/sections/1">
             <Content />
           </Browser>
-        </>
+        </>,
       )}
     </>
   );
