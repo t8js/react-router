@@ -1,0 +1,24 @@
+html {
+  color: black;
+  background: white;
+}
+body {
+  margin: 0;
+}
+header {
+  background: lavender;
+  padding: 1em;
+}
+header h1 {
+  font-size: 3em;
+  margin: 0 0 0.5em;
+}
+header.full {
+  text-align: center;
+}
+header.compact h1 {
+  font-size: 1.5em;
+}
+main {
+  padding: 0 1em;
+}
