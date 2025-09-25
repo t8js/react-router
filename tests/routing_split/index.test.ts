@@ -30,7 +30,7 @@ let server: Server;
 
 test.beforeAll(async () => {
   server = await serve({
-    path: "tests/route_matching_split",
+    path: "tests/routing_split",
     bundle: "src/index.tsx",
     spa: true,
   });
