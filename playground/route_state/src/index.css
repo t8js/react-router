@@ -1,0 +1,16 @@
+body {
+  padding: 0.5em;
+  margin: 0;
+}
+#app {
+  max-width: 20em;
+}
+.shape {
+  font-size: 0;
+  display: inline-block;
+  color: mediumpurple;
+  background: lavender;
+}
+p {
+  margin: 0.5em 0;
+}

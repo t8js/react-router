@@ -9,9 +9,11 @@
     "clean": "node -e \"require('node:fs').rmSync('dist', {force: true, recursive: true});\"",
     "compile": "npx esbuild index.ts --bundle --outdir=dist --platform=neutral --external:react",
     "gh-pages": "npx ghstage --theme=t8 --ymid=103784239 --nav=https://raw.githubusercontent.com/t8js/t8js.github.io/refs/heads/main/assets/nav.html",
+    "play": "npx @t8/serve 3000 * playground/route_matching -b src/index.tsx index.js",
     "prepublishOnly": "npx npm-run-all build gh-pages",
-    "preversion": "npx npm-run-all typecheck shape build",
+    "preversion": "npx npm-run-all typecheck shape build test",
     "shape": "npx codeshape",
+    "test": "npx playwright test",
     "typecheck": "tsc --noEmit"
   },
   "keywords": [
@@ -34,10 +36,15 @@
     "react": ">=16.8"
   },
   "devDependencies": {
+    "@playwright/test": "^1.55.1",
+    "@t8/serve": "^0.1.18",
+    "@types/node": "^24.5.2",
     "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.9",
+    "react-dom": "^19.1.1",
     "typescript": "^5.9.2"
   },
   "dependencies": {
-    "@t8/router": "^1.0.14"
+    "@t8/router": "^1.0.20"
   }
 }
