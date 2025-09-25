@@ -1,5 +1,5 @@
 dist
-playground
+tests
 playwright.config.ts
 *.test.ts
 

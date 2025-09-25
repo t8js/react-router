@@ -34,7 +34,7 @@ let server: Server;
 
 test.beforeAll(async () => {
   server = await serve({
-    path: "playground/route_state",
+    path: "tests/route_state",
     bundle: "src/index.tsx",
     spa: true,
   });

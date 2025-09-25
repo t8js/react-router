@@ -1,7 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
-  testDir: "./playground",
+  testDir: "./tests",
   fullyParallel: true,
   forbidOnly: true,
   retries: 0,
@@ -26,7 +26,7 @@ export default defineConfig({
     },
   ],
   // webServer: {
-  //   command: "npm run play",
+  //   command: "npm run demo",
   //   url: "http://localhost:3000",
   // },
 });
