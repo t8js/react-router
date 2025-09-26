@@ -19,30 +19,30 @@ Installation: `npm i @t8/react-router`
 Rendering based on the URL with `@t8/react-router` is similar to conditional rendering with the ternary operator `matchesRoutePattern ? x : y`, equally applicable to components and prop values and resulting in a single consistent approach for both. This is a contrast to the component-, config-, or file-based route matching which are typically focused on component rendering, while route-based prop values have to be handled differently.
 
 ```jsx
-import {useRoute} from '@t8/react-router';
+import { useRoute } from "@t8/react-router";
 
 let App = () => {
-    let {withRoute} = useRoute();
+  let { withRoute } = useRoute();
 
-    // `withRoute(routePattern, x, y)` acts similarly to
-    // `matchesRoutePattern ? x : y`
-    return (
-        <>
-            <header className={withRoute('/', 'full', 'compact')}>
-                <h1>App</h1>
-            </header>
-            {withRoute('/', (
-                <main>
-                    <h1>Intro</h1>
-                </main>
-            ))}
-            {withRoute(/^\/sections\/(?<id>\d+)\/?$/, ({params}) => (
-                <main>
-                    <h1>Section {params.id}</h1>
-                </main>
-            ))}
-        </>
-    );
+  // `withRoute(routePattern, x, y)` acts similarly to
+  // `matchesRoutePattern ? x : y`
+  return (
+    <>
+      <header className={withRoute("/", "full", "compact")}>
+        <h1>App</h1>
+      </header>
+      {withRoute("/", (
+        <main>
+          <h1>Intro</h1>
+        </main>
+      ))}
+      {withRoute(/^\/sections\/(?<id>\d+)\/?$/, ({ params }) => (
+        <main>
+          <h1>Section {params.id}</h1>
+        </main>
+      ))}
+    </>
+  );
 };
 ```
 
@@ -65,23 +65,23 @@ Note that both the header's `className` prop and the `<main>` component are rend
 The route navigation API of `@t8/react-router` is largely aligned with the similar native APIs familiar to most web developers, such as `<a href="/x">` and `window.location`, which helps reduce cognitive load and shorten the migration path from the native APIs:
 
 ```diff
-+ import {A, useRoute} from '@t8/react-router';
++ import { A, useRoute } from "@t8/react-router";
 
-  let UserNav = ({signedIn}) => {
-+     let {route} = useRoute();
+  let UserNav = ({ signedIn }) => {
++   let { route } = useRoute();
 
-      let handleClick = () => {
--         window.location.assign(signedIn ? '/profile' : '/login');
-+         route.assign(signedIn ? '/profile' : '/login');
-      };
+    let handleClick = () => {
+-     window.location.assign(signedIn ? "/profile" : "/login");
++     route.assign(signedIn ? "/profile" : "/login");
+    };
 
-      return (
-          <nav>
--             <a href="/">Home</a>
-+             <A href="/">Home</A>
-              <button onClick={handleClick}>Profile</button>
-          </nav>
-      );
+    return (
+      <nav>
+-       <a href="/">Home</a>
++       <A href="/">Home</A>
+        <button onClick={handleClick}>Profile</button>
+      </nav>
+    );
   };
 ```
 
@@ -92,12 +92,12 @@ The route navigation API of `@t8/react-router` is largely aligned with the simil
 The route link component `<A>` enabling SPA navigation has the same props as the HTML link tag `<a>`. Apart from reducing some cognitive load, sticking to the similar API allows to quickly migrate from plain HTML links to route links (or the other way around).
 
 ```jsx
-import {A} from '@t8/react-router';
+import { A } from "@t8/react-router";
 
 let Nav = () => (
-    <nav>
-        <A href="/intro">Intro</A>
-    </nav>
+  <nav>
+    <A href="/intro">Intro</A>
+  </nav>
 );
 ```
 
@@ -114,16 +114,16 @@ By setting `data-navigation-mode="replace"` on a route link component `<A>` or `
 To jump to another route programmatically, there's the `route` object returned from the `useRoute()` hook:
 
 ```jsx
-import {useRoute} from '@t8/react-router';
+import { useRoute } from "@t8/react-router";
 
-let ProfileButton = ({signedIn}) => {
-    let {route} = useRoute();
+let ProfileButton = ({ signedIn }) => {
+  let { route } = useRoute();
 
-    let handleClick = () => {
-        route.assign(signedIn ? '/profile' : '/login');
-    };
+  let handleClick = () => {
+    route.assign(signedIn ? "/profile" : "/login");
+  };
 
-    return <button onClick={handleClick}>Profile</button>;
+  return <button onClick={handleClick}>Profile</button>;
 };
 ```
 
@@ -132,43 +132,43 @@ This particular example is somewhat contrived since it could have been composed 
 The interface of the `route` object consists of the following parts:
 
 - SPA navigation via the History API:
-    - `.assign()`, `.replace()`, `.reload()`, `.href`, `.pathname`, `.search`, `.hash`, semantically similar to `window.location`;
-    - `.back()`, `.forward()`, `.go(delta)`, corresponding to the [`history` methods](https://developer.mozilla.org/en-US/docs/Web/API/History#instance_methods);
+  - `.assign()`, `.replace()`, `.reload()`, `.href`, `.pathname`, `.search`, `.hash`, semantically similar to `window.location`;
+  - `.back()`, `.forward()`, `.go(delta)`, corresponding to the [`history` methods](https://developer.mozilla.org/en-US/docs/Web/API/History#instance_methods);
 - route matching:
-    - `.match(pattern)`, accepting various types of location patterns (`string | RegExp | (string | RegExp)[]`) and returning an object containing the matched parameters and a flag indicating whether the current location matches the given `pattern`.
+  - `.match(pattern)`, accepting various types of location patterns (`string | RegExp | (string | RegExp)[]`) and returning an object containing the matched parameters and a flag indicating whether the current location matches the given `pattern`.
 
 ## Routing middleware
 
 The `useNavigationStart()` and `useNavigationComplete()` hooks define routing *middleware*, that is intermediate actions to be done before and after the route navigation occurs:
 
 ```jsx
-import {useNavigationComplete, useNavigationStart} from '@t8/react-router';
+import { useNavigationComplete, useNavigationStart } from "@t8/react-router";
 
 function setTitle(href) {
-    if (href === '/intro')
-        document.title = 'Intro';
+  if (href === "/intro")
+    document.title = "Intro";
 }
 
 let App = () => {
-    let {route} = useRoute();
-    let [hasUnsavedChanges, setUnsavedChanges] = useState(false);
+  let { route } = useRoute();
+  let [hasUnsavedChanges, setUnsavedChanges] = useState(false);
 
-    let handleNavigationStart = useCallback(nextHref => {
-        if (hasUnsavedChanges)
-            return false; // prevents navigation
+  let handleNavigationStart = useCallback(nextHref => {
+    if (hasUnsavedChanges)
+      return false; // prevents navigation
 
-        if (nextHref === '/intro') {
-            route.assign('/'); // redirection
-            return false;
-        }
-    }, [hasUnsavedChanges, route]);
+    if (nextHref === "/intro") {
+      route.assign("/"); // redirection
+      return false;
+    }
+  }, [hasUnsavedChanges, route]);
 
-    useNavigationStart(handleNavigationStart);
-    useNavigationComplete(setTitle);
+  useNavigationStart(handleNavigationStart);
+  useNavigationComplete(setTitle);
 
-    return (
-        // app content
-    );
+  return (
+    // app content
+  );
 };
 ```
 
@@ -185,47 +185,47 @@ There are two partially overlapping hooks to deal with URL parameters, such as p
 🔹 `useRouteMatch(location)` can be used to *read* URL parameters from a fixed route, typed route pattern, `RegExp` pattern, or an array thereof.
 
 ```js
-import {useRouteMatch} from '@t8/react-router';
+import { useRouteMatch } from "@t8/react-router";
 
 let Section = () => {
-    let {params, query} = useRouteMatch(/^\/sections\/(?<id>\d+)\/?$/);
+  let { params, query } = useRouteMatch(/^\/sections\/(?<id>\d+)\/?$/);
 
-    return (
-        <section className={params.id === '1' ? 'cover' : 'regular'}>
-            {/* content */}
-        </section>
-    );
+  return (
+    <section className={params.id === "1" ? "cover" : "regular"}>
+      {/* content */}
+    </section>
+  );
 };
 ```
 
 🔹 `useRouteState(location)` can be used to *read and update* URL parameters of a fixed route or a typed route pattern. Similarly to React's `useState()`, the hook returns `[state, setState]` to manipulate the URL's `{params, query}`, which can be regarded as a form of app state.
 
 ```diff
-+ import {useRouteState} from '@t8/react-router';
++ import { useRouteState } from "@t8/react-router";
 
   let App = () => {
--     let [{coords}, setState] = useState({coords: {}});
-+     let [{query}, setState] = useRouteState('/');
+-   let [{ coords }, setState] = useState({ coords: {} });
++   let [{ query }, setState] = useRouteState("/");
 
-      let setPosition = () => {
-          setState(state => ({
-              ...state,
--             coords: {
-+             query: {
-                  x: Math.random(),
-                  y: Math.random(),
-              },
-          });
-      };
+    let setPosition = () => {
+      setState(state => ({
+        ...state,
+-       coords: {
++       query: {
+          x: Math.random(),
+          y: Math.random(),
+        },
+      });
+    };
 
-      return (
-          <>
-              <h1>Shape</h1>
--             <Shape x={coords.x} y={coords.y}/>
-+             <Shape x={query.x} y={query.y}/>
-              <p><button onClick={setPosition}>Move</button></p>
-          </>
-      );
+    return (
+      <>
+        <h1>Shape</h1>
+-       <Shape x={coords.x} y={coords.y}/>
++       <Shape x={query.x} y={query.y}/>
+        <p><button onClick={setPosition}>Move</button></p>
+      </>
+    );
   };
 ```
 
@@ -243,56 +243,56 @@ As an optional enhancement, `@t8/react-router` supports progressive schema-based
 Type-safe routing is enabled by supporting route patterns created with a type-safe URL builder like `url-shape` coupled with a schema created with `zod` or `yup`. This approach allows for gradual or partial adoption of type-safe routing in an application.
 
 ```tsx
-import {A, useRoute} from '@t8/react-router';
-import {createURLSchema} from 'url-shape';
-import {z} from 'zod';
+import { A, useRoute } from "@t8/react-router";
+import { createURLSchema } from "url-shape";
+import { z } from "zod";
 
-const {url} = createURLSchema({
-    '/': null, // goes without parameters
-    '/sections/:id': {
-        params: z.object({
-            id: z.coerce.number(),
-        }),
-    },
-    '/search': {
-        query: z.object({
-            term: z.string(),
-            lang: z.optional(z.enum(['current', 'all'])),
-        }),
-    },
+const { url } = createURLSchema({
+  "/": null, // goes without parameters
+  "/sections/:id": {
+    params: z.object({
+      id: z.coerce.number(),
+    }),
+  },
+  "/search": {
+    query: z.object({
+      term: z.string(),
+      lang: z.optional(z.enum(["current", "all"])),
+    }),
+  },
 });
 
 let App = () => {
-    let {withRoute} = useRoute();
+  let { withRoute } = useRoute();
 
-    // `withRoute(routePattern, x, y)` acts similarly to
-    // `matchesRoutePattern ? x : y`
-    return (
-        <>
-            <header className={withRoute(url('/'), 'full', 'compact')}>
-                <h1>App</h1>
-                <nav>
-                    <A href={url('/')}>
-                        Intro
-                    </A>
-                    {' | '}
-                    <A href={url('/sections/:id', {params: {id: 1}})}>
-                        Start
-                    </A>
-                </nav>
-            </header>
-            {withRoute(url('/'), (
-                <main>
-                    <h1>Intro</h1>
-                </main>
-            ))}
-            {withRoute(url('/sections/:id'), ({params}) => (
-                <main>
-                    <h1>Section {params.id}</h1>
-                </main>
-            ))}
-        </>
-    );
+  // `withRoute(routePattern, x, y)` acts similarly to
+  // `matchesRoutePattern ? x : y`
+  return (
+    <>
+      <header className={withRoute(url("/"), "full", "compact")}>
+        <h1>App</h1>
+        <nav>
+          <A href={url("/")}>
+            Intro
+          </A>
+          {" | "}
+          <A href={url("/sections/:id", { params: { id: 1 } })}>
+            Start
+          </A>
+        </nav>
+      </header>
+      {withRoute(url("/"), (
+        <main>
+          <h1>Intro</h1>
+        </main>
+      ))}
+      {withRoute(url("/sections/:id"), ({ params }) => (
+        <main>
+          <h1>Section {params.id}</h1>
+        </main>
+      ))}
+    </>
+  );
 };
 ```
 
@@ -307,16 +307,16 @@ let App = () => {
 🔹 Stricter type safety can be achieved by disallowing URLs and URL patterns other than provided by the URL builder (the `url()` function in the example above) throughout the app:
 
 ```ts
-declare module '@t8/react-router' {
-    interface Config {
-        strict: true;
-    }
+declare module "@t8/react-router" {
+  interface Config {
+    strict: true;
+  }
 }
 ```
 
 Adding this type declaration to an app effectively disallows using `string` and `RegExp` values for routes and route patterns (such as in the route link `href` prop, `route.assign(location)`, and the ternary route-matching function `withRoute(routePattern, x, y)`), only allowing values returned from the URL builder with the same routing APIs.
 
-🔹 A URL builder pattern (like `url('/sections/:id')`) can also be used with `useRouteMatch(pattern)` and `useRouteState(pattern)` to manipulate [URL parameters](#url-parameters) in a type-safe manner.
+🔹 A URL builder pattern (like `url("/sections/:id")`) can also be used with `useRouteMatch(pattern)` and `useRouteState(pattern)` to manipulate [URL parameters](#url-parameters) in a type-safe manner.
 
 [Typed URL parameters state demo](https://codesandbox.io/p/sandbox/qnd87w?file=%2Fsrc%2FShapeSection.tsx)
 
@@ -329,24 +329,24 @@ Server-side rendering and unit tests are the examples of the environments lackin
 Let's consider an *express* application route as an example:
 
 ```jsx
-import {renderToString} from 'react-dom/server';
-import {Router} from '@t8/react-router';
+import { renderToString } from "react-dom/server";
+import { Router } from "@t8/react-router";
 
-app.get('/', (req, res) => {
-    let html = renderToString(
-        <Router location={req.originalUrl}>
-            <App/>
-        </Router>,
-    );
+app.get("/", (req, res) => {
+  let html = renderToString(
+    <Router location={req.originalUrl}>
+      <App/>
+    </Router>,
+  );
 
-    res.send(html);
+  res.send(html);
 });
 ```
 
 The value passed to the router's `location` prop can be accessed via the `useRoute()` hook:
 
 ```jsx
-let {route, withRoute} = useRoute();
+let { route, withRoute } = useRoute();
 
 console.log(route.href); // returns the router's `location`
 ```
@@ -368,40 +368,40 @@ This example also shows how the same routing code (of the `<Content>` component)
 The fallback parameter of the route-matching function `withRoute(routePattern, x, y)` can be used as a way to handle unknown routes:
 
 ```jsx
-import {A, useRoute} from '@t8/react-router';
+import { A, useRoute } from "@t8/react-router";
 
 const routeMap = {
-    intro: '/intro',
-    sections: /^\/sections\/(?<id>\d+)\/?$/,
+  intro: "/intro",
+  sections: /^\/sections\/(?<id>\d+)\/?$/,
 };
 
 const knownRoutes = Object.values(routeMap);
 
 let App = () => {
-    let {withRoute} = useRoute();
+  let { withRoute } = useRoute();
 
-    return (
-        <>
-            <nav>
-                <A href={routeMap.intro}>Intro</A>
-            </nav>
-            {withRoute(routeMap.intro, (
-                <main>
-                    <h1>Intro</h1>
-                </main>
-            ))}
-            {withRoute(routeMap.sections, ({params}) => (
-                <main>
-                    <h1>Section {params.id}</h1>
-                </main>
-            ))}
-            {withRoute(knownRoutes, null, (
-                <main className="error">
-                    <h1>404 Not found</h1>
-                </main>
-            ))}
-        </>
-    );
+  return (
+    <>
+      <nav>
+        <A href={routeMap.intro}>Intro</A>
+      </nav>
+      {withRoute(routeMap.intro, (
+        <main>
+          <h1>Intro</h1>
+        </main>
+      ))}
+      {withRoute(routeMap.sections, ({ params }) => (
+        <main>
+          <h1>Section {params.id}</h1>
+        </main>
+      ))}
+      {withRoute(knownRoutes, null, (
+        <main className="error">
+          <h1>404 Not found</h1>
+        </main>
+      ))}
+    </>
+  );
 };
 ```
 
@@ -418,40 +418,40 @@ Lazy routes are routes whose content is loaded on demand, when the route is visi
 Enabling lazy routes doesn't require a specific routing setup. It's a combination of the [route matching](#route-matching) and lazily loaded React components (with `React.lazy()` and React's `<Suspense>`), processed by a code-splitting-capable build tool (like Esbuild, Webpack, Rollup, Vite):
 
 ```diff
-+ import {Suspense} from 'react';
-  import {A, useRoute} from '@t8/react-router';
-  import {Intro} from './Intro';
-- import {Projects} from './Projects';
-+ import {Projects} from './Projects.lazy';
++ import { Suspense } from "react";
+  import { A, useRoute } from "@t8/react-router";
+  import { Intro } from "./Intro";
+- import { Projects } from "./Projects";
++ import { Projects } from "./Projects.lazy";
 
   export const App = () => {
-      let {withRoute} = useRoute();
+    let { withRoute } = useRoute();
 
-      return (
-          <>
-              <nav>
-                  <A href="/">Intro</A>
-                  <A href="/projects">Projects</A>
-              </nav>
-              {withRoute('/', (
-                  <Intro/>
-              ))}
-              {withRoute('/projects', (
--                 <Projects/>
-+                 <Suspense fallback={<p>Loading...</p>}>
-+                     <Projects/>
-+                 </Suspense>
-              ))}
-          </>
-      );
+    return (
+      <>
+        <nav>
+          <A href="/">Intro</A>
+          <A href="/projects">Projects</A>
+        </nav>
+        {withRoute("/", (
+          <Intro/>
+        ))}
+        {withRoute("/projects", (
+-         <Projects/>
++         <Suspense fallback={<p>Loading...</p>}>
++           <Projects/>
++         </Suspense>
+        ))}
+      </>
+    );
   };
 ```
 
 ```diff
 + // Projects.lazy.js
-+ import {lazy} from 'react';
++ import { lazy } from "react";
 +
-+ export const Projects = lazy(() => import('./Projects'));
++ export const Projects = lazy(() => import("./Projects"));
 ```
 
 [Lazy routes live demo](https://codesandbox.io/p/sandbox/x75p5w?file=%2Fsrc%2FApp.jsx)
@@ -463,19 +463,19 @@ In this example, the `<Projects>` component isn't loaded until the corresponding
 A chunk of static HTML content is an example where the route link component can't be directly used but it still might be desirable to make plain HTML links in that content behave as SPA route links. The `useRouteLinks()` hook can be helpful here:
 
 ```jsx
-import {useRef} from 'react';
-import {useRouteLinks} from '@t8/react-router';
+import { useRef } from "react";
+import { useRouteLinks } from "@t8/react-router";
 
-let Content = ({value}) => {
-    let containerRef = useRef(null);
+let Content = ({ value }) => {
+  let containerRef = useRef(null);
 
-    useRouteLinks(containerRef);
+  useRouteLinks(containerRef);
 
-    return (
-        <div ref={containerRef}>
-            {value}
-        </div>
-    );
+  return (
+    <div ref={containerRef}>
+      {value}
+    </div>
+  );
 };
 ```
 
@@ -484,5 +484,5 @@ In this example, the `useRouteLinks()` hook makes all HTML links inside the cont
 To be more specific as to which elements in the container should be converted to route links, a selector, or an HTML element, or a collection thereof, can be passed as the second parameter of `useRouteLinks()`:
 
 ```js
-useRouteLinks(containerRef, '.content a');
+useRouteLinks(containerRef, ".content a");
 ```
