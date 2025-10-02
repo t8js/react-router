@@ -122,7 +122,7 @@ This example shows some common examples of what can be handled with routing midd
 
 ## URL parameters as state
 
-URL parameters, as a portion of the apps' state, can be managed in the React's `useState()`-like manner, allowing for quick migration from local state to URL parameters or the other way around:
+URL parameters, as a portion of the app's state, can be managed in the React's `useState()`-like manner, allowing for quick migration from local state to URL parameters or the other way around:
 
 ```diff
 + import { useRouteState } from "@t8/react-router";
