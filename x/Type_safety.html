@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="t8">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Type safety | @t8/react-router</title>
+<link rel="stylesheet" href="https://unpkg.com/ghstage@2.5/dist/css/base.css">
+<link rel="stylesheet" href="https://unpkg.com/ghstage@2.5/dist/css/section.css">
+<link rel="icon" type="image/png" href="/assets/logo.png">
+<link rel="prefetch" href="/react-router/x/Location_provider">
+<link rel="prefetch" href="/react-router/x/URL_parameters">
+</head>
+<body>
+<div class="layout">
+<div class="body">
+<main>
+<h1><a href="/" class="scope">@t8</a><span class="sep">/</span><a href="/react-router/" class="name">react-router</a></a></h1>
+<h2 id="type-safety">Type safety</h2>
+<p>Type-safe routing is as an optional enhancement. It's enabled by supporting route patterns created with a type-safe URL builder like <em>url-shape</em> together with a schema created with <em>zod</em> or <em>yup</em>. This approach allows for gradual or partial adoption of type-safe routing in an application.</p>
+<pre><code class="language-tsx">import { A, useRoute } from "@t8/react-router";
+import { createURLSchema } from "url-shape";
+import { z } from "zod";
+
+const { url } = createURLSchema({
+  "/": null, // Goes without parameters
+  "/sections/:id": {
+    // Path components
+    params: z.object({
+      id: z.coerce.number(),
+    }),
+    // Similarly a `query` schema can be added here
+  },
+});
+
+let App = () =&gt; {
+  let { withRoute } = useRoute();
+
+  return (
+    &lt;&gt;
+      &lt;header className={withRoute(url("/"), "full", "compact")}&gt;
+        &lt;h1&gt;App&lt;/h1&gt;
+        &lt;nav&gt;
+          &lt;A href={url("/")}&gt;Intro&lt;/A&gt;{" | "}
+          &lt;A href={url("/sections/:id", { params: { id: 1 } })}&gt;Start&lt;/A&gt;
+        &lt;/nav&gt;
+      &lt;/header&gt;
+      {withRoute(url("/"), &lt;Intro/&gt;)}
+      {withRoute(url("/sections/:id"), ({ params }) =&gt; (
+        &lt;Section id={params.id}/&gt;
+      ))}
+    &lt;/&gt;
+  );
+};
+</code></pre>
+<p><a href="https://codesandbox.io/p/sandbox/vgt64k?file=%2Fsrc%2FApp.tsx" target="_blank">Type-safe routing live demo</a></p>
+<p>🔹 The <code>url()</code> function is a type-safe URL builder. It creates a URL with a URL pattern defined in the schema and typed parameters that are prevalidated against the given schema: typos and type mismatches are highlighted in a type-aware code editor. <a href="https://github.com/axtk/url-shape#readme" target="_blank">See <em>url-shape</em></a> for more details.</p>
+<p>🔹 A URL schema doesn't have to cover the entire app. Standalone portions of an app can have their own URL schemas.</p>
+<p>🔹 Optionally, application-wide type safety can be achieved by disallowing URLs and URL patterns other than provided by the URL builder (the <code>url()</code> function in the example above):</p>
+<pre><code class="language-ts">declare module "@t8/react-router" {
+  interface Config {
+    strict: true;
+  }
+}
+</code></pre>
+<p>Adding this type declaration to an app effectively disallows using <code>string</code> and <code>RegExp</code> values for routes and route patterns (such as in the route link <code>href</code> prop, <code>route.assign(location)</code>, and the routing function <code>withRoute(routePattern, x, y)</code>), only allowing values returned from the URL builder with the same routing APIs.</p>
+<p>🔹 A URL builder pattern (like <code>url("/sections/:id")</code>) can also be used with <code>useRouteState(pattern)</code> and <code>useRouteMatch(pattern)</code> to manipulate <a href="/react-router/x/URL_parameters">URL parameters</a> in a type-safe manner.</p>
+<p><a href="https://codesandbox.io/p/sandbox/qnd87w?file=%2Fsrc%2FShapeSection.tsx" target="_blank">Typed URL parameters state demo</a></p>
+<p>🔹 Recap: It's using a typed URL pattern (like with <code>url()</code> from <em>url-shape</em>) that enables type-safe route handling, which is an optional enhancement. Plain <code>string</code> routes and <code>RegExp</code> route patterns are handled with more generic typing as a baseline sufficient in many cases.</p>
+
+<p class="pagenav">
+  <span class="prev">
+    <span class="icon">←</span>
+    <a href="/react-router/x/URL_parameters">URL parameters</a>
+  </span>
+  <span class="sep">|</span>
+  <span class="next"><a href="/react-router/x/Location_provider">Location provider</a> <span class="icon">→</span></span>
+</p>
+</main>
+<hr>
+<nav>
+<section><ul>
+<li data-id="Routing"><a href="/react-router/x/Routing">Routing</a></li></li>
+<li data-id="Navigation"><a href="/react-router/x/Navigation">Navigation</a></li></li>
+<li data-id="Middleware"><a href="/react-router/x/Middleware">Middleware</a></li></li>
+<li data-id="URL_parameters"><a href="/react-router/x/URL_parameters">URL parameters</a></li></li>
+<li data-id="Type_safety"><strong>Type safety</strong></li></li>
+<li data-id="Location_provider"><a href="/react-router/x/Location_provider">Location provider</a></li></li>
+<li data-id="Custom_routing_behavior"><a href="/react-router/x/Custom_routing_behavior">Custom routing behavior</a></li></li>
+<li data-id="Unknown_routes"><a href="/react-router/x/Unknown_routes">Unknown routes</a></li></li>
+<li data-id="Lazy_routes"><a href="/react-router/x/Lazy_routes">Lazy routes</a></li></li>
+<li data-id="Converting_HTML_links_to_SPA_route_links"><a href="/react-router/x/Converting_HTML_links_to_SPA_route_links">Converting HTML links to SPA route links</a></li></li>
+</ul></section>
+<section class="ref">
+  <ul>
+    <li><a href="https://github.com/t8js/react-router" target="_blank">GitHub</a></li>
+    
+  </ul>
+</section>
+<section class="related">
+  <h2>Also with React</h2>
+  <ul>
+    
+    <li><a href="/react-store" data-name="@t8/react-store">T8 <strong>React Store</strong></a></li>
+    <li><a href="/react-pending" data-name="@t8/react-pending">T8 <strong>React Pending</strong></a></li>
+  </ul>
+  <h2>Vanilla TS/JS</h2>
+  <ul>
+    <li><a href="https://github.com/t8js/router#readme" data-name="@t8/router">T8 <strong>Router</strong></a></li>
+    <li><a href="https://github.com/t8js/store#readme" data-name="@t8/store">T8 <strong>Store</strong></a></li>
+  </ul>
+</section>
+
+</nav>
+</div>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/base16/material.min.css">
+<link rel="stylesheet" href="https://unpkg.com/ghstage@2.5/dist/css/code.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+<script>hljs.highlightAll()</script>
+<script>
+(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+m[i].l=1*new Date();
+for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+(window, document, "script", "https://mc.yandex.com/metrika/tag.js", "ym");
+ym(103784239, "init", {clickmap: true, trackLinks: true, accurateTrackBounce: true});
+</script>
+<noscript><div><img src="https://mc.yandex.com/watch/103784239" style="position:absolute;left:-9999px;" alt=""></div></noscript>
+</body>
+</html>

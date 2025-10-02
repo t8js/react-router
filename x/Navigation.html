@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="t8">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Navigation | @t8/react-router</title>
+<link rel="stylesheet" href="https://unpkg.com/ghstage@2.5/dist/css/base.css">
+<link rel="stylesheet" href="https://unpkg.com/ghstage@2.5/dist/css/section.css">
+<link rel="icon" type="image/png" href="/assets/logo.png">
+<link rel="prefetch" href="/react-router/x/Middleware">
+<link rel="prefetch" href="/react-router/x/Routing">
+</head>
+<body>
+<div class="layout">
+<div class="body">
+<main>
+<h1><a href="/" class="scope">@t8</a><span class="sep">/</span><a href="/react-router/" class="name">react-router</a></a></h1>
+<h2 id="navigation">Navigation</h2>
+<p>The route navigation API is largely aligned with the similar native JS APIs familiar to most web developers, such as <code>&lt;a href="/x"&gt;</code> and <code>window.location</code>:</p>
+<pre><code class="language-diff">+ import { A, useRoute } from "@t8/react-router";
+
+  let UserNav = ({ signedIn }) =&gt; {
++   let { route } = useRoute();
+
+    let handleClick = () =&gt; {
+-     window.location.assign(signedIn ? "/profile" : "/login");
++     route.assign(signedIn ? "/profile" : "/login");
+    };
+
+    return (
+      &lt;nav&gt;
+-       &lt;a href="/"&gt;Home&lt;/a&gt;
++       &lt;A href="/"&gt;Home&lt;/A&gt;
+        &lt;button onClick={handleClick}&gt;Profile&lt;/button&gt;
+      &lt;/nav&gt;
+    );
+  };
+</code></pre>
+<p>🔹 The <code>route</code> object has: <code>.assign(url)</code>, <code>.replace(url)</code>, <code>.reload()</code>, <code>.href</code>, <code>.pathname</code>, <code>.search</code>, <code>.hash</code>, <code>.back()</code>, <code>.forward()</code>, <code>.go(delta)</code> — similar to the built-in APIs of <code>window.location</code> and <code>history</code> carried over to route-based SPA navigation.</p>
+<p>🔹 A route link component can be switched to the replace mode by having the <code>data-navigation-mode="replace"</code> attribute.</p>
+<p>🔹 Like the route link <code>&lt;A&gt;</code> corresponds to the HTML link tag <code>&lt;a&gt;</code>, the route link <code>&lt;Area&gt;</code> corresponds to the HTML link tag <code>&lt;area&gt;</code>.</p>
+
+<p class="pagenav">
+  <span class="prev">
+    <span class="icon">←</span>
+    <a href="/react-router/x/Routing">Routing</a>
+  </span>
+  <span class="sep">|</span>
+  <span class="next"><a href="/react-router/x/Middleware">Middleware</a> <span class="icon">→</span></span>
+</p>
+</main>
+<hr>
+<nav>
+<section><ul>
+<li data-id="Routing"><a href="/react-router/x/Routing">Routing</a></li></li>
+<li data-id="Navigation"><strong>Navigation</strong></li></li>
+<li data-id="Middleware"><a href="/react-router/x/Middleware">Middleware</a></li></li>
+<li data-id="URL_parameters"><a href="/react-router/x/URL_parameters">URL parameters</a></li></li>
+<li data-id="Type_safety"><a href="/react-router/x/Type_safety">Type safety</a></li></li>
+<li data-id="Location_provider"><a href="/react-router/x/Location_provider">Location provider</a></li></li>
+<li data-id="Custom_routing_behavior"><a href="/react-router/x/Custom_routing_behavior">Custom routing behavior</a></li></li>
+<li data-id="Unknown_routes"><a href="/react-router/x/Unknown_routes">Unknown routes</a></li></li>
+<li data-id="Lazy_routes"><a href="/react-router/x/Lazy_routes">Lazy routes</a></li></li>
+<li data-id="Converting_HTML_links_to_SPA_route_links"><a href="/react-router/x/Converting_HTML_links_to_SPA_route_links">Converting HTML links to SPA route links</a></li></li>
+</ul></section>
+<section class="ref">
+  <ul>
+    <li><a href="https://github.com/t8js/react-router" target="_blank">GitHub</a></li>
+    
+  </ul>
+</section>
+<section class="related">
+  <h2>Also with React</h2>
+  <ul>
+    
+    <li><a href="/react-store" data-name="@t8/react-store">T8 <strong>React Store</strong></a></li>
+    <li><a href="/react-pending" data-name="@t8/react-pending">T8 <strong>React Pending</strong></a></li>
+  </ul>
+  <h2>Vanilla TS/JS</h2>
+  <ul>
+    <li><a href="https://github.com/t8js/router#readme" data-name="@t8/router">T8 <strong>Router</strong></a></li>
+    <li><a href="https://github.com/t8js/store#readme" data-name="@t8/store">T8 <strong>Store</strong></a></li>
+  </ul>
+</section>
+
+</nav>
+</div>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/base16/material.min.css">
+<link rel="stylesheet" href="https://unpkg.com/ghstage@2.5/dist/css/code.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+<script>hljs.highlightAll()</script>
+<script>
+(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+m[i].l=1*new Date();
+for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+(window, document, "script", "https://mc.yandex.com/metrika/tag.js", "ym");
+ym(103784239, "init", {clickmap: true, trackLinks: true, accurateTrackBounce: true});
+</script>
+<noscript><div><img src="https://mc.yandex.com/watch/103784239" style="position:absolute;left:-9999px;" alt=""></div></noscript>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="t8">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Routing | @t8/react-router</title>
+<link rel="stylesheet" href="https://unpkg.com/ghstage@2.5/dist/css/base.css">
+<link rel="stylesheet" href="https://unpkg.com/ghstage@2.5/dist/css/section.css">
+<link rel="icon" type="image/png" href="/assets/logo.png">
+<link rel="prefetch" href="/react-router/x/Navigation">
+
+</head>
+<body>
+<div class="layout">
+<div class="body">
+<main>
+<h1><a href="/" class="scope">@t8</a><span class="sep">/</span><a href="/react-router/" class="name">react-router</a></a></h1>
+<h2 id="routing">Routing</h2>
+<p>The route-matching function <code>withRoute(routePattern, x, y)</code> acts similarly to the conditional operator <code>matchesRoutePattern ? x : y</code> and is equally applicable to components and prop values. The route link component is similar to the HTML link tag:</p>
+<pre><code class="language-jsx">import { A, useRoute } from "@t8/react-router";
+import { Intro } from "./Intro";
+import { Section } from "./Section";
+
+let App = () =&gt; {
+  let { withRoute } = useRoute();
+
+  return (
+    &lt;&gt;
+      &lt;header className={withRoute("/", "full", "compact")}&gt;
+        &lt;h1&gt;App&lt;/h1&gt;
+        &lt;nav&gt;
+          &lt;A href="/"&gt;Intro&lt;/A&gt;{" | "}
+          &lt;A href="/sections/1"&gt;Section 1&lt;/A&gt;
+        &lt;/nav&gt;
+      &lt;/header&gt;
+      {withRoute("/", &lt;Intro/&gt;)}
+      {withRoute(/^\/sections\/(?&lt;id&gt;\d+)\/?$/, ({ params }) =&gt; (
+        &lt;Section id={params.id}/&gt;
+      ))}
+    &lt;/&gt;
+  );
+};
+</code></pre>
+<p><a href="https://codesandbox.io/p/sandbox/63xzd4?file=%252Fsrc%252FApp.tsx" target="_blank">Live demo</a></p>
+<p>🔹 <code>withRoute()</code> calls are independent from each other, they don't have to maintain a certain order, they shouldn't be necessarily grouped in a single component (although they can be, as in the example above). Components with route-based logic can be split like any other components.</p>
+
+<p class="pagenav">
+  <span class="prev">
+    <span class="icon">←</span>
+    <a href="/react-router/">Intro</a>
+  </span>
+  <span class="sep">|</span>
+  <span class="next"><a href="/react-router/x/Navigation">Navigation</a> <span class="icon">→</span></span>
+</p>
+</main>
+<hr>
+<nav>
+<section><ul>
+<li data-id="Routing"><strong>Routing</strong></li></li>
+<li data-id="Navigation"><a href="/react-router/x/Navigation">Navigation</a></li></li>
+<li data-id="Middleware"><a href="/react-router/x/Middleware">Middleware</a></li></li>
+<li data-id="URL_parameters"><a href="/react-router/x/URL_parameters">URL parameters</a></li></li>
+<li data-id="Type_safety"><a href="/react-router/x/Type_safety">Type safety</a></li></li>
+<li data-id="Location_provider"><a href="/react-router/x/Location_provider">Location provider</a></li></li>
+<li data-id="Custom_routing_behavior"><a href="/react-router/x/Custom_routing_behavior">Custom routing behavior</a></li></li>
+<li data-id="Unknown_routes"><a href="/react-router/x/Unknown_routes">Unknown routes</a></li></li>
+<li data-id="Lazy_routes"><a href="/react-router/x/Lazy_routes">Lazy routes</a></li></li>
+<li data-id="Converting_HTML_links_to_SPA_route_links"><a href="/react-router/x/Converting_HTML_links_to_SPA_route_links">Converting HTML links to SPA route links</a></li></li>
+</ul></section>
+<section class="ref">
+  <ul>
+    <li><a href="https://github.com/t8js/react-router" target="_blank">GitHub</a></li>
+    
+  </ul>
+</section>
+<section class="related">
+  <h2>Also with React</h2>
+  <ul>
+    
+    <li><a href="/react-store" data-name="@t8/react-store">T8 <strong>React Store</strong></a></li>
+    <li><a href="/react-pending" data-name="@t8/react-pending">T8 <strong>React Pending</strong></a></li>
+  </ul>
+  <h2>Vanilla TS/JS</h2>
+  <ul>
+    <li><a href="https://github.com/t8js/router#readme" data-name="@t8/router">T8 <strong>Router</strong></a></li>
+    <li><a href="https://github.com/t8js/store#readme" data-name="@t8/store">T8 <strong>Store</strong></a></li>
+  </ul>
+</section>
+
+</nav>
+</div>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/base16/material.min.css">
+<link rel="stylesheet" href="https://unpkg.com/ghstage@2.5/dist/css/code.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+<script>hljs.highlightAll()</script>
+<script>
+(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+m[i].l=1*new Date();
+for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+(window, document, "script", "https://mc.yandex.com/metrika/tag.js", "ym");
+ym(103784239, "init", {clickmap: true, trackLinks: true, accurateTrackBounce: true});
+</script>
+<noscript><div><img src="https://mc.yandex.com/watch/103784239" style="position:absolute;left:-9999px;" alt=""></div></noscript>
+</body>
+</html>
