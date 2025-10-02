@@ -26,8 +26,6 @@ import { Section } from "./Section";
 let App = () => {
   let { withRoute } = useRoute();
 
-  // `withRoute(routePattern, x, y)` acts similarly to
-  // `matchesRoutePattern ? x : y`
   return (
     <>
       <header className={withRoute("/", "full", "compact")}>
@@ -50,9 +48,9 @@ let App = () => {
 
 🔹 `withRoute()` calls are independent from each other, they don't have to maintain a certain order, they shouldn't be necessarily grouped in a single component (although they can be, as in the example above). Components with route-based logic can be split like any other components.
 
-## Route navigation
+## Navigation
 
-The route navigation API is largely aligned with the similar native APIs familiar to most web developers, such as `<a href="/x">` and `window.location`:
+The route navigation API is largely aligned with the similar native JS APIs familiar to most web developers, such as `<a href="/x">` and `window.location`:
 
 ```diff
 + import { A, useRoute } from "@t8/react-router";
@@ -81,7 +79,7 @@ The route navigation API is largely aligned with the similar native APIs familia
 
 🔹 Like the route link `<A>` corresponds to the HTML link tag `<a>`, the route link `<Area>` corresponds to the HTML link tag `<area>`.
 
-## Routing middleware
+## Middleware
 
 The `useNavigationStart()` and `useNavigationComplete()` hooks define routing *middleware*, that is intermediate actions to be done before and after the route navigation occurs:
 
@@ -179,8 +177,6 @@ const { url } = createURLSchema({
 let App = () => {
   let { withRoute } = useRoute();
 
-  // `withRoute(routePattern, x, y)` acts similarly to
-  // `matchesRoutePattern ? x : y`
   return (
     <>
       <header className={withRoute(url("/"), "full", "compact")}>
