@@ -37,44 +37,46 @@ class Playground {
   }
 }
 
-let server: Server;
+test.describe("route state", () => {
+  let server: Server;
 
-test.beforeAll(async () => {
-  server = await serve({
-    path: "tests/route_state",
-    bundle: "src/index.tsx",
-    spa: true,
+  test.beforeAll(async () => {
+    server = await serve({
+      path: "tests/route_state",
+      bundle: "src/index.tsx",
+      spa: true,
+    });
   });
-});
 
-test.afterAll(() => {
-  server.close();
-});
+  test.afterAll(() => {
+    server.close();
+  });
 
-test("move", async ({ page }) => {
-  let p = new Playground(page);
+  test("move shape", async ({ page }) => {
+    let p = new Playground(page);
 
-  await page.goto("/");
-  await p.hasMatchingShape();
+    await page.goto("/");
+    await p.hasMatchingShape();
 
-  await p.move();
-  await p.hasMatchingShape();
+    await p.move();
+    await p.hasMatchingShape();
 
-  await p.move();
-  await p.hasMatchingShape();
+    await p.move();
+    await p.hasMatchingShape();
 
-  await p.reset();
-  await p.hasPath("/");
-  await p.hasMatchingShape();
-});
+    await p.reset();
+    await p.hasPath("/");
+    await p.hasMatchingShape();
+  });
 
-test("non-empty initial state", async ({ page }) => {
-  let p = new Playground(page);
+  test("non-empty initial state", async ({ page }) => {
+    let p = new Playground(page);
 
-  await page.goto("?x=78&y=62&r=28");
-  await p.hasMatchingShape();
+    await page.goto("?x=78&y=62&r=28");
+    await p.hasMatchingShape();
 
-  await p.reset();
-  await p.hasPath("/");
-  await p.hasMatchingShape();
+    await p.reset();
+    await p.hasPath("/");
+    await p.hasMatchingShape();
+  });
 });

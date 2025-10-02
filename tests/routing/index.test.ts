@@ -26,57 +26,59 @@ class Playground {
   }
 }
 
-let server: Server;
+test.describe("routing", () => {
+  let server: Server;
 
-test.beforeAll(async () => {
-  server = await serve({
-    path: "tests/routing",
-    bundle: "src/index.tsx",
-    spa: true,
+  test.beforeAll(async () => {
+    server = await serve({
+      path: "tests/routing",
+      bundle: "src/index.tsx",
+      spa: true,
+    });
   });
-});
 
-test.afterAll(() => {
-  server.close();
-});
+  test.afterAll(() => {
+    server.close();
+  });
 
-test("route links", async ({ page }) => {
-  let p = new Playground(page);
+  test("route links", async ({ page }) => {
+    let p = new Playground(page);
 
-  await page.goto("/");
-  await p.hasMainTitle();
-  await p.hasFullHeader();
+    await page.goto("/");
+    await p.hasMainTitle();
+    await p.hasFullHeader();
 
-  await p.clickLink("Section 1");
-  await p.hasPath("/sections/1");
-  await p.hasSectionTitle("Section 1");
-  await p.hasCompactHeader();
+    await p.clickLink("Section 1");
+    await p.hasPath("/sections/1");
+    await p.hasSectionTitle("Section 1");
+    await p.hasCompactHeader();
 
-  await p.clickLink("Section 2");
-  await p.hasPath("/sections/2");
-  await p.hasSectionTitle("Section 2");
-  await p.hasCompactHeader();
+    await p.clickLink("Section 2");
+    await p.hasPath("/sections/2");
+    await p.hasSectionTitle("Section 2");
+    await p.hasCompactHeader();
 
-  await p.clickLink("Intro");
-  await p.hasPath("/");
-  await p.hasSectionTitle("Intro");
-  await p.hasFullHeader();
-});
+    await p.clickLink("Intro");
+    await p.hasPath("/");
+    await p.hasSectionTitle("Intro");
+    await p.hasFullHeader();
+  });
 
-test("non-root url", async ({ page }) => {
-  let p = new Playground(page);
+  test("non-root url", async ({ page }) => {
+    let p = new Playground(page);
 
-  await page.goto("/sections/10");
-  await p.hasSectionTitle("Section 10");
-  await p.hasCompactHeader();
+    await page.goto("/sections/10");
+    await p.hasSectionTitle("Section 10");
+    await p.hasCompactHeader();
 
-  await p.clickLink("Intro");
-  await p.hasPath("/");
-  await p.hasSectionTitle("Intro");
-  await p.hasFullHeader();
+    await p.clickLink("Intro");
+    await p.hasPath("/");
+    await p.hasSectionTitle("Intro");
+    await p.hasFullHeader();
 
-  await p.clickLink("Section 1");
-  await p.hasPath("/sections/1");
-  await p.hasSectionTitle("Section 1");
-  await p.hasCompactHeader();
+    await p.clickLink("Section 1");
+    await p.hasPath("/sections/1");
+    await p.hasSectionTitle("Section 1");
+    await p.hasCompactHeader();
+  });
 });
