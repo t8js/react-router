@@ -219,7 +219,7 @@ Adding this type declaration to an app effectively disallows using `string` and 
 
 🔹 Recap: It's using a typed URL pattern (like with `url()` from *url-shape*) that enables type-safe route handling, which is an optional enhancement. Plain `string` routes and `RegExp` route patterns are handled with more generic typing as a baseline sufficient in many cases.
 
-## `<Router>`
+## Location provider
 
 Server-side rendering and unit tests are the examples of the environments lacking a global location (such as `window.location`). They are the prime use cases for the location provider, `<Router>`.
 
@@ -252,9 +252,9 @@ Both `route` and `withRoute()` returned from `useRoute()` operate based on the r
 
 `<Router>` can be used with client-side rendering as well. In most cases, it is unnecessary since by default the route context takes the global location from `window.location` if it's available.
 
-### Custom routing behavior
+## Custom routing behavior
 
-[Custom routing behavior live demo](https://codesandbox.io/p/sandbox/w7rsjl?file=%252Fsrc%252FApp.tsx)
+[Custom routing behavior example](https://codesandbox.io/p/sandbox/w7rsjl?file=%252Fsrc%252FApp.tsx)
 
 In this example, we've got a kind of a browser-in-browser with its routing based on a text input rather than the URL. It's enabled by passing an instance of a custom extension of the `Route` class, `InputRoute`, to the `<Router>` component, configured to interact with a text input.
 
