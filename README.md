@@ -118,7 +118,7 @@ This example shows some common examples of what can be handled with routing midd
 
 🔹 The callback of both hooks is first called when the component gets mounted if the route is already in the navigation-complete state.
 
-## URL parameters as state
+## URL parameters
 
 URL parameters, as a portion of the app's state, can be managed in the React's `useState()`-like manner, allowing for quick migration from local state to URL parameters or the other way around:
 
@@ -154,9 +154,9 @@ URL parameters, as a portion of the app's state, can be managed in the React's `
 [Route state live demo](https://codesandbox.io/p/sandbox/sgvdfg?file=%252Fsrc%252FApp.tsx)<br>
 [Typed route state live demo](https://codesandbox.io/p/sandbox/qnd87w?file=%2Fsrc%2FShapeSection.tsx)
 
-## Type-safe routing
+## Type safety
 
-Type-safe routing is as an optional enhancement. It's enabled by supporting route patterns created with a type-safe URL builder like `url-shape` together with a schema created with `zod` or `yup`. This approach allows for gradual or partial adoption of type-safe routing in an application.
+Type-safe routing is as an optional enhancement. It's enabled by supporting route patterns created with a type-safe URL builder like *url-shape* together with a schema created with *zod* or *yup*. This approach allows for gradual or partial adoption of type-safe routing in an application.
 
 ```tsx
 import { A, useRoute } from "@t8/react-router";
@@ -201,7 +201,7 @@ let App = () => {
 
 🔹 A URL schema doesn't have to cover the entire app. Standalone portions of an app can have their own URL schemas.
 
-🔹 Stricter type safety can be achieved by disallowing URLs and URL patterns other than provided by the URL builder (the `url()` function in the example above) throughout the app:
+🔹 Optionally, application-wide type safety can be achieved by disallowing URLs and URL patterns other than provided by the URL builder (the `url()` function in the example above):
 
 ```ts
 declare module "@t8/react-router" {
@@ -217,7 +217,7 @@ Adding this type declaration to an app effectively disallows using `string` and 
 
 [Typed URL parameters state demo](https://codesandbox.io/p/sandbox/qnd87w?file=%2Fsrc%2FShapeSection.tsx)
 
-🔹 Recap: It's using a typed URL pattern (like with `url()` from `url-shape`) that enables type-safe route handling, which is an optional enhancement. Plain `string` routes and `RegExp` route patterns are handled with more generic typing as a baseline sufficient in many cases.
+🔹 Recap: It's using a typed URL pattern (like with `url()` from *url-shape*) that enables type-safe route handling, which is an optional enhancement. Plain `string` routes and `RegExp` route patterns are handled with more generic typing as a baseline sufficient in many cases.
 
 ## `<Router>`
 
@@ -302,7 +302,7 @@ The last `withRoute()` in this example results in `null` (that is no content) fo
 
 Lazy routes are routes whose content is loaded on demand, when the route is visited.
 
-Enabling lazy routes doesn't require a specific routing setup. It's a combination of the [route matching](#route-matching) and lazily loaded React components (with `React.lazy()` and React's `<Suspense>`), processed by a code-splitting-capable build tool (like Esbuild, Webpack, Rollup, Vite):
+Enabling lazy routes doesn't require a specific routing setup. It's a combination of the [route matching](#routing) and lazily loaded React components (with `React.lazy()` and React's `<Suspense>`), processed by a code-splitting-capable build tool (like Esbuild, Webpack, Rollup, Vite):
 
 ```diff
 + import { Suspense } from "react";
