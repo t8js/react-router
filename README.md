@@ -2,7 +2,7 @@
 
 # @t8/react-router
 
-*Straightforward and minimalist router for React apps*
+*Concise router for React apps*
 
 - Consistent route matching in components and prop values
 - Decoupled routes: no hierarchy as a prerequisite
