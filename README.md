@@ -16,7 +16,7 @@ Installation: `npm i @t8/react-router`
 
 ## Routing
 
-The route-matching function `withRoute(routePattern, x, y)` acts similarly to the conditional operator `matchesRoutePattern ? x : y` and is equally applicable to components and prop values. The route link component is similar to the HTML link tag:
+The following example shows the most essential parts of routing code. The route-matching function `withRoute(routePattern, x, y)` acts similarly to the conditional operator `matchesRoutePattern ? x : y` and is equally applicable to components and prop values. The route link component is similar to the HTML link tag.
 
 ```jsx
 import { A, useRoute } from "@t8/react-router";
