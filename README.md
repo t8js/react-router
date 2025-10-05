@@ -48,6 +48,18 @@ let App = () => {
 
 🔹 `withRoute()` calls are independent from each other, they don't have to maintain a certain order, they shouldn't be necessarily grouped in a single component (although they can be, as in the example above). Components with route-based logic can be split like any other components.
 
+🔹 Route-based rendering with the `<Activity>` component from React 19.2 looks technically similar to what we've seen in the example above:
+
+```jsx
+// Without Activity
+{withRoute("/about", <About/>)}
+
+// With Activity
+<Activity mode={withRoute("/about", "visible", "hidden")}>
+  <About/>
+</Activity>
+```
+
 ## Navigation
 
 The route navigation API is largely aligned with the similar native JS APIs familiar to most web developers, such as `<a href="/x">` and `window.location`:
