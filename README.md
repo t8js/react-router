@@ -48,7 +48,7 @@ let App = () => {
 
 🔹 `withRoute()` calls are independent from each other, they don't have to maintain a certain order, they shouldn't be necessarily grouped in a single component (although they can be, as in the example above). Components with route-based logic can be split like any other components.
 
-🔹 Route-based rendering with the `<Activity>` component from React 19.2 looks technically similar to what we've seen in the example above:
+🔹 Route-based rendering with the React's `<Activity>` component looks similar to what we've seen in the example above:
 
 ```jsx
 // Without Activity
