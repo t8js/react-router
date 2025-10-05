@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "npx npm-run-all clean compile",
-    "clean": "node -e \"require('node:fs').rmSync('dist', {force: true, recursive: true});\"",
+    "clean": "node -e \"require('node:fs').rmSync('dist', { force: true, recursive: true });\"",
     "compile": "npx esbuild index.ts --bundle --outdir=dist --platform=neutral --external:react",
     "demo": "npx @t8/serve 3000 * tests/route_matching -b src/index.tsx index.js",
     "gh-pages": "npx ghstage --theme=t8 --ymid=103784239 --nav=https://raw.githubusercontent.com/t8js/t8js.github.io/refs/heads/main/assets/nav_react.html",
