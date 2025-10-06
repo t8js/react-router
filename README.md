@@ -46,7 +46,7 @@ let App = () => {
 
 [Live demo](https://codesandbox.io/p/sandbox/63xzd4?file=%252Fsrc%252FApp.tsx)
 
-🔹 As mentioned above, `withRoute(routePattern, x, y)` acts similarly to the conditional operator `matchesRoutePattern ? x : y`: it returns `x` if the current URL matches `routePattern`, and `y` otherwise. However, having the ternary function rather than the conditional ternary operator allows for additional flexibility. If omitted, `y` is effectively `undefined` (as in `withRoute("/", <Intro/>)`), which is perfectly valid and results in no content when the route pattern is unmatched. Passing a function as `x` allows to return a value based on `params` extracted from the route pattern, as `x({ params })` (like with `<Section id={params.id}/>` above).
+🔹 As mentioned above, `withRoute(routePattern, x, y)` acts similarly to the conditional operator `matchesRoutePattern ? x : y`: it returns `x` if the current URL matches `routePattern`, and `y` otherwise. Having the ternary function rather than the ternary conditional operator allows for additional flexibility, like omitting an `undefined` fallback parameter or resolving as a dynamic value based on `params` extracted from the route pattern, as seen in the example above.
 
 🔹 `withRoute()` calls are independent from each other, they don't have to maintain a certain order, they shouldn't be necessarily grouped in a single component (although they can be, as in the example above). Components with route-based logic can be split like any other components.
 
