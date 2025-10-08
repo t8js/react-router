@@ -1,6 +1,6 @@
 {
   "name": "@t8/react-router",
-  "version": "1.0.38",
+  "version": "1.0.39",
   "description": "Concise router for React apps",
   "main": "dist/index.js",
   "type": "module",
