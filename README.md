@@ -211,7 +211,7 @@ let App = () => {
 
 [Type-safe routing live demo](https://codesandbox.io/p/sandbox/vgt64k?file=%2Fsrc%2FApp.tsx)
 
-🔹 The `url()` function is a type-safe URL builder. It creates a URL with a URL pattern defined in the schema and typed parameters that are prevalidated against the given schema: typos and type mismatches are highlighted in a type-aware code editor. [See *url-shape*](https://github.com/axtk/url-shape#readme) for more details.
+🔹 The `url()` function is a type-safe URL builder. It creates a URL with a URL pattern defined in the schema and typed parameters that are prevalidated against the given schema: typos and type mismatches are highlighted in a type-aware code editor. [See *url-shape*](https://github.com/t8js/url-shape#readme) for more details.
 
 🔹 A URL schema doesn't have to cover the entire app. Standalone portions of an app can have their own URL schemas.
 
