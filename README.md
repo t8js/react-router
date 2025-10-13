@@ -233,6 +233,49 @@ Adding this type declaration to an app effectively disallows using `string` and 
 
 🔹 Recap: It's using a typed URL pattern (like with `url()` from *url-shape*) that enables type-safe route handling, which is an optional enhancement. Plain `string` routes and `RegExp` route patterns are handled with more generic typing as a baseline sufficient in many cases.
 
+## Nested routes
+
+Nested routes don't require special rendering rules. All routes are handled equally and independently from each other.
+
+```js
+let App = () => {
+  let { withRoute } = useRoute();
+
+  return (
+    <>
+      {withRoute("/about", <About/>)}
+      {withRoute("/about/contacts", <Contacts/>)}
+      // ...
+    </>
+  );
+};
+```
+
+In a [type-safe setup](#type-safety), a URL schema of a nested route can inherit certain parameters from the parent route. Such relations (which might as well be other than direct nestedness) can be settled within the URL schema with the schema toolset.
+
+```js
+import { createURLSchema } from "url-shape";
+import { z } from "zod";
+
+let sectionParams = z.object({
+  sectionId: z.coerce.number(),
+});
+
+export const { url } = createURLSchema({
+  "/sections/:sectionId": {
+    params: sectionParams,
+  },
+  "/sections/:sectionId/stories/:storyId": {
+    params: z.object({
+      ...sectionParams.shape, // Shared params
+      storyId: z.string(),
+    }),
+  },
+});
+```
+
+In such a setup, arbitrary relations between the routes are seen and managed directly, allowing for fine-grained control, including sharing or filtering out certain parameters.
+
 ## Location provider
 
 Server-side rendering and unit tests are the examples of the environments lacking a global location (such as `window.location`). They are the prime use cases for the location provider, `<Router>`.
