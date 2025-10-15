@@ -30,7 +30,7 @@
   },
   "homepage": "https://t8.js.org/react-router",
   "author": "axtk",
-  "license": "ISC",
+  "license": "MIT",
   "peerDependencies": {
     "react": ">=16.8"
   },
