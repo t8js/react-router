@@ -275,7 +275,7 @@ In such a setup, arbitrary relations between the routes are seen and managed dir
 
 ## Location provider
 
-Server-side rendering and unit tests are the examples of the environments lacking a global location (such as `window.location`). They are the prime use cases for the location provider, `<Router>`.
+Server-side rendering and unit tests are the examples of the environments lacking a global location object (such as `window.location`). They are the prime use cases for the location provider, `<Router>`.
 
 Let's consider an *express* application route as an example:
 
