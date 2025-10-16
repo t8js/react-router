@@ -4,12 +4,55 @@
 
 *Concise router for React apps*
 
-- Concise and familiar APIs
-- Middleware hooks and lazy routes
-- Typed routes and URL parameters
-- SSR- and CSR-compatible
+🔹 Concise and familiar APIs
+
+```jsx
+{withRoute("/about", <About/>)}
+// ≈ with "/about" ? <About/> : undefined
+```
+
+```jsx
+<header className={withRoute("/", "full", "compact")}>
+// ≈ with "/" ? "full" : "compact"
+```
+
+```diff
+- <a href="/about">About</a>
++ <A href="/about">About</A> // SPA route link
+```
+
+```diff
+- window.location.assign("/about");
++ route.assign("/about");
+```
+
+🔹 Middleware hooks
+
+```jsx
+useNavigationStart(callback);
+// e.g. to redirect or prevent navigation
+useNavigationComplete(callback);
+// e.g. to set document title
+```
+
+🔹 Typed routes and URL parameters
+
+```jsx
+let [state, setState] = useRouteState(url("/sections/:id"));
+  // ^ { params: { id: number } }
+```
+
+🔹 Lazy routes
+
+```jsx
+{withRoute("/about", <Suspense><About/></Suspense>)}
+```
+
+🔹 SSR- and CSR-compatible
 
 Installation: `npm i @t8/react-router`
+
+---
 
 ## Routing
 
