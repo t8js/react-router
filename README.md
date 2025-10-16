@@ -31,8 +31,9 @@
 ```jsx
 useNavigationStart(callback);
 // e.g. to redirect or prevent navigation
+
 useNavigationComplete(callback);
-// e.g. to set document title
+// e.g. to set the document's title
 ```
 
 🔹 Typed routes and URL parameters
@@ -51,8 +52,6 @@ let [state, setState] = useRouteState(url("/sections/:id"));
 🔹 SSR- and CSR-compatible
 
 Installation: `npm i @t8/react-router`
-
----
 
 ## Routing
 
