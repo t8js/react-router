@@ -8,12 +8,12 @@
 
 ```jsx
 {at("/about", <About/>)}
-// ≈ with "/about" ? <About/> : undefined
+// ≈ at "/about" ? <About/> : undefined
 ```
 
 ```jsx
 <header className={at("/", "full", "compact")}>
-// ≈ with "/" ? "full" : "compact"
+// ≈ at "/" ? "full" : "compact"
 ```
 
 ```diff
@@ -55,7 +55,7 @@ Installation: `npm i @t8/react-router`
 
 ## Routing
 
-The following example shows the most essential parts of routing code. The route-matching function `at(routePattern, x, y)` acts similarly to the conditional operator `matchesRoutePattern ? x : y` and is equally applicable to components and prop values. The route link component is similar to the HTML link tag.
+The following example runs through the essential parts of routing code. The route-matching function `at(route, x, y)` acts similarly to the conditional operator `atRoute ? x : y` and is equally applicable to components and prop values. The route link component acts and looks similar to the HTML link tag.
 
 ```jsx
 import { A, useRoute } from "@t8/react-router";
@@ -85,7 +85,7 @@ let App = () => {
 
 [Live demo](https://codesandbox.io/p/sandbox/63xzd4?file=%252Fsrc%252FApp.tsx)
 
-🔹 As mentioned above, `at(routePattern, x, y)` acts similarly to the conditional operator `matchesRoutePattern ? x : y`: it returns `x` if the current URL matches `routePattern`, and `y` otherwise. Having the ternary function rather than the ternary conditional operator allows for additional flexibility, like omitting an `undefined` fallback parameter or resolving as a dynamic value based on `params` extracted from the route pattern, as seen in the example above.
+🔹 As mentioned above, `at(route, x, y)` acts similarly to the conditional operator `atRoute ? x : y`: it returns `x` if the current URL matches `route`, and `y` otherwise. Having the ternary function rather than the ternary conditional operator allows for additional flexibility, like omitting an `undefined` fallback parameter or resolving as a dynamic value based on `params` extracted from the route pattern, as seen in the example above.
 
 🔹 `at()` calls are independent from each other, they don't have to maintain a certain order, they shouldn't be necessarily grouped in a single component (although they can be, as in the example above). Components with route-based logic can be split like any other components.
 
@@ -358,7 +358,7 @@ This example also shows how the same routing code (of the `<Content>` component)
 
 ## Unknown routes
 
-The fallback parameter of the route-matching function `at(routePattern, x, y)` can be used as a way to handle unknown routes:
+The fallback parameter of the route-matching function `at(route, x, y)` can be used as a way to handle unknown routes:
 
 ```jsx
 import { A, useRoute } from "@t8/react-router";
@@ -390,7 +390,7 @@ let App = () => {
 
 The last `at()` in this example results in `null` (that is no content) for all known routes and renders the error content for the rest unknown routes.
 
-🔹 `at()` calls don't have to maintain a specific order, and the unknown route handling `at()` doesn't have to be the last.
+🔹 `at()` calls don't have to maintain a specific order, and the `at()` call handling unknown routes doesn't have to be the last.
 
 🔹 `at()` calls don't have to be grouped side by side like in the example above, their collocation is not a requirement. `at()` calls are not coupled together, they can be split across separate components and files (like any other conditionally rendered components).
 
@@ -401,21 +401,26 @@ Lazy routes are routes whose content is loaded on demand, when the route is visi
 Enabling lazy routes doesn't require a specific routing setup. It's a combination of the [route matching](#routing) and lazily loaded React components (with `React.lazy()` and React's `<Suspense>`), processed by a code-splitting-capable build tool (like Esbuild, Webpack, Rollup, Vite):
 
 ```diff
+  import { useRoute } from "@t8/react-router";
 + import { Suspense } from "react";
 - import { Projects } from "./Projects";
 + import { Projects } from "./Projects.lazy";
 
-  let App = () => (
-    <>
-      // ...
-      {at("/projects", (
--       <Projects/>
-+       <Suspense fallback={<p>Loading...</p>}>
-+         <Projects/>
-+       </Suspense>
-      ))}
-    </>
-  );
+  let App = () => {
+    let { at } = useRoute();
+
+    return (
+      <>
+        // ...
+        {at("/projects", (
+-         <Projects/>
++         <Suspense fallback={<p>Loading...</p>}>
++           <Projects/>
++         </Suspense>
+        ))}
+      </>
+    );
+  };
 ```
 
 ```diff
