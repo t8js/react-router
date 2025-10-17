@@ -12,11 +12,11 @@ let { url } = createURLSchema({
 });
 
 export const App = () => {
-  let { withRoute } = useRoute();
+  let { at } = useRoute();
 
   return (
     <>
-      <header className={withRoute(url("/"), "full", "compact")}>
+      <header className={at(url("/"), "full", "compact")}>
         <h1>App</h1>
         <nav>
           <A href={url("/")}>Intro</A>
@@ -26,13 +26,13 @@ export const App = () => {
           <A href={url("/sections/:id", { params: { id: 2 } })}>Section 2</A>
         </nav>
       </header>
-      {withRoute(
+      {at(
         url("/"),
         <main>
           <h2>Intro</h2>
         </main>,
       )}
-      {withRoute(url("/sections/:id"), ({ params }) => (
+      {at(url("/sections/:id"), ({ params }) => (
         <main>
           <h2>Section {params.id}</h2>
         </main>

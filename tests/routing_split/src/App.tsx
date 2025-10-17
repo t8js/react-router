@@ -1,10 +1,10 @@
 import { A, useRoute } from "../../..";
 
 const Header = () => {
-  let { withRoute } = useRoute();
+  let { at } = useRoute();
 
   return (
-    <header className={withRoute("/", "full", "compact")}>
+    <header className={at("/", "full", "compact")}>
       <h1>App</h1>
       <nav>
         <A href="/">Intro</A>
@@ -30,13 +30,13 @@ const Section = ({ id }: { id: string }) => (
 );
 
 export const App = () => {
-  let { withRoute } = useRoute();
+  let { at } = useRoute();
 
   return (
     <>
       <Header />
-      {withRoute("/", <Intro />)}
-      {withRoute(/^\/sections\/(?<id>\d+)\/?$/, ({ params }) => (
+      {at("/", <Intro />)}
+      {at(/^\/sections\/(?<id>\d+)\/?$/, ({ params }) => (
         <Section id={params.id!} />
       ))}
     </>

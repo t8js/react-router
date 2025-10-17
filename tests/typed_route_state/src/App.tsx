@@ -3,7 +3,7 @@ import { A, useNavigationStart, useRoute } from "../../..";
 import { ShapeSection } from "./ShapeSection";
 
 export const App = () => {
-  let { route, withRoute } = useRoute();
+  let { route, at } = useRoute();
 
   let initialRedirect = useCallback(
     (href: string) => {
@@ -19,7 +19,7 @@ export const App = () => {
 
   return (
     <>
-      {withRoute(
+      {at(
         "/",
         <main className="intro">
           <p>
@@ -27,7 +27,7 @@ export const App = () => {
           </p>
         </main>,
       )}
-      {withRoute(/^\/shapes\/\d+/, <ShapeSection />)}
+      {at(/^\/shapes\/\d+/, <ShapeSection />)}
     </>
   );
 };

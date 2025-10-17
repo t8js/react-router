@@ -4,7 +4,7 @@ import { Intro } from "./Intro";
 import { ItemList } from "./ItemList.lazy";
 
 export const App = () => {
-  let { withRoute } = useRoute();
+  let { at } = useRoute();
 
   return (
     <>
@@ -13,8 +13,8 @@ export const App = () => {
         {" | "}
         <A href="/items">Items</A>
       </nav>
-      {withRoute("/", <Intro />)}
-      {withRoute(
+      {at("/", <Intro />)}
+      {at(
         "/items",
         <Suspense fallback={<p>⌛ Loading...</p>}>
           <ItemList />

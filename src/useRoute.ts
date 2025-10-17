@@ -13,7 +13,7 @@ export function useRoute() {
   return useMemo(
     () => ({
       route,
-      withRoute: route.resolve.bind(route),
+      at: route.resolve.bind(route),
     }),
     [route],
   );

@@ -7,12 +7,12 @@
 🔹 Concise and familiar APIs
 
 ```jsx
-{withRoute("/about", <About/>)}
+{at("/about", <About/>)}
 // ≈ with "/about" ? <About/> : undefined
 ```
 
 ```jsx
-<header className={withRoute("/", "full", "compact")}>
+<header className={at("/", "full", "compact")}>
 // ≈ with "/" ? "full" : "compact"
 ```
 
@@ -46,7 +46,7 @@ let [state, setState] = useRouteState(url("/sections/:id"));
 🔹 Lazy routes
 
 ```jsx
-{withRoute("/about", <Suspense><About/></Suspense>)}
+{at("/about", <Suspense><About/></Suspense>)}
 ```
 
 🔹 SSR- and CSR-compatible
@@ -55,7 +55,7 @@ Installation: `npm i @t8/react-router`
 
 ## Routing
 
-The following example shows the most essential parts of routing code. The route-matching function `withRoute(routePattern, x, y)` acts similarly to the conditional operator `matchesRoutePattern ? x : y` and is equally applicable to components and prop values. The route link component is similar to the HTML link tag.
+The following example shows the most essential parts of routing code. The route-matching function `at(routePattern, x, y)` acts similarly to the conditional operator `matchesRoutePattern ? x : y` and is equally applicable to components and prop values. The route link component is similar to the HTML link tag.
 
 ```jsx
 import { A, useRoute } from "@t8/react-router";
@@ -63,19 +63,19 @@ import { Intro } from "./Intro";
 import { Section } from "./Section";
 
 let App = () => {
-  let { withRoute } = useRoute();
+  let { at } = useRoute();
 
   return (
     <>
-      <header className={withRoute("/", "full", "compact")}>
+      <header className={at("/", "full", "compact")}>
         <h1>App</h1>
         <nav>
           <A href="/">Intro</A>{" | "}
           <A href="/sections/1">Section 1</A>
         </nav>
       </header>
-      {withRoute("/", <Intro/>)}
-      {withRoute(/^\/sections\/(?<id>\d+)\/?$/, ({ params }) => (
+      {at("/", <Intro/>)}
+      {at(/^\/sections\/(?<id>\d+)\/?$/, ({ params }) => (
         <Section id={params.id}/>
       ))}
     </>
@@ -85,18 +85,18 @@ let App = () => {
 
 [Live demo](https://codesandbox.io/p/sandbox/63xzd4?file=%252Fsrc%252FApp.tsx)
 
-🔹 As mentioned above, `withRoute(routePattern, x, y)` acts similarly to the conditional operator `matchesRoutePattern ? x : y`: it returns `x` if the current URL matches `routePattern`, and `y` otherwise. Having the ternary function rather than the ternary conditional operator allows for additional flexibility, like omitting an `undefined` fallback parameter or resolving as a dynamic value based on `params` extracted from the route pattern, as seen in the example above.
+🔹 As mentioned above, `at(routePattern, x, y)` acts similarly to the conditional operator `matchesRoutePattern ? x : y`: it returns `x` if the current URL matches `routePattern`, and `y` otherwise. Having the ternary function rather than the ternary conditional operator allows for additional flexibility, like omitting an `undefined` fallback parameter or resolving as a dynamic value based on `params` extracted from the route pattern, as seen in the example above.
 
-🔹 `withRoute()` calls are independent from each other, they don't have to maintain a certain order, they shouldn't be necessarily grouped in a single component (although they can be, as in the example above). Components with route-based logic can be split like any other components.
+🔹 `at()` calls are independent from each other, they don't have to maintain a certain order, they shouldn't be necessarily grouped in a single component (although they can be, as in the example above). Components with route-based logic can be split like any other components.
 
 🔹 Route-based rendering with the React's `<Activity>` component looks similar to what we've seen in the example above:
 
 ```jsx
 // Without Activity
-{withRoute("/about", <About/>)}
+{at("/about", <About/>)}
 
 // With Activity
-<Activity mode={withRoute("/about", "visible", "hidden")}>
+<Activity mode={at("/about", "visible", "hidden")}>
   <About/>
 </Activity>
 ```
@@ -228,19 +228,19 @@ const { url } = createURLSchema({
 });
 
 let App = () => {
-  let { withRoute } = useRoute();
+  let { at } = useRoute();
 
   return (
     <>
-      <header className={withRoute(url("/"), "full", "compact")}>
+      <header className={at(url("/"), "full", "compact")}>
         <h1>App</h1>
         <nav>
           <A href={url("/")}>Intro</A>{" | "}
           <A href={url("/sections/:id", { params: { id: 1 } })}>Start</A>
         </nav>
       </header>
-      {withRoute(url("/"), <Intro/>)}
-      {withRoute(url("/sections/:id"), ({ params }) => (
+      {at(url("/"), <Intro/>)}
+      {at(url("/sections/:id"), ({ params }) => (
         <Section id={params.id}/>
       ))}
     </>
@@ -264,7 +264,7 @@ declare module "@t8/react-router" {
 }
 ```
 
-Adding this type declaration to an app effectively disallows using `string` and `RegExp` values for routes and route patterns (such as in the route link `href` prop, `route.assign(location)`, and the routing function `withRoute(routePattern, x, y)`), only allowing values returned from the URL builder with the same routing APIs.
+Adding this type declaration to an app effectively disallows using `string` and `RegExp` values for routes and route patterns (such as in the route link `href` prop, `route.assign(location)`, and the routing function `at(routePattern, x, y)`), only allowing values returned from the URL builder with the same routing APIs.
 
 🔹 A URL builder pattern (like `url("/sections/:id")`) can also be used with `useRouteState(pattern)` and `useRouteMatch(pattern)` to manipulate [URL parameters](#url-parameters) in a type-safe manner.
 
@@ -278,12 +278,12 @@ Nested routes don't require special rendering rules. All routes are handled equa
 
 ```js
 let App = () => {
-  let { withRoute } = useRoute();
+  let { at } = useRoute();
 
   return (
     <>
-      {withRoute("/about", <About/>)}
-      {withRoute("/about/contacts", <Contacts/>)}
+      {at("/about", <About/>)}
+      {at("/about/contacts", <Contacts/>)}
       // ...
     </>
   );
@@ -339,12 +339,12 @@ app.get("/", (req, res) => {
 The value passed to the router's `location` prop can be accessed via the `useRoute()` hook:
 
 ```jsx
-let { route, withRoute } = useRoute();
+let { route, at } = useRoute();
 
 console.log(route.href); // returns the router's `location`
 ```
 
-Both `route` and `withRoute()` returned from `useRoute()` operate based on the router's `location`.
+Both `route` and `at()` returned from `useRoute()` operate based on the router's `location`.
 
 `<Router>` can be used with client-side rendering as well. In most cases, it is unnecessary since by default the route context takes the global location from `window.location` if it's available.
 
@@ -358,7 +358,7 @@ This example also shows how the same routing code (of the `<Content>` component)
 
 ## Unknown routes
 
-The fallback parameter of the route-matching function `withRoute(routePattern, x, y)` can be used as a way to handle unknown routes:
+The fallback parameter of the route-matching function `at(routePattern, x, y)` can be used as a way to handle unknown routes:
 
 ```jsx
 import { A, useRoute } from "@t8/react-router";
@@ -371,28 +371,28 @@ const routeMap = {
 const knownRoutes = Object.values(routeMap);
 
 let App = () => {
-  let { withRoute } = useRoute();
+  let { at } = useRoute();
 
   return (
     <>
       <nav>
         <A href={routeMap.intro}>Intro</A>
       </nav>
-      {withRoute(routeMap.intro, <Intro/>)}
-      {withRoute(routeMap.sections, ({ params }) => (
+      {at(routeMap.intro, <Intro/>)}
+      {at(routeMap.sections, ({ params }) => (
         <Section id={params.id}/>
       ))}
-      {withRoute(knownRoutes, null, <Error/>)}
+      {at(knownRoutes, null, <Error/>)}
     </>
   );
 };
 ```
 
-The last `withRoute()` in this example results in `null` (that is no content) for all known routes and renders the error content for the rest unknown routes.
+The last `at()` in this example results in `null` (that is no content) for all known routes and renders the error content for the rest unknown routes.
 
-🔹 `withRoute()` calls don't have to maintain a specific order, and the unknown route handling `withRoute()` doesn't have to be the last.
+🔹 `at()` calls don't have to maintain a specific order, and the unknown route handling `at()` doesn't have to be the last.
 
-🔹 `withRoute()` calls don't have to be grouped side by side like in the example above, their collocation is not a requirement. `withRoute()` calls are not coupled together, they can be split across separate components and files (like any other conditionally rendered components).
+🔹 `at()` calls don't have to be grouped side by side like in the example above, their collocation is not a requirement. `at()` calls are not coupled together, they can be split across separate components and files (like any other conditionally rendered components).
 
 ## Lazy routes
 
@@ -408,7 +408,7 @@ Enabling lazy routes doesn't require a specific routing setup. It's a combinatio
   let App = () => (
     <>
       // ...
-      {withRoute("/projects", (
+      {at("/projects", (
 -       <Projects/>
 +       <Suspense fallback={<p>Loading...</p>}>
 +         <Projects/>

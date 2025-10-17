@@ -2,7 +2,7 @@ import { A, useRoute } from "../../..";
 import { Browser } from "./Browser";
 
 const Content = () => {
-  let { withRoute } = useRoute();
+  let { at } = useRoute();
 
   return (
     <>
@@ -18,9 +18,9 @@ const Content = () => {
         </p>
       </nav>
       <section>
-        {withRoute("/", <h1>Intro</h1>)}
-        {withRoute("/about", <h1>About</h1>)}
-        {withRoute(/^\/sections\/(?<id>\d+)$/, ({ params }) => (
+        {at("/", <h1>Intro</h1>)}
+        {at("/about", <h1>About</h1>)}
+        {at(/^\/sections\/(?<id>\d+)$/, ({ params }) => (
           <h1>Section {params.id}</h1>
         ))}
       </section>
@@ -29,12 +29,12 @@ const Content = () => {
 };
 
 export const App = () => {
-  let { withRoute } = useRoute();
+  let { at } = useRoute();
 
   return (
     <>
       <Content />
-      {withRoute(
+      {at(
         "/",
         <>
           <Browser autoFocus>

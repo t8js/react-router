@@ -1,11 +1,11 @@
 import { A, useRoute } from "../../..";
 
 export const App = () => {
-  let { withRoute } = useRoute();
+  let { at } = useRoute();
 
   return (
     <>
-      <header className={withRoute("/", "full", "compact")}>
+      <header className={at("/", "full", "compact")}>
         <h1>App</h1>
         <nav>
           <A href="/">Intro</A>
@@ -15,13 +15,13 @@ export const App = () => {
           <A href="/sections/2">Section 2</A>
         </nav>
       </header>
-      {withRoute(
+      {at(
         "/",
         <main>
           <h2>Intro</h2>
         </main>,
       )}
-      {withRoute(/^\/sections\/(?<id>\d+)\/?$/, ({ params }) => (
+      {at(/^\/sections\/(?<id>\d+)\/?$/, ({ params }) => (
         <main>
           <h2>Section {params.id}</h2>
         </main>
