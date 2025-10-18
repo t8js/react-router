@@ -4,7 +4,7 @@
 
 *Concise router for React apps*
 
-🔹 Concise and familiar APIs
+🔹 Concise routing API
 
 ```jsx
 {at("/about", <About/>)}
@@ -15,6 +15,8 @@
 <header className={at("/", "full", "compact")}>
 // ≈ at "/" ? "full" : "compact"
 ```
+
+🔹 Familiar navigation APIs
 
 ```diff
 - <a href="/about">About</a>
@@ -31,7 +33,9 @@
 ```jsx
 useNavigationStart(callback);
 // e.g. to redirect or prevent navigation
+```
 
+```jsx
 useNavigationComplete(callback);
 // e.g. to set the document's title
 ```
