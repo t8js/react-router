@@ -8,12 +8,12 @@
 
 ```jsx
 {at("/about", <About/>)}
-// ≈ at "/about" ? <About/> : undefined
+// at "/about" ? <About/> : undefined
 ```
 
 ```jsx
 <header className={at("/", "full", "compact")}>
-// ≈ at "/" ? "full" : "compact"
+// at "/" ? "full" : "compact"
 ```
 
 🔹 Familiar navigation APIs
@@ -59,7 +59,7 @@ Installation: `npm i @t8/react-router`
 
 ## Routing
 
-The following example runs through the essential parts of routing code. The route-matching function `at(route, x, y)` acts similarly to the conditional operator `atRoute ? x : y` and is equally applicable to components and prop values. The route link component acts and looks similar to the HTML link tag.
+The following example runs through the essential parts of routing code. The `at(route, x, y)` function returns a value based on whether the `route` parameter matches the current URL. It acts similarly to the conditional operator `atRoute ? x : y` and is equally applicable to components and prop values. The route link component that is used for SPA navigation acts and looks similar to the HTML link tag.
 
 ```jsx
 import { A, useRoute } from "@t8/react-router";
@@ -274,7 +274,7 @@ Adding this type declaration to an app effectively disallows using `string` and 
 
 [Typed URL parameters state demo](https://codesandbox.io/p/sandbox/qnd87w?file=%2Fsrc%2FShapeSection.tsx)
 
-🔹 Recap: It's using a typed URL pattern (like with `url()` from *url-shape*) that enables type-safe route handling, which is an optional enhancement. Plain `string` routes and `RegExp` route patterns are handled with more generic typing as a baseline sufficient in many cases.
+🔹 Recap: It's using typed URL patterns (like from `url()` of *url-shape*) that enables type-safe route handling, which is an optional enhancement. Plain `string` routes and `RegExp` route patterns are handled with baseline typing sufficient in many cases.
 
 ## Nested routes
 
