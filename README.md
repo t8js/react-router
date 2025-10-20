@@ -317,6 +317,8 @@ export const { url } = createURLSchema({
 });
 ```
 
+[Live typed nested routes demo](https://codesandbox.io/p/sandbox/htfslv?file=%252Fsrc%252FApp.tsx)
+
 In such a setup, arbitrary relations between the routes are seen and managed directly, allowing for fine-grained control, including sharing or filtering out certain parameters.
 
 ## Location provider
