@@ -25,14 +25,26 @@ const sectionStoryCount = 3;
 let Nav = () => (
   <nav>
     <ul>
-      <li><A href={url("/")}>Intro</A></li>
+      <li>
+        <A href={url("/")}>Intro</A>
+      </li>
       {Array.from({ length: sectionCount }).map((_, i) => (
         <li key={i}>
-          <A href={url("/sections/:sectionId", { params: { sectionId: i + 1 } })}>Section {i + 1}</A>
+          <A
+            href={url("/sections/:sectionId", { params: { sectionId: i + 1 } })}
+          >
+            Section {i + 1}
+          </A>
           <ul>
             {Array.from({ length: sectionStoryCount }).map((_, k) => (
               <li key={`${i}_${k}`}>
-                <A href={url("/sections/:sectionId/stories/:storyId", { params: { sectionId: i + 1, storyId: k + 1 } })}>Story {i + 1}.{k + 1}</A>
+                <A
+                  href={url("/sections/:sectionId/stories/:storyId", {
+                    params: { sectionId: i + 1, storyId: k + 1 },
+                  })}
+                >
+                  Story {i + 1}.{k + 1}
+                </A>
               </li>
             ))}
           </ul>
@@ -47,7 +59,7 @@ export let App = () => {
 
   return (
     <>
-      <Nav/>
+      <Nav />
       {at(url("/sections/:sectionId"), ({ params }) => (
         <main>
           <h1>Section {params.sectionId}</h1>
@@ -55,14 +67,17 @@ export let App = () => {
       ))}
       {at(url("/sections/:sectionId/stories/:storyId"), ({ params }) => (
         <main>
-          <h1>Story {params.sectionId}.{params.storyId}</h1>
+          <h1>
+            Story {params.sectionId}.{params.storyId}
+          </h1>
         </main>
       ))}
-      {at(url("/"), (
+      {at(
+        url("/"),
         <main>
           <h1>Intro</h1>
-        </main>
-      ))}
+        </main>,
+      )}
     </>
   );
 };
