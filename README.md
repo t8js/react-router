@@ -46,6 +46,12 @@ useNavigationComplete(callback);
 🔹 Typed routes and URL parameters
 
 ```jsx
+let { url } = createURLSchema({
+  "/sections/:id": {
+    params: z.object({ id: z.coerce.number() }) // With Zod
+  }
+});
+
 let [state, setState] = useRouteState(url("/sections/:id"));
   // ^ { params: { id: number } }
 ```
