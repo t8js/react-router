@@ -26,6 +26,9 @@
 ```diff
 - window.location.assign("/about");
 + route.assign("/about");
+
+- window.location.href = "/about";
++ route.href = "/about";
 ```
 
 🔹 Middleware hooks
