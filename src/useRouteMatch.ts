@@ -1,5 +1,5 @@
 import {
-  getMatchState,
+  match,
   type LocationPattern,
   type MatchState,
 } from "@t8/router";
@@ -11,7 +11,7 @@ export function useRouteMatch<P extends LocationPattern>(locationPattern?: P) {
 
   return useMemo(
     () =>
-      getMatchState(
+      match(
         locationPattern === undefined ? route.href : locationPattern,
         route.href,
       ),

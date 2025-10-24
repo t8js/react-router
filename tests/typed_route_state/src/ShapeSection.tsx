@@ -39,7 +39,7 @@ export const ShapeSection = () => {
   return (
     <main>
       <h1>Shape {params.id}</h1>
-      <Shape x={query.x} y={query.y} r={query.r} n={params.id + 2} />
+      <Shape x={query?.x} y={query?.y} r={query?.r} n={params.id + 2} />
       <p>
         <button onClick={setPosition}>Move</button>{" "}
         <button onClick={resetPosition}>Reset</button>

@@ -1,5 +1,5 @@
 import {
-  getMatchState,
+  match,
   type LocationValue,
   type MatchState,
   type NavigationMode,
@@ -22,7 +22,7 @@ export function useRouteState<T extends LocationValue>(
     (href?: string) => {
       let resolvedHref = href ?? route.href;
 
-      return getMatchState(
+      return match(
         location === undefined ? resolvedHref : location,
         resolvedHref,
       ) as MatchState<T>;
