@@ -1,8 +1,4 @@
-import {
-  match,
-  type LocationPattern,
-  type MatchState,
-} from "@t8/router";
+import { type LocationPattern, type MatchState, match } from "@t8/router";
 import { useMemo } from "react";
 import { useRoute } from "./useRoute";
 
