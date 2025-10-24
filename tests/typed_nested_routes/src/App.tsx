@@ -7,16 +7,16 @@ let sectionParams = z.object({
 });
 
 const { url } = createURLSchema({
-  "/": null,
-  "/sections/:sectionId": {
+  "/": z.object({}),
+  "/sections/:sectionId": z.object({
     params: sectionParams,
-  },
-  "/sections/:sectionId/stories/:storyId": {
+  }),
+  "/sections/:sectionId/stories/:storyId": z.object({
     params: z.object({
       ...sectionParams.shape, // Shared params
       storyId: z.coerce.number(),
     }),
-  },
+  }),
 });
 
 const sectionCount = 3;

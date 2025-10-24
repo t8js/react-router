@@ -3,12 +3,12 @@ import { z } from "zod";
 import { A, useRoute } from "../../..";
 
 let { url } = createURLSchema({
-  "/": null, // goes without parameters
-  "/sections/:id": {
+  "/": z.object({}), // goes without parameters
+  "/sections/:id": z.object({
     params: z.object({
       id: z.coerce.number(),
     }),
-  },
+  }),
 });
 
 export const App = () => {

@@ -4,7 +4,7 @@ import { A, useRouteState } from "../../..";
 import { Shape } from "./Shape";
 
 const { url } = createURLSchema({
-  "/shapes/:id": {
+  "/shapes/:id": z.object({
     params: z.object({
       id: z.coerce.number(),
     }),
@@ -15,7 +15,7 @@ const { url } = createURLSchema({
         r: z.coerce.number(),
       }),
     ),
-  },
+  }),
 });
 
 export const ShapeSection = () => {
