@@ -47,9 +47,9 @@ useNavigationComplete(callback);
 
 ```jsx
 let { url } = createURLSchema({
-  "/sections/:id": {
+  "/sections/:id": z.object({
     params: z.object({ id: z.coerce.number() }) // With Zod
-  }
+  })
 });
 
 let [state, setState] = useRouteState(url("/sections/:id"));
@@ -222,7 +222,7 @@ URL parameters, as a portion of the app's state, can be managed in the React's `
 
 ## Type safety
 
-Type-safe routing is as an optional enhancement. It's enabled by supporting route patterns created with a type-safe URL builder like *url-shape* together with a schema created with *zod* or *yup*. This approach allows for gradual or partial adoption of type-safe routing in an application.
+Type-safe routing is as an optional enhancement. It's enabled by supporting route patterns created with a type-safe URL builder like *url-shape* together with a schema created with a validation library implementing the [Standard Schema](https://github.com/standard-schema/standard-schema#readme) spec, like *zod*, *valibot*, *arktype*, or *yup*. This approach allows for gradual or partial adoption of type-safe routing in an application.
 
 ```tsx
 import { A, useRoute } from "@t8/react-router";
@@ -230,14 +230,14 @@ import { createURLSchema } from "url-shape";
 import { z } from "zod";
 
 const { url } = createURLSchema({
-  "/": null, // Goes without parameters
-  "/sections/:id": {
+  "/": z.object({}), // Goes without parameters
+  "/sections/:id": z.object({
     // Path components
     params: z.object({
       id: z.coerce.number(),
     }),
     // Similarly a `query` schema can be added here
-  },
+  }),
 });
 
 let App = () => {
@@ -314,15 +314,15 @@ let sectionParams = z.object({
 });
 
 export const { url } = createURLSchema({
-  "/sections/:sectionId": {
+  "/sections/:sectionId": z.object({
     params: sectionParams,
-  },
-  "/sections/:sectionId/stories/:storyId": {
+  }),
+  "/sections/:sectionId/stories/:storyId": z.object({
     params: z.object({
       ...sectionParams.shape, // Shared params
       storyId: z.string(),
     }),
-  },
+  }),
 });
 ```
 
