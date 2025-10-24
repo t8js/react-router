@@ -1,5 +1,5 @@
 {
-  "include": ["index.ts", "playwright.config.ts", "src", "tests"],
+  "include": ["./index.ts", "./playwright.config.ts", "./src", "./tests"],
   "compilerOptions": {
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "target": "ESNext",
