@@ -373,7 +373,7 @@ This example also shows how the same routing code (of the `<Content>` component)
 
 ## Unknown routes
 
-The fallback parameter of the route-matching function `at(route, x, y)` can be used as a way to handle unknown routes:
+The fallback parameter of the route-matching function `at(route, x, y)` can be used as a way to handle unknown routes, as shown in the example below. In a [type-safe setup](#type-safety), unknown routes can be handled based on whether the given route belongs to the URL schema (e.g. with `validate(route)` from [*url-shape*](https://github.com/t8js/url-shape#readme)).
 
 ```jsx
 import { A, useRoute } from "@t8/react-router";
