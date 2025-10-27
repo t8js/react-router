@@ -7,13 +7,19 @@
 🔹 Concise routing API
 
 ```jsx
+<header className={at("/", "full", "compact")}>
+// at "/" ? "full" : "compact"
+```
+
+```jsx
 {at("/about", <About/>)}
 // at "/about" ? <About/> : undefined
 ```
 
 ```jsx
-<header className={at("/", "full", "compact")}>
-// at "/" ? "full" : "compact"
+{at(/^\/sections\/(?<id>\d+)\/?$/, ({ params }) => (
+  <Section id={params.id}/>
+))}
 ```
 
 🔹 Familiar navigation APIs
@@ -43,17 +49,38 @@ useNavigationComplete(callback);
 // e.g. to set the document's title
 ```
 
-🔹 Typed routes and URL parameters
+🔹 Typed routes and URL parameters, as an optional enhancement
 
 ```jsx
+   // ↓ type-safe URL pattern builder
 let { url } = createURLSchema({
-  "/sections/:id": z.object({
-    params: z.object({ id: z.coerce.number() }) // With Zod
+  "/sections/:id": z.object({ // with Zod
+    params: z.object({ id: z.coerce.number() })
   })
 });
+```
 
-let [state, setState] = useRouteState(url("/sections/:id"));
-  // ^ { params: { id: number } }
+```jsx
+                          // ↓ { params: { id: number } }
+{at(url("/sections/:id"), ({ params }) => (
+  <Section id={params.id}/>
+))}
+```
+
+```jsx
+<A href={url("/sections/:id", { params: { id: 1 } })}>Section 1</A>
+                             // ↑ { params: { id: number } }
+```
+
+🔹 URL parameters as state
+
+```jsx
+let [state, setState] = useRouteState("/");
+```
+
+```jsx
+// with type safety based on a custom URL schema
+let [state, setState] = useRouteState(url("/"));
 ```
 
 🔹 Lazy routes
