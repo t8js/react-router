@@ -20,6 +20,7 @@
 {at(/^\/sections\/(?<id>\d+)\/?$/, ({ params }) => (
   <Section id={params.id}/>
 ))}
+// at "/sections/<id>" ? <Section id={id}/> : undefined
 ```
 
 🔹 Familiar navigation APIs
