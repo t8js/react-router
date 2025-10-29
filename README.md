@@ -32,10 +32,10 @@
 
 ```diff
 - window.location.assign("/about");
-+ route.assign("/about");
++ route.assign("/about"); // SPA navigation
 
 - window.location.href = "/about";
-+ route.href = "/about";
++ route.href = "/about"; // SPA navigation
 ```
 
 🔹 Middleware hooks
