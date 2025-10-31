@@ -62,7 +62,7 @@ let { url } = createURLSchema({
 ```
 
 ```jsx
-                          // ↓ { params: { id: number } }
+                          // ↓ { id: number }
 {at(url("/sections/:id"), ({ params }) => (
   <Section id={params.id}/>
 ))}
@@ -70,7 +70,7 @@ let { url } = createURLSchema({
 
 ```jsx
 <A href={url("/sections/:id", { params: { id: 1 } })}>Section 1</A>
-                             // ↑ { params: { id: number } }
+                             // ↑ { id: number }
 ```
 
 🔹 URL parameters as state
