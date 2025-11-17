@@ -1,5 +1,5 @@
-import { useRouteState } from "../../..";
-import { Shape } from "./Shape";
+import { useRouteState } from "../../../index.ts";
+import { Shape } from "./Shape.tsx";
 
 export const App = () => {
   let [{ query }, setState] = useRouteState("/");

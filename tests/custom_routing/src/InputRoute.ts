@@ -1,4 +1,4 @@
-import { type LocationValue, Route } from "../../..";
+import { type LocationValue, Route } from "../../../index.ts";
 
 export class InputRoute extends Route {
   inputId: string;

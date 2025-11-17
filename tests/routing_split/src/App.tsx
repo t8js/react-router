@@ -1,4 +1,4 @@
-import { A, useRoute } from "../../..";
+import { A, useRoute } from "../../../index.ts";
 
 const Header = () => {
   let { at } = useRoute();

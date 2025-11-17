@@ -1,6 +1,6 @@
 import { createURLSchema } from "url-shape";
 import { z } from "zod";
-import { A, useRoute } from "../../..";
+import { A, useRoute } from "../../../index.ts";
 
 let { url } = createURLSchema({
   "/": z.object({}), // goes without parameters

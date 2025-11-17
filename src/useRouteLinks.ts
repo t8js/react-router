@@ -1,6 +1,6 @@
 import type { ContainerElement, Route } from "@t8/router";
 import { type RefObject, useContext, useEffect } from "react";
-import { RouteContext } from "./RouteContext";
+import { RouteContext } from "./RouteContext.ts";
 
 /**
  * Converts plain HTML links to route links, with history navigation

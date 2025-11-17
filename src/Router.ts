@@ -1,6 +1,6 @@
 import { Route } from "@t8/router";
 import { createElement, type ReactNode, useEffect, useMemo } from "react";
-import { RouteContext } from "./RouteContext";
+import { RouteContext } from "./RouteContext.ts";
 
 export type RouterProps = {
   location?: string | Route | undefined;

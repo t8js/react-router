@@ -1,6 +1,6 @@
 import type { NavigationCallback, NavigationEvent } from "@t8/router";
 import { useContext, useEffect } from "react";
-import { RouteContext } from "./RouteContext";
+import { RouteContext } from "./RouteContext.ts";
 
 export function useNavigationEvent(
   event: NavigationEvent,

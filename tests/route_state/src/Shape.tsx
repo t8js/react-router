@@ -1,5 +1,5 @@
-import { getRandomShape } from "./getRandomShape";
-import { toNumber } from "./toNumber";
+import { getRandomShape } from "./getRandomShape.ts";
+import { toNumber } from "./toNumber.ts";
 
 const n = 10;
 

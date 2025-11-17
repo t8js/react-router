@@ -1,7 +1,7 @@
 import { Suspense } from "react";
-import { A, useRoute } from "../../..";
-import { Intro } from "./Intro";
-import { ItemList } from "./ItemList.lazy";
+import { A, useRoute } from "../../../index.ts";
+import { Intro } from "./Intro.tsx";
+import { ItemList } from "./ItemList.lazy.ts";
 
 export const App = () => {
   let { at } = useRoute();

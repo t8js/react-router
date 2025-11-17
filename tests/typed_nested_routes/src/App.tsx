@@ -1,6 +1,6 @@
 import { createURLSchema } from "url-shape";
 import { z } from "zod";
-import { A, useRoute } from "../../..";
+import { A, useRoute } from "../../../index.ts";
 
 let sectionParams = z.object({
   sectionId: z.coerce.number(),

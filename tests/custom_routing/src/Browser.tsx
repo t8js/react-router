@@ -1,6 +1,6 @@
 import { type ReactNode, useId, useMemo } from "react";
-import { Router } from "../../..";
-import { InputRoute } from "./InputRoute";
+import { Router } from "../../../index.ts";
+import { InputRoute } from "./InputRoute.ts";
 import "./Browser.css";
 
 export type BrowserProps = {

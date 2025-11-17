@@ -1,5 +1,5 @@
 import { useContext, useEffect, useMemo, useState } from "react";
-import { RouteContext } from "./RouteContext";
+import { RouteContext } from "./RouteContext.ts";
 
 export function useRoute() {
   let route = useContext(RouteContext);

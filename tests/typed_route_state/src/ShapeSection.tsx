@@ -1,7 +1,7 @@
 import { createURLSchema } from "url-shape";
 import { z } from "zod";
-import { A, useRouteState } from "../../..";
-import { Shape } from "./Shape";
+import { A, useRouteState } from "../../../index.ts";
+import { Shape } from "./Shape.tsx";
 
 const { url } = createURLSchema({
   "/shapes/:id": z.object({

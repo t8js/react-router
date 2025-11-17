@@ -1,6 +1,6 @@
 import { useCallback } from "react";
-import { A, useNavigationStart, useRoute } from "../../..";
-import { ShapeSection } from "./ShapeSection";
+import { A, useNavigationStart, useRoute } from "../../../index.ts";
+import { ShapeSection } from "./ShapeSection.tsx";
 
 export const App = () => {
   let { route, at } = useRoute();

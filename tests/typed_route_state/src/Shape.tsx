@@ -1,4 +1,4 @@
-import { getRandomShape } from "./getRandomShape";
+import { getRandomShape } from "./getRandomShape.ts";
 
 export type ShapeProps = {
   n: number;

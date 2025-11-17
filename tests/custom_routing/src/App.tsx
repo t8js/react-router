@@ -1,5 +1,5 @@
-import { A, useRoute } from "../../..";
-import { Browser } from "./Browser";
+import { A, useRoute } from "../../../index.ts";
+import { Browser } from "./Browser.tsx";
 
 const Content = () => {
   let { at } = useRoute();

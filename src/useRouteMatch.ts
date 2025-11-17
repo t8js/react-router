@@ -1,6 +1,6 @@
 import { type LocationPattern, type MatchState, match } from "@t8/router";
 import { useMemo } from "react";
-import { useRoute } from "./useRoute";
+import { useRoute } from "./useRoute.ts";
 
 export function useRouteMatch<P extends LocationPattern>(locationPattern?: P) {
   let { route } = useRoute();

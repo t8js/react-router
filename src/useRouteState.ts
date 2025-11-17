@@ -6,7 +6,7 @@ import {
   type URLData,
 } from "@t8/router";
 import { useCallback, useMemo } from "react";
-import { useRoute } from "./useRoute";
+import { useRoute } from "./useRoute.ts";
 
 type SetState<T extends LocationValue> = (
   update: URLData<T> | ((state: MatchState<T>) => URLData<T>),
