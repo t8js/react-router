@@ -126,7 +126,7 @@ let App = () => {
 
 [Live demo](https://codesandbox.io/p/sandbox/63xzd4?file=%252Fsrc%252FApp.tsx)
 
-🔹 As mentioned above, `at(route, x, y)` acts similarly to the ternary operator `atRoute ? x : y` often used with conditional rendering, which route-based rendering essentially is: it returns `x` if the current URL matches `route`, and `y` otherwise. Having the ternary function rather than the ternary conditional operator allows for additional flexibility, like omitting an `undefined` fallback parameter or resolving as a dynamic value based on `params` extracted from the route pattern, as seen in the example above.
+🔹 As mentioned above, `at(route, x, y)` acts similarly to the ternary operator `atRoute ? x : y` often used with conditional rendering, which route-based rendering essentially is: it returns `x` if the current URL matches `route`, and `y` otherwise. Having the ternary function rather than the ternary conditional operator allows for additional flexibility, like omitting an `undefined` fallback parameter (as with `at("/", <Intro/>)` in the example above) or resolving as a dynamic value based on `params` extracted from the route pattern (as with `<Section id={params.id}/>` above).
 
 While `at(route, x, y)` works equally with both components and prop values (and actually with any other route-based values), the component-, config-, and file-based approaches that many routers tend to adopt are focused on component rendering, requiring an extra route matching hook for route-based prop values.
 
