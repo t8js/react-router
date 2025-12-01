@@ -171,7 +171,7 @@ The route navigation API is largely aligned with the similar native JS APIs fami
 
 🔹 The `route` object has: `.assign(url)`, `.replace(url)`, `.reload()`, `.href`, `.pathname`, `.search`, `.hash`, `.back()`, `.forward()`, `.go(delta)` — similar to the built-in APIs of `window.location` and `history` carried over to route-based SPA navigation.
 
-🔹 A route link component can be switched to the replace mode by having the `data-navigation-mode="replace"` attribute.
+🔹 A route link component can be switched to the replace mode by having the `data-navigation-mode="replace"` attribute. In the replace mode, clicking the link will replace the current history navigation entry rather than keep it as a previous record (similarly to calling `route.replace(url)`), effectively preventing the user from returning to the current URL by pressing the browser's *Back* button.
 
 🔹 Like the route link `<A>` corresponds to the HTML link tag `<a>`, the route link `<Area>` corresponds to the HTML link tag `<area>`.
 
