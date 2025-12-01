@@ -358,7 +358,7 @@ export const { url } = createURLSchema({
 
 [Live typed nested routes demo](https://codesandbox.io/p/sandbox/htfslv?file=%252Fsrc%252FApp.tsx)
 
-In such a setup, arbitrary relations between the routes are seen and managed directly, allowing for fine-grained control, including sharing or filtering out certain parameters.
+Such a setup doesn't impose specific implicit relations between the routes (like parameter inheritance) ahead of time. The relations between the routes as arbitrary as they can be are seen and managed directly, allowing for fine-grained control, including sharing or filtering out certain parameters, without the need to work around implicit constraints.
 
 ## Location provider
 
