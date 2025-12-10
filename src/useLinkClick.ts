@@ -1,5 +1,5 @@
 import { getNavigationMode, isRouteEvent } from "@t8/router";
-import { type MouseEvent, useCallback, useContext } from "react";
+import { type MouseEvent as ReactMouseEvent, useCallback, useContext } from "react";
 import { RouteContext } from "./RouteContext.ts";
 import type { AProps } from "./types/AProps.ts";
 import type { AreaProps } from "./types/AreaProps.ts";
@@ -12,7 +12,7 @@ export function useLinkClick(props: UseLinkClickParams) {
   let navigationMode = getNavigationMode(props);
 
   return useCallback(
-    (event: MouseEvent<HTMLAnchorElement & HTMLAreaElement>) => {
+    (event: ReactMouseEvent<HTMLAnchorElement & HTMLAreaElement>) => {
       onClick?.(event);
 
       if (!event.defaultPrevented && isRouteEvent(event, { href, target })) {
