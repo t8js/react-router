@@ -1,5 +1,9 @@
 import { getNavigationMode, isRouteEvent } from "@t8/router";
-import { type MouseEvent as ReactMouseEvent, useCallback, useContext } from "react";
+import {
+  type MouseEvent as ReactMouseEvent,
+  useCallback,
+  useContext,
+} from "react";
 import { RouteContext } from "./RouteContext.ts";
 import type { AProps } from "./types/AProps.ts";
 import type { AreaProps } from "./types/AreaProps.ts";

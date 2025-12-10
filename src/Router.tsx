@@ -18,8 +18,6 @@ export const Router = ({ location, children }: RouterProps) => {
   useEffect(() => () => route.disconnect(), [route]);
 
   return (
-    <RouteContext.Provider value={route}>
-      {children}
-    </RouteContext.Provider>
+    <RouteContext.Provider value={route}>{children}</RouteContext.Provider>
   );
 };

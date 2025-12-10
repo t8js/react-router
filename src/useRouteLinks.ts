@@ -4,7 +4,7 @@ import { RouteContext } from "./RouteContext.ts";
 
 /**
  * Converts plain HTML links to SPA route links.
- * 
+ *
  * @param containerRef - A React Ref pointing to a container element.
  * @param elements - An optional selector, or an HTML element, or a
  * collection thereof, specifying the links inside the container to
