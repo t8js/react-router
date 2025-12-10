@@ -1,5 +1,5 @@
 import { Route } from "@t8/router";
-import { createElement, type ReactNode, useEffect, useMemo } from "react";
+import { type ReactNode, useEffect, useMemo } from "react";
 import { RouteContext } from "./RouteContext.ts";
 
 export type RouterProps = {
@@ -17,5 +17,9 @@ export const Router = ({ location, children }: RouterProps) => {
 
   useEffect(() => () => route.disconnect(), [route]);
 
-  return createElement(RouteContext.Provider, { value: route }, children);
+  return (
+    <RouteContext.Provider value={route}>
+      {children}
+    </RouteContext.Provider>
+  );
 };
