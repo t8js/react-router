@@ -6,16 +6,12 @@
   "types": "dist/index.d.ts",
   "type": "module",
   "scripts": {
-    "build": "npx npm-run-all clean compile types",
     "clean": "node -e \"require('node:fs').rmSync('dist', { force: true, recursive: true });\"",
     "compile": "npx esbuild index.ts --bundle --outdir=dist --platform=neutral --external:react",
     "demo": "npx @t8/serve 3000 * tests/route_matching -b src/index.tsx index.js",
-    "prepublishOnly": "npm run build",
-    "preversion": "npx npm-run-all typecheck shape build test",
-    "shape": "npx codeshape",
-    "test": "npx playwright test --project=chromium",
-    "typecheck": "tsc --noEmit",
-    "types": "tsc -p tsconfig.build.json"
+    "preversion": "npx npm-run-all clean shape compile test",
+    "shape": "npx codeshape --typecheck --emit-types",
+    "test": "npx playwright test --project=chromium"
   },
   "keywords": [
     "react",
@@ -43,7 +39,6 @@
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "react-dom": "^19.2.1",
-    "typescript": "^5.9.3",
     "url-shape": "^1.3.9",
     "zod": "^4.1.13"
   },
