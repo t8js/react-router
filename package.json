@@ -2,15 +2,14 @@
   "name": "@t8/react-router",
   "version": "1.2.9",
   "description": "Concise router for React apps",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "type": "module",
   "scripts": {
-    "clean": "node -e \"require('node:fs').rmSync('dist', { force: true, recursive: true });\"",
-    "compile": "npx esbuild index.ts --bundle --outdir=dist --platform=neutral --external:react",
     "demo": "npx @t8/serve 3000 * tests/route_matching -b src/index.tsx index.js",
-    "preversion": "npx npm-run-all clean shape compile test",
-    "shape": "npx codeshape --typecheck --emit-types",
+    "preversion": "npx npm-run-all shape test",
+    "shape": "npx codeshape",
     "test": "npx playwright test --project=chromium"
   },
   "keywords": [
