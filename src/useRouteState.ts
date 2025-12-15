@@ -12,6 +12,15 @@ type SetState<T extends LocationValue> = (
   update: URLData<T> | ((state: MatchState<T>) => URLData<T>),
 ) => void;
 
+/**
+ * Reads and sets URL parameters in a way similar to React's `useState()`.
+ * This hooks returns `[state, setState]`, where `state` contains path
+ * placeholder parameters and query parameters, `{ params?, query? }`.
+ *
+ * Note that the path placeholders, `params`, are only available if the
+ * `location` parameter is an output of a typed URL builder (like
+ * the one produced with *url-shape*).
+ */
 export function useRouteState<T extends LocationValue>(
   location?: T,
   navigationMode?: NavigationMode,

@@ -7,6 +7,9 @@ export type RouterProps = {
   children?: ReactNode;
 };
 
+/**
+ * A component providing a URL value to the nested components.
+ */
 export const Router = ({ location, children }: RouterProps) => {
   let route = useMemo(() => {
     if (location instanceof Route) return location;
