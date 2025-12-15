@@ -1,96 +1,10 @@
 # T8 React Router
 
-*Concise router for React apps*
+Concise router for React apps
 
 [![npm](https://img.shields.io/npm/v/@t8/react-router?labelColor=345&color=46e)](https://www.npmjs.com/package/@t8/react-router) ![Lightweight](https://img.shields.io/bundlephobia/minzip/@t8/react-router?label=minzip&labelColor=345&color=46e) ![CSR ✓](https://img.shields.io/badge/CSR-✓-345?labelColor=345) ![SSR ✓](https://img.shields.io/badge/SSR-✓-345?labelColor=345)
 
-🔹 Concise routing API
-
-```jsx
-<header className={at("/", "full", "compact")}>
-// at "/" ? "full" : "compact"
-```
-
-```jsx
-{at("/about", <About/>)}
-// at "/about" ? <About/> : undefined
-```
-
-```jsx
-{at(/^\/sections\/(?<id>\d+)\/?$/, ({ params }) => (
-  <Section id={params.id}/>
-))}
-// at "/sections/<id>" ? <Section id={id}/> : undefined
-```
-
-🔹 Familiar navigation APIs
-
-```diff
-- <a href="/about">About</a>
-+ <A href="/about">About</A> // SPA route link
-```
-
-```diff
-- window.location.assign("/about");
-+ route.assign("/about"); // SPA navigation
-
-- window.location.href = "/about";
-+ route.href = "/about"; // SPA navigation
-```
-
-🔹 Middleware hooks
-
-```jsx
-useNavigationStart(callback);
-// e.g. to redirect or prevent navigation
-```
-
-```jsx
-useNavigationComplete(callback);
-// e.g. to set the document's title
-```
-
-🔹 Typed routes and URL parameters, as an optional enhancement
-
-```jsx
-   // ↓ type-safe URL pattern builder
-let { url } = createURLSchema({
-  "/sections/:id": z.object({ // with Zod
-    params: z.object({ id: z.coerce.number() })
-  })
-});
-```
-
-```jsx
-                          // ↓ { id: number }
-{at(url("/sections/:id"), ({ params }) => (
-  <Section id={params.id}/>
-))}
-```
-
-```jsx
-<A href={url("/sections/:id", { params: { id: 1 } })}>Section 1</A>
-                             // ↑ { id: number }
-```
-
-🔹 URL parameters as state
-
-```jsx
-let [state, setState] = useRouteState("/");
-```
-
-```jsx
-// with type safety based on a custom URL schema
-let [state, setState] = useRouteState(url("/"));
-```
-
-🔹 Lazy routes
-
-```jsx
-{at("/about", <Suspense><About/></Suspense>)}
-```
-
-🔹 SSR- and CSR-compatible
+**Why?** To make URL-based rendering as simple as regular conditional rendering, which it essentially is, with a single approach for both components and prop values. To repurpose well-known built-in navigation APIs to use them with SPA navigation, also without reinventing an API for a link component. To manage URL parameters as state by following the React's state pattern. And also to keep SSR, routing middleware, and lazy routes simple.
 
 Installation: `npm i @t8/react-router`
 
@@ -126,13 +40,13 @@ let App = () => {
 
 [Live demo](https://codesandbox.io/p/sandbox/63xzd4?file=%252Fsrc%252FApp.tsx)
 
-🔹 As mentioned above, `at(route, x, y)` acts similarly to the ternary operator `atRoute ? x : y` often used with conditional rendering, which route-based rendering essentially is: it returns `x` if the current URL matches `route`, and `y` otherwise. Having the ternary function rather than the ternary conditional operator allows for additional flexibility, like omitting an `undefined` fallback parameter (as with `at("/", <Intro/>)` in the example above) or resolving as a dynamic value based on `params` extracted from the route pattern (as with `<Section id={params.id}/>` above).
+⬥ As mentioned above, `at(route, x, y)` acts similarly to the ternary operator `atRoute ? x : y` often used with conditional rendering, which route-based rendering essentially is: it returns `x` if the current URL matches `route`, and `y` otherwise. Having the ternary function rather than the ternary conditional operator allows for additional flexibility, like omitting an `undefined` fallback parameter (as with `at("/", <Intro/>)` in the example above) or resolving as a dynamic value based on `params` extracted from the route pattern (as with `<Section id={params.id}/>` above).
 
 While the component-, config-, and file-based approaches that many routers tend to adopt are focused on component rendering, requiring an extra route matching hook for route-based prop values, `at(route, x, y)` works equally with both components and prop values (and with any other route-based values).
 
-🔹 `at()` calls are independent from each other, they don't have to maintain a certain order, they shouldn't be necessarily grouped in a single component (although they can be, as in the example above). Components with route-based logic can be split like any other components.
+⬥ `at()` calls are independent from each other, they don't have to maintain a certain order, they shouldn't be necessarily grouped in a single component (although they can be, as in the example above). Components with route-based logic can be split like any other components.
 
-🔹 Route-based rendering with the React's `<Activity>` component looks similar to what we've seen in the example above:
+⬥ Route-based rendering with the React's `<Activity>` component looks similar to what we've seen in the example above:
 
 ```jsx
 // Without Activity
@@ -169,11 +83,11 @@ The route navigation API is largely aligned with the similar native JS APIs fami
   };
 ```
 
-🔹 The `route` object has: `.assign(url)`, `.replace(url)`, `.reload()`, `.href`, `.pathname`, `.search`, `.hash`, `.back()`, `.forward()`, `.go(delta)` — similar to the built-in APIs of `window.location` and `history` carried over to route-based SPA navigation.
+⬥ The `route` object has: `.assign(url)`, `.replace(url)`, `.reload()`, `.href`, `.pathname`, `.search`, `.hash`, `.back()`, `.forward()`, `.go(delta)` — similar to the built-in APIs of `window.location` and `history` carried over to route-based SPA navigation.
 
-🔹 A route link component can be switched to the replace mode by having the `data-navigation-mode="replace"` attribute. In the replace mode, clicking the link will replace the current history navigation entry rather than keep it as a previous record (similarly to calling `route.replace(url)`), effectively preventing the user from returning to the current URL by pressing the browser's *Back* button.
+⬥ A route link component can be switched to the replace mode by having the `data-navigation-mode="replace"` attribute. In the replace mode, clicking the link will replace the current history navigation entry rather than keep it as a previous record (similarly to calling `route.replace(url)`), effectively preventing the user from returning to the current URL by pressing the browser's *Back* button.
 
-🔹 Like the route link `<A>` corresponds to the HTML link tag `<a>`, the route link `<Area>` corresponds to the HTML link tag `<area>`.
+⬥ Like the route link `<A>` corresponds to the HTML link tag `<a>`, the route link `<Area>` corresponds to the HTML link tag `<area>`.
 
 ## Middleware
 
@@ -212,7 +126,7 @@ let App = () => {
 
 This example shows some common examples of what can be handled with routing middleware: preventing navigation with unsaved user input, redirecting to another location, setting the page title based on the current location.
 
-🔹 The callback of both hooks is first called when the component gets mounted if the route is already in the navigation-complete state.
+⬥ The callback of both hooks is first called when the component gets mounted if the route is already in the navigation-complete state.
 
 ## URL parameters
 
@@ -293,11 +207,11 @@ let App = () => {
 
 [Type-safe routing live demo](https://codesandbox.io/p/sandbox/vgt64k?file=%2Fsrc%2FApp.tsx)
 
-🔹 The `url()` function is a type-safe URL builder. It creates a URL with a URL pattern defined in the schema and typed parameters that are prevalidated against the given schema: typos and type mismatches are highlighted in a type-aware code editor. [See *url-shape*](https://github.com/t8js/url-shape#readme) for more details.
+⬥ The `url()` function is a type-safe URL builder. It creates a URL with a URL pattern defined in the schema and typed parameters that are prevalidated against the given schema: typos and type mismatches are highlighted in a type-aware code editor. [See *url-shape*](https://github.com/t8js/url-shape#readme) for more details.
 
-🔹 A URL schema doesn't have to cover the entire app. Standalone portions of an app can have their own URL schemas.
+⬥ A URL schema doesn't have to cover the entire app. Standalone portions of an app can have their own URL schemas.
 
-🔹 Optionally, application-wide type safety can be achieved by disallowing URLs and URL patterns other than provided by the URL builder (the `url()` function in the example above):
+⬥ Optionally, application-wide type safety can be achieved by disallowing URLs and URL patterns other than provided by the URL builder (the `url()` function in the example above):
 
 ```ts
 declare module "@t8/react-router" {
@@ -309,11 +223,11 @@ declare module "@t8/react-router" {
 
 Adding this type declaration to an app effectively disallows using `string` and `RegExp` values for routes and route patterns (such as in the route link `href` prop, `route.assign(location)`, and the routing function `at(routePattern, x, y)`), only allowing values returned from the URL builder with the same routing APIs.
 
-🔹 A URL builder pattern (like `url("/sections/:id")`) can also be used with `useRouteState(pattern)` and `useRouteMatch(pattern)` to manipulate [URL parameters](#url-parameters) in a type-safe manner.
+⬥ A URL builder pattern (like `url("/sections/:id")`) can also be used with `useRouteState(pattern)` and `useRouteMatch(pattern)` to manipulate [URL parameters](#url-parameters) in a type-safe manner.
 
 [Typed URL parameters state demo](https://codesandbox.io/p/sandbox/qnd87w?file=%2Fsrc%2FShapeSection.tsx)
 
-🔹 Recap: It's using typed URL patterns (like from `url()` of *url-shape*) that enables type-safe route handling, which is an optional enhancement. Plain `string` routes and `RegExp` route patterns are handled with baseline typing sufficient in many cases.
+⬥ Recap: It's using typed URL patterns (like from `url()` of *url-shape*) that enables type-safe route handling, which is an optional enhancement. Plain `string` routes and `RegExp` route patterns are handled with baseline typing sufficient in many cases.
 
 ## Nested routes
 
@@ -435,9 +349,9 @@ let App = () => {
 
 The last `at()` in this example results in `null` (that is no content) for all known routes and renders the error content for the rest unknown routes.
 
-🔹 `at()` calls don't have to maintain a specific order, and the `at()` call handling unknown routes doesn't have to be the last.
+⬥ `at()` calls don't have to maintain a specific order, and the `at()` call handling unknown routes doesn't have to be the last.
 
-🔹 `at()` calls don't have to be grouped side by side like in the example above, their collocation is not a requirement. `at()` calls are not coupled together, they can be split across separate components and files (like any other conditionally rendered components).
+⬥ `at()` calls don't have to be grouped side by side like in the example above, their collocation is not a requirement. `at()` calls are not coupled together, they can be split across separate components and files (like any other conditionally rendered components).
 
 ## Lazy routes
 
