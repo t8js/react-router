@@ -6,15 +6,20 @@ Concise router for React apps
 
 **Why?** To make URL-based rendering as simple as regular conditional rendering, which it essentially is, with a single approach for both components and prop values. To repurpose well-known built-in navigation APIs for use with SPA navigation, also without reinventing an API for a link component. To manage URL parameters as state by following the React's state pattern. To keep SSR, routing middleware, and lazy routes simple. To make type safety an optional enhancement allowing for incremental adoption.
 
-```
-atRoute ? x : y
-→ at(route, x, y)
+```diff
+// Core parts
 
-window.location.href = "/x";
-→ route.href = "/x";
+// Route-based rendering
+at("/", <Intro/>)
+<header className={at("/", "full", "compact")}>
 
-<a href="/x">
-→ <A href="/x">
+// Route navigation
+- window.location.href = "/x";
++ route.href = "/x";
+
+// Route link
+- <a href="/">Intro</a>
++ <A href="/">Intro</A>
 ```
 
 Installation: `npm i @t8/react-router`
