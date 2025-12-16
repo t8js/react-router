@@ -152,7 +152,7 @@ URL parameters, as a portion of the app's state, can be managed in the React's `
 + import { useRouteState } from "@t8/react-router";
 
   let App = () => {
--   let [{ coords }, setState] = useState({ coords: {} });
+-   let [{ coords }, setState] = useState({ coords: { x: 0, y: 0 } });
 +   let [{ query }, setState] = useRouteState("/");
 
     let setPosition = () => {
@@ -288,7 +288,7 @@ export const { url } = createURLSchema({
 
 [Live typed nested routes demo](https://codesandbox.io/p/sandbox/htfslv?file=%252Fsrc%252FApp.tsx)
 
-Such a setup doesn't impose specific implicit relations between the routes (like parameter inheritance) ahead of time. The relations between the routes as arbitrary as they can be are seen and managed directly, allowing for fine-grained control, including sharing or filtering out certain parameters, without the need to work around implicit constraints.
+Such a setup doesn't impose specific implicit relations between the routes (like parameter inheritance) ahead of time. The relations between the routes, as arbitrary as they can be, are seen and managed directly, allowing for fine-grained control, including sharing or filtering out certain parameters, without the need to work around implicit constraints.
 
 ## Location provider
 
@@ -325,11 +325,13 @@ Both `route` and `at()` returned from `useRoute()` operate based on the router's
 
 ## Custom routing behavior
 
+The default URL-based routing behavior is what's used in most cases, but its customization is also conceivable and possible. The `<Router>` component discussed above (or even multiple ones) can be used to set up customized routing behavior over a specific portion of the app (or the entire app).
+
 [Custom routing behavior example](https://codesandbox.io/p/sandbox/w7rsjl?file=%252Fsrc%252FApp.tsx)
 
-In this example, we've got a kind of a browser-in-browser with its routing based on a text input rather than the URL. It's enabled by passing an instance of a custom extension of the `Route` class, `InputRoute`, to the `<Router>` component, configured to interact with a text input.
+In this example, we've got a kind of a browser-in-browser with its routing based on a text input rather than the URL. It's enabled by devising a custom extension of the `Route` class, `InputRoute`, configured to interact with a text input, and passing its instance to the `<Router>` component.
 
-This example also shows how the same routing code (of the `<Content>` component) can interact with either the URL or the text input element based on the closest `<Router>` component up the component tree.
+This example also shows how the same routing code (of the `<Content>` component) can interact with either the URL or the text input element based on the closest `<Router>` context up the component tree.
 
 ## Unknown routes
 
