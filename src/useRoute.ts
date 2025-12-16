@@ -11,10 +11,10 @@ import { RouteContext } from "./RouteContext.ts";
  */
 export function useRoute() {
   let route = useContext(RouteContext);
-  let [, setHref] = useState(route.href);
+  let [, setRevision] = useState(-1);
 
   useEffect(
-    () => route.on("navigationcomplete", (href) => setHref(href)),
+    () => route.on("navigationcomplete", () => setRevision(Math.random())),
     [route],
   );
 
