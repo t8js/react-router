@@ -34,7 +34,7 @@ export const Browser = ({
         />
       </div>
       <div className="content">
-        <Router location={route}>{children}</Router>
+        <Router href={route}>{children}</Router>
       </div>
     </div>
   );

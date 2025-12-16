@@ -3,8 +3,8 @@ import { type LocationValue, Route } from "../../../index.ts";
 export class InputRoute extends Route {
   inputId: string;
 
-  constructor(inputId: string, location?: LocationValue) {
-    super(location);
+  constructor(inputId: string, url?: LocationValue) {
+    super(url);
     this.inputId = inputId;
   }
 
@@ -12,13 +12,13 @@ export class InputRoute extends Route {
     return document.querySelector<HTMLInputElement>(`#${this.inputId}`);
   }
 
-  _getHref(location?: LocationValue) {
-    if (location === undefined || location === null)
+  _getHref(url?: LocationValue) {
+    if (url === undefined || url === null)
       return typeof window === "undefined"
         ? ""
         : (this._getElement()?.value ?? "");
 
-    return String(location);
+    return String(url);
   }
 
   _subscribe() {
