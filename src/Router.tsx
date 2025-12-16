@@ -3,20 +3,20 @@ import { type ReactNode, useEffect, useMemo } from "react";
 import { RouteContext } from "./RouteContext.ts";
 
 export type RouterProps = {
-  location?: string | Route | undefined;
+  href?: string | Route | undefined;
   children?: ReactNode;
 };
 
 /**
  * A component providing a URL value to the nested components.
  */
-export const Router = ({ location, children }: RouterProps) => {
+export const Router = ({ href, children }: RouterProps) => {
   let route = useMemo(() => {
-    if (location instanceof Route) return location;
-    else if (location === undefined || typeof location === "string")
-      return new Route(location);
-    else throw new Error("Router location of unsupported type");
-  }, [location]);
+    if (href instanceof Route) return href;
+    else if (href === undefined || typeof href === "string")
+      return new Route(href);
+    else throw new Error("Router's 'href' of unsupported type");
+  }, [href]);
 
   useEffect(() => () => route.disconnect(), [route]);
 

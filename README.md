@@ -302,7 +302,7 @@ import { Router } from "@t8/react-router";
 
 app.get("/", (req, res) => {
   let html = renderToString(
-    <Router location={req.originalUrl}>
+    <Router href={req.originalUrl}>
       <App/>
     </Router>,
   );
@@ -311,15 +311,13 @@ app.get("/", (req, res) => {
 });
 ```
 
-The value passed to the router's `location` prop can be accessed via the `useRoute()` hook:
+Both `route` and `at()` returned from `useRoute()` operate based on the router's `href`:
 
 ```jsx
 let { route, at } = useRoute();
 
-console.log(route.href); // returns the router's `location`
+console.log(route.href); // returns based on the router's `href`
 ```
-
-Both `route` and `at()` returned from `useRoute()` operate based on the router's `location`.
 
 `<Router>` can be used with client-side rendering as well. In most cases, it is unnecessary since by default the route context takes the global location from `window.location` if it's available.
 
