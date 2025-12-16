@@ -14,7 +14,8 @@ export function useRoute() {
   let [, setRevision] = useState(-1);
 
   useEffect(
-    () => route.on("navigationcomplete", () => setRevision(Math.random()), true),
+    () =>
+      route.on("navigationcomplete", () => setRevision(Math.random()), true),
     [route],
   );
 
