@@ -24,8 +24,7 @@ export function useLinkClick(props: UseLinkClickParams) {
       if (!event.defaultPrevented && isRouteEvent(event, { href, target })) {
         event.preventDefault();
 
-        if (scrollMode !== "off")
-          window.scrollTo(0, 0);
+        if (scrollMode !== "off") window.scrollTo(0, 0);
 
         route._navigate(href, navigationMode);
       }
