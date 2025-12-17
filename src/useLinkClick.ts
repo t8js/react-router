@@ -1,4 +1,4 @@
-import { getNavigationMode, getScrollMode, isRouteEvent } from "@t8/router";
+import { getNavigationMode, getScrollMode, isRouteEvent, scroll } from "@t8/router";
 import {
   type MouseEvent as ReactMouseEvent,
   useCallback,
@@ -21,12 +21,14 @@ export function useLinkClick(props: UseLinkClickParams) {
     (event: ReactMouseEvent<HTMLAnchorElement & HTMLAreaElement>) => {
       onClick?.(event);
 
-      if (!event.defaultPrevented && isRouteEvent(event, { href, target })) {
+      let linkProps = { href, target };
+
+      if (!event.defaultPrevented && isRouteEvent(event, linkProps)) {
         event.preventDefault();
 
-        if (scrollMode !== "off") window.scrollTo(0, 0);
-
-        route._navigate(href, navigationMode);
+        route._navigate(href, navigationMode).then(() => {
+          if (scrollMode !== "off") scroll(linkProps);
+        });
       }
     },
     [route, href, target, onClick, navigationMode, scrollMode],
