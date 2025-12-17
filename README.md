@@ -103,6 +103,8 @@ The route navigation API is largely aligned with the similar native JS APIs fami
 
 ⬥ A route link component can be switched to the replace mode by having the `data-navigation-mode="replace"` attribute. In the replace mode, clicking the link will replace the current history navigation entry rather than keep it as a previous record (similarly to calling `route.replace(url)`), effectively preventing the user from returning to the current URL by pressing the browser's *Back* button.
 
+⬥ The `data-scroll="off"` attribute can be added to a route link to turn off the default scrolling behavior when the link is clicked. By default, similarly to the behavior of regular HTML links, the page is scrolled either to the element whose `id` matches the link fragment (`#example`) if the element is available or to the top of the page otherwise.
+
 ⬥ Like the route link `<A>` corresponds to the HTML link tag `<a>`, the route link `<Area>` corresponds to the HTML link tag `<area>`.
 
 ## Middleware
