@@ -1,4 +1,9 @@
-import { getNavigationMode, getScrollMode, isRouteEvent, scroll } from "@t8/router";
+import {
+  getNavigationMode,
+  getScrollMode,
+  isRouteEvent,
+  scroll,
+} from "@t8/router";
 import {
   type MouseEvent as ReactMouseEvent,
   useCallback,

@@ -17,9 +17,10 @@ export const App = () => {
               To the story (no scroll)
             </A>
           </p>
-          <hr/>
+          <hr />
           <p>
-            <A href="#footnotes">To the footnotes</A>{" | "}
+            <A href="#footnotes">To the footnotes</A>
+            {" | "}
             <A href="/story#ps">To the story's postscript</A>
           </p>
           <p className="placeholder">Long text placeholder</p>

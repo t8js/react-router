@@ -16,7 +16,9 @@ class Playground {
     expect(await this.getScrollY()).toBeGreaterThan(100);
   }
   async hasPath(value: string) {
-    await expect(this.page).toHaveURL(({ pathname, search, hash }) => pathname + search + hash === value);
+    await expect(this.page).toHaveURL(
+      ({ pathname, search, hash }) => pathname + search + hash === value,
+    );
   }
   async hasMainTitle(value: string) {
     await expect(this.page.locator("h1:visible")).toHaveText(value);
