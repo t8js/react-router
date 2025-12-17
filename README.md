@@ -4,7 +4,7 @@ Concise router for React apps
 
 [![npm](https://img.shields.io/npm/v/@t8/react-router?labelColor=345&color=46e)](https://www.npmjs.com/package/@t8/react-router) ![Lightweight](https://img.shields.io/bundlephobia/minzip/@t8/react-router?label=minzip&labelColor=345&color=46e) ![CSR ✓](https://img.shields.io/badge/CSR-✓-345?labelColor=345) ![SSR ✓](https://img.shields.io/badge/SSR-✓-345?labelColor=345)
 
-**Why?** To make URL-based rendering as simple as regular conditional rendering, which it essentially is, with a single approach for both components and prop values. To repurpose well-known built-in navigation APIs for use with SPA navigation, also without reinventing an API for a link component. To manage URL parameters as state by following the React's state pattern. To keep SSR, routing middleware, and lazy routes simple. To make type safety an optional enhancement allowing for incremental adoption.
+**Why?** To simplify routing code. More specifically: To make URL-based rendering as simple as regular conditional rendering, which it essentially is, with a single approach for both components and prop values. To make use of the well-known built-in navigation APIs in the context of SPA navigation, also without reinventing an API for a link component. To manage URL parameters as state by following the React's state pattern. To keep SSR, routing middleware, and lazy routes simple. To make type safety an optional enhancement allowing for incremental adoption.
 
 ```diff
 // Core parts
