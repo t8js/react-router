@@ -1,0 +1,20 @@
+html {
+  color: black;
+  background: white;
+}
+body {
+  padding: 1em;
+  margin: 0;
+}
+.placeholder {
+  color: #585858;
+  background: #eee;
+  max-width: 42em;
+  height: calc(100px + 150vh);
+  padding: 1em;
+  box-sizing: border-box;
+}
+h1 {
+  font-size: 2em;
+  margin: 0 0 0.5em 0;
+}
