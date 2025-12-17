@@ -16,7 +16,7 @@ class Playground {
     expect(await this.getScrollY()).toBeGreaterThan(100);
   }
   async hasPath(value: string) {
-    await expect(this.page).toHaveURL(({ pathname }) => pathname === value);
+    await expect(this.page).toHaveURL(({ pathname, search, hash }) => pathname + search + hash === value);
   }
   async hasMainTitle(value: string) {
     await expect(this.page.locator("h1:visible")).toHaveText(value);
@@ -73,5 +73,51 @@ test.describe("link scroll mode", () => {
     await p.hasPath("/story");
     await p.hasMainTitle("Story");
     await p.isScrolledAway();
+  });
+
+  test("same-page anchor link", async ({ page }) => {
+    let p = new Playground(page);
+
+    await page.goto("/");
+    await p.hasMainTitle("Intro");
+    await p.isScrolledUp();
+
+    let link = page.getByRole("link", {
+      name: "To the footnotes",
+      exact: true,
+    });
+
+    await link.scrollIntoViewIfNeeded();
+
+    let footnotes = page.locator("#footnotes");
+
+    await expect(footnotes).not.toBeInViewport();
+    await link.click();
+    await p.hasPath("/#footnotes");
+    await p.isScrolledAway();
+    await expect(footnotes).toBeInViewport();
+  });
+
+  test("other-page anchor link", async ({ page }) => {
+    let p = new Playground(page);
+
+    await page.goto("/");
+    await p.hasMainTitle("Intro");
+    await p.isScrolledUp();
+
+    let link = page.getByRole("link", {
+      name: "To the story's postscript",
+      exact: true,
+    });
+
+    await link.scrollIntoViewIfNeeded();
+
+    let storyPostscript = page.locator("#ps");
+
+    await expect(storyPostscript).toBeHidden();
+    await link.click();
+    await p.hasPath("/story#ps");
+    await p.isScrolledAway();
+    await expect(storyPostscript).toBeInViewport();
   });
 });

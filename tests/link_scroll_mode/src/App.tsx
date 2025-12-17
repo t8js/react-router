@@ -6,7 +6,7 @@ export const App = () => {
   return (
     <>
       {at(
-        "/",
+        /^\/(#.*)?$/,
         <main>
           <h1>Intro</h1>
           <p className="placeholder">Long text placeholder</p>
@@ -17,16 +17,25 @@ export const App = () => {
               To the story (no scroll)
             </A>
           </p>
+          <hr/>
+          <p>
+            <A href="#footnotes">To the footnotes</A>{" | "}
+            <A href="/story#ps">To the story's postscript</A>
+          </p>
+          <p className="placeholder">Long text placeholder</p>
+          <p id="footnotes">Footnotes</p>
         </main>,
       )}
       {at(
-        "/story",
+        /^\/story(#.*)?$/,
         <main>
           <h1>Story</h1>
           <p className="placeholder">Long text placeholder</p>
           <p>
             <A href="/">Back to the intro</A>
           </p>
+          <p className="placeholder">Long text placeholder</p>
+          <p id="ps">P.S. Lorem ipsum</p>
         </main>,
       )}
     </>
