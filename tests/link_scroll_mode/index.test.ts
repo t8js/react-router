@@ -75,7 +75,7 @@ test.describe("link scroll mode", () => {
     await p.isScrolledAway();
   });
 
-  test("same-page anchor link", async ({ page }) => {
+  test("same-page fragment link", async ({ page }) => {
     let p = new Playground(page);
 
     await page.goto("/");
@@ -98,7 +98,7 @@ test.describe("link scroll mode", () => {
     await expect(footnotes).toBeInViewport();
   });
 
-  test("other-page anchor link", async ({ page }) => {
+  test("other-page fragment link", async ({ page }) => {
     let p = new Playground(page);
 
     await page.goto("/");
