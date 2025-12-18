@@ -101,11 +101,15 @@ The route navigation API is largely aligned with the similar native JS APIs fami
 
 ⬥ The `route` object has: `.assign(url)`, `.replace(url)`, `.reload()`, `.href`, `.pathname`, `.search`, `.hash`, `.back()`, `.forward()`, `.go(delta)` — similar to the built-in APIs of `window.location` and `history` carried over to route-based SPA navigation.
 
-⬥ A route link component can be switched to the replace mode by having the `data-navigation-mode="replace"` attribute. In the replace mode, clicking the link will replace the current history navigation entry rather than keep it as a previous record (similarly to calling `route.replace(url)`), effectively preventing the user from returning to the current URL by pressing the browser's *Back* button.
+⬥ There are two kinds of route link components: `<A>` and `<Area>` corresponding to the HTML link tags `<a>` and `<area>`.
 
-⬥ The `data-scroll="off"` attribute can be added to a route link to turn off the default scrolling behavior when the link is clicked. By default, similarly to the behavior of regular HTML links, the page is scrolled either to the element whose `id` matches the link fragment (`#example`) if the element is available or to the top of the page otherwise.
+## Optional link attributes
 
-⬥ Like the route link `<A>` corresponds to the HTML link tag `<a>`, the route link `<Area>` corresponds to the HTML link tag `<area>`.
+⬥ `data-history="replace"` added to a link component changes its navigation mode, so that clicking the link replaces the current history navigation entry rather than keeps it as a previous record (similarly to calling `route.replace(url)`), effectively preventing the user from returning to the current URL by pressing the browser's *Back* button.
+
+⬥ `data-spa="off"` turns off SPA navigation for the given link component and makes it act like an ordinary HTML link triggering a full-page reload.
+
+⬥ `data-scroll="off"` turns off the default scrolling behavior when the link component with this attribute is clicked. By default, similarly to the behavior of regular HTML links, the page is scrolled either to the element whose `id` matches the link fragment (like `#example`) if the element is available or to the top of the page otherwise.
 
 ## Middleware
 
