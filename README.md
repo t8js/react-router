@@ -114,7 +114,7 @@ The `useNavigationStart()` and `useNavigationComplete()` hooks define routing *m
 ```jsx
 import { useNavigationComplete, useNavigationStart } from "@t8/react-router";
 
-function setTitle(href) {
+function setTitle({ href }) {
   if (href === "/intro")
     document.title = "Intro";
 }
@@ -123,11 +123,11 @@ let App = () => {
   let { route } = useRoute();
   let [hasUnsavedChanges, setUnsavedChanges] = useState(false);
 
-  let handleNavigationStart = useCallback(nextHref => {
+  let handleNavigationStart = useCallback(({ href }) => {
     if (hasUnsavedChanges)
       return false; // prevents navigation
 
-    if (nextHref === "/intro") {
+    if (href === "/intro") {
       route.assign("/"); // redirection
       return false;
     }
