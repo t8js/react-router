@@ -1,12 +1,12 @@
 import { useCallback } from "react";
-import { A, useNavigationStart, useRoute } from "../../../index.ts";
+import { A, NavigationOptions, useNavigationStart, useRoute } from "../../../index.ts";
 import { ShapeSection } from "./ShapeSection.tsx";
 
 export const App = () => {
   let { route, at } = useRoute();
 
   let initialRedirect = useCallback(
-    (href: string) => {
+    ({ href }: NavigationOptions) => {
       if (href === "/") {
         route.assign("/shapes/1");
         return false;

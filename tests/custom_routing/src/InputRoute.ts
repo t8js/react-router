@@ -1,4 +1,4 @@
-import { type LocationValue, Route } from "../../../index.ts";
+import { type LocationValue, NavigationOptions, Route } from "../../../index.ts";
 
 export class InputRoute extends Route {
   inputId: string;
@@ -31,7 +31,7 @@ export class InputRoute extends Route {
         event.key === "Enter"
       ) {
         event.preventDefault();
-        this._navigate(element.value);
+        this._navigate({ href: element.value });
       }
     };
 
@@ -42,11 +42,13 @@ export class InputRoute extends Route {
     };
   }
 
-  _transition(nextHref: string) {
-    if (typeof window === "undefined") return;
+  _transition(payload: NavigationOptions) {
+    let href = payload?.href;
+
+    if (typeof window === "undefined" || href === undefined) return;
 
     let input = this._getElement();
 
-    if (input && input.value !== nextHref) input.value = nextHref;
+    if (input && input.value !== href) input.value = href;
   }
 }

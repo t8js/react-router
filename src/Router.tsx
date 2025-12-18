@@ -18,7 +18,7 @@ export const Router = ({ href, children }: RouterProps) => {
     else throw new Error("Router's 'href' of unsupported type");
   }, [href]);
 
-  useEffect(() => () => route.disconnect(), [route]);
+  useEffect(() => () => route.stop(), [route]);
 
   return (
     <RouteContext.Provider value={route}>{children}</RouteContext.Provider>

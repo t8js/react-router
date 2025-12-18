@@ -2,8 +2,8 @@ import {
   type LocationValue,
   type MatchState,
   match,
-  type NavigationMode,
   type URLData,
+  NavigationOptions,
 } from "@t8/router";
 import { useCallback, useMemo } from "react";
 import { useRoute } from "./useRoute.ts";
@@ -18,12 +18,12 @@ type SetState<T extends LocationValue> = (
  * placeholder parameters and query parameters, `{ params?, query? }`.
  *
  * Note that the path placeholders, `params`, are only available if the
- * `location` parameter is an output of a typed URL builder (like
- * the one produced with *url-shape*).
+ * `url` parameter is an output of a typed URL builder (like the one
+ * produced with *url-shape*).
  */
 export function useRouteState<T extends LocationValue>(
-  location?: T,
-  navigationMode?: NavigationMode,
+  url?: T,
+  options?: Omit<NavigationOptions, "href">,
 ) {
   let { route } = useRoute();
 
@@ -32,20 +32,23 @@ export function useRouteState<T extends LocationValue>(
       let resolvedHref = href ?? route.href;
 
       return match(
-        location === undefined ? resolvedHref : location,
+        url === undefined ? resolvedHref : url,
         resolvedHref,
       ) as MatchState<T>;
     },
-    [location, route],
+    [url, route],
   );
 
   let setState = useCallback<SetState<T>>(
     (update) => {
       let state = typeof update === "function" ? update(getState()) : update;
 
-      route._navigate(route.compile(location, state), navigationMode);
+      route._navigate({
+        ...options,
+        href: route.compile(url, state),
+      });
     },
-    [location, route, navigationMode, getState],
+    [url, route, options, getState],
   );
 
   let state = useMemo(
