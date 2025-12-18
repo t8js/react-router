@@ -25,7 +25,7 @@ export class InputRoute extends Route {
     return String(url);
   }
 
-  _subscribe() {
+  _connect() {
     let handleInput = (event: KeyboardEvent) => {
       let element = event.target;
 
@@ -54,5 +54,11 @@ export class InputRoute extends Route {
     let input = this._getElement();
 
     if (input && input.value !== href) input.value = href;
+  }
+
+  _complete() {
+    // Do nothing for now. Can be used to emulate the view container
+    // scrolling to the top or to the element specified by the URL fragment
+    // after the navigation is complete.
   }
 }
