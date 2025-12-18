@@ -2,8 +2,8 @@ import {
   type LocationValue,
   type MatchState,
   match,
+  type NavigationOptions,
   type URLData,
-  NavigationOptions,
 } from "@t8/router";
 import { useCallback, useMemo } from "react";
 import { useRoute } from "./useRoute.ts";

@@ -1,6 +1,4 @@
-import {
-  isRouteEvent,
-} from "@t8/router";
+import { isRouteEvent } from "@t8/router";
 import {
   type MouseEvent as ReactMouseEvent,
   useCallback,
@@ -10,7 +8,14 @@ import { RouteContext } from "./RouteContext.ts";
 import type { AProps } from "./types/AProps.ts";
 import type { AreaProps } from "./types/AreaProps.ts";
 
-export function useLinkClick({ onClick, href, target, "data-spa": spa, "data-history": history, "data-scroll": scroll }: AProps | AreaProps) {
+export function useLinkClick({
+  onClick,
+  href,
+  target,
+  "data-spa": spa,
+  "data-history": history,
+  "data-scroll": scroll,
+}: AProps | AreaProps) {
   let route = useContext(RouteContext);
 
   return useCallback(

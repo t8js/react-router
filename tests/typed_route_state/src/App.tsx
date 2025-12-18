@@ -1,5 +1,10 @@
 import { useCallback } from "react";
-import { A, NavigationOptions, useNavigationStart, useRoute } from "../../../index.ts";
+import {
+  A,
+  type NavigationOptions,
+  useNavigationStart,
+  useRoute,
+} from "../../../index.ts";
 import { ShapeSection } from "./ShapeSection.tsx";
 
 export const App = () => {
