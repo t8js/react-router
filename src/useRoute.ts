@@ -31,7 +31,7 @@ export function useRoute(callback?: RenderCallback) {
 
       return route.on("navigationcomplete", handleNavigationComplete, true);
     },
-    [route],
+    [route, callback],
   );
 
   return useMemo(
