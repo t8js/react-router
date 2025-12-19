@@ -42,6 +42,6 @@
     "zod": "^4.1.13"
   },
   "dependencies": {
-    "@t8/router": "^1.3.4"
+    "@t8/router": "^1.3.5"
   }
 }
