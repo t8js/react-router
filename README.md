@@ -150,6 +150,8 @@ This example shows some common examples of what can be handled with routing midd
 
 ⬥ The callback of both hooks is first called when the component gets mounted if the route is already in the navigation-complete state.
 
+⬥ The optional `callback` parameter of `useRoute(callback?)` can be used as middleware defining certain actions to be taken right before or after components get notified to re-render in response to a route change. One use case for this callback is [activating view transitions](#animated-view-transitions).
+
 ## URL parameters
 
 URL parameters, as a portion of the app's state, can be managed in the React's `useState()`-like manner, allowing for quick migration from local state to URL parameters or the other way around:
@@ -414,6 +416,49 @@ Enabling lazy routes doesn't require a specific routing setup. It's a combinatio
 [Lazy routes live demo](https://codesandbox.io/p/sandbox/x75p5w?file=%2Fsrc%2FApp.jsx)
 
 In this example, the `<Projects>` component isn't loaded until the corresponding `/projects` route is visited. When it's first visited, while the component is being fetched, `<p>Loading...</p>` shows up, as specified with the `fallback` prop of `<Suspense>`.
+
+## Animated view transitions
+
+Animated transitions between different routes can be achieved by using the browser's [View Transition API](https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API). The optional `callback` parameter of `useRoute()` can be used to set up such a transition.
+
+```diff
++ import { flushSync } from "react-dom";
+  import { A, useRoute } from "@t8/react-router";
+
++ function renderViewTransition(render) {
++   document.startViewTransition(() => {
++     flushSync(render);
++   });
++ }
+
+  export const App = () => {
+-   let { at } = useRoute();
++   let { at } = useRoute(renderViewTransition);
+
+    return (
+      // Content
+    );
+  };
+```
+
+[Live demo](https://codesandbox.io/p/sandbox/znvrmt?file=%252Fsrc%252FApp.tsx)
+
+In the example above, the `renderViewTransition()` function passed to `useRoute()` calls `document.startViewTransition()` from the View Transition API to start a view transition and React's `flushSync()` to apply the DOM changes synchronously within the view transition, with the visual effects defined with CSS.
+
+Should we need to trigger a transition only with specific links, the `options` parameter of the `useRoute()` callback can be used to add a condition for the view transitions:
+
+```js
+let viewTransitionLinkIds = new Set([/* ... */]);
+
+function renderViewTransition(render, options) {
+  // `options.id` reflects the link's `data-id`
+  if (viewTransitionLinkIds.has(options.id))
+    document.startViewTransition(() => {
+      flushSync(render);
+    });
+  else render();
+}
+```
 
 ## Converting HTML links to SPA route links
 
