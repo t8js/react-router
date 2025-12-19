@@ -1,5 +1,10 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { RouteContext } from "./RouteContext.ts";
+import { NavigationCallback, NavigationOptions } from "@t8/router";
+
+export type RenderCallback =
+  | ((render: () => void, options: NavigationOptions) => void)
+  | ((render: () => void, options: NavigationOptions) => Promise<void>);
 
 /**
  * Returns `{ route, at }`, where:
@@ -9,13 +14,23 @@ import { RouteContext } from "./RouteContext.ts";
  * rendering acting similarly to the ternary conditional opearator
  * `atRoute ? x : y`.
  */
-export function useRoute() {
+export function useRoute(callback?: RenderCallback) {
   let route = useContext(RouteContext);
   let [, setRevision] = useState(-1);
 
   useEffect(
-    () =>
-      route.on("navigationcomplete", () => setRevision(Math.random()), true),
+    () => {
+      let render = () => {
+        setRevision(Math.random());
+      };
+
+      let handleNavigationComplete: NavigationCallback = (options) => {
+        if (callback) callback(render, options);
+        else render();
+      }
+
+      return route.on("navigationcomplete", handleNavigationComplete, true);
+    },
     [route],
   );
 
