@@ -23,7 +23,7 @@ const Intro = () => (
   </main>
 );
 
-const Section = ({ id }: { id: string }) => (
+const Section = ({ id }: { id: string | undefined }) => (
   <main>
     <h2>Section {id}</h2>
   </main>
@@ -37,7 +37,7 @@ export const App = () => {
       <Header />
       {at("/", <Intro />)}
       {at(/^\/sections\/(?<id>\d+)\/?$/, ({ params }) => (
-        <Section id={params.id!} />
+        <Section id={params.id} />
       ))}
     </>
   );
