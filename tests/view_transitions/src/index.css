@@ -1,0 +1,57 @@
+html {
+  color: black;
+  background: white;
+}
+body {
+  margin: 1em;
+}
+#app {
+  max-width: 24em;
+}
+nav {
+  background: #eee;
+  padding: 0.75em 1.5em 0.85em;
+  margin-bottom: 0.5em;
+  box-sizing: border-box;
+}
+main {
+  background: #eee;
+  padding: 1.5em;
+  box-sizing: border-box;
+  view-transition-name: main;
+}
+main[data-id="intro"] {
+  background: moccasin;
+}
+main[data-id="section-1"] {
+  background: palegreen;
+}
+main[data-id="section-2"] {
+  background: powderblue;
+}
+h1 {
+  font-size: 2em;
+  margin: 0 0 0.75em 0;
+}
+::view-transition-old(main) {
+  animation: fade-out 0.5s ease-in-out forwards;
+}
+::view-transition-new(main) {
+  animation: fade-in 0.5s ease-in-out forwards;
+}
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
