@@ -17,7 +17,7 @@ export class InputRoute extends Route {
   }
 
   _getHref(url?: LocationValue) {
-    if (url === undefined || url === null)
+    if (url === undefined)
       return typeof window === "undefined"
         ? ""
         : (this._getElement()?.value ?? "");
@@ -46,8 +46,8 @@ export class InputRoute extends Route {
     };
   }
 
-  _transition(payload: NavigationOptions) {
-    let href = payload?.href;
+  _transition(options?: NavigationOptions) {
+    let href = options?.href;
 
     if (typeof window === "undefined" || href === undefined) return;
 
