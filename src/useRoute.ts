@@ -1,6 +1,6 @@
+import type { NavigationCallback, NavigationOptions } from "@t8/router";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { RouteContext } from "./RouteContext.ts";
-import { NavigationCallback, NavigationOptions } from "@t8/router";
 
 export type RenderCallback =
   | ((render: () => void, options: NavigationOptions) => void)
@@ -18,21 +18,18 @@ export function useRoute(callback?: RenderCallback) {
   let route = useContext(RouteContext);
   let [, setRevision] = useState(-1);
 
-  useEffect(
-    () => {
-      let render = () => {
-        setRevision(Math.random());
-      };
+  useEffect(() => {
+    let render = () => {
+      setRevision(Math.random());
+    };
 
-      let handleNavigationComplete: NavigationCallback = (options) => {
-        if (callback) callback(render, options);
-        else render();
-      }
+    let handleNavigationComplete: NavigationCallback = (options) => {
+      if (callback) callback(render, options);
+      else render();
+    };
 
-      return route.on("navigationcomplete", handleNavigationComplete, true);
-    },
-    [route, callback],
-  );
+    return route.on("navigationcomplete", handleNavigationComplete, true);
+  }, [route, callback]);
 
   return useMemo(
     () => ({
