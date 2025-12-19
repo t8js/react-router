@@ -329,11 +329,11 @@ console.log(route.href); // returns based on the router's `href`
 
 ## Custom routing behavior
 
-The default URL-based routing behavior is what's used in most cases, but its customization is also conceivable and possible. The `<Router>` component discussed above (or even multiple ones) can be used to set up customized routing behavior over a specific portion of the app (or the entire app).
+The default URL-based routing behavior is what's used in most cases, but it's also conceivable to have routing based on the URL in a different way or not based on the browser's URL altogether. The `<Router>` component discussed above (or even multiple ones) can be used to set up customized routing behavior over a specific portion of the app (or the entire app).
 
 [Custom routing behavior example](https://codesandbox.io/p/sandbox/w7rsjl?file=%252Fsrc%252FApp.tsx)
 
-In this example, we've got a kind of a browser-in-browser with its routing based on a text input rather than the URL. It's enabled by devising a custom extension of the `Route` class, `InputRoute`, configured to interact with a text input, and passing its instance to the `<Router>` component.
+In this example, we've got a kind of a browser-in-browser component with its routing based on a text input rather than the URL. It's enabled by devising a custom extension of the `Route` class, `InputRoute`, configured to interact with a text input, and passing its instance to the `<Router>` component.
 
 This example also shows how the same routing code (of the `<Content>` component) can interact with either the URL or the text input element based on the closest `<Router>` context up the component tree.
 
