@@ -9,15 +9,15 @@ Concise router for React apps
 ```diff
 // Core parts
 
-// Route-based rendering
+// URL-based rendering
 at("/", <Intro/>)
 <header className={at("/", "full", "compact")}>
 
-// Route navigation
+// SPA navigation
 - window.location.href = "/x";
 + route.href = "/x";
 
-// Route link
+// SPA route link
 - <a href="/">Intro</a>
 + <A href="/">Intro</A>
 ```
@@ -101,7 +101,7 @@ The route navigation API is largely aligned with the similar native JS APIs fami
 
 ⬥ The `route` object has: `.assign(url)`, `.replace(url)`, `.reload()`, `.href`, `.pathname`, `.search`, `.hash`, `.back()`, `.forward()`, `.go(delta)` — similar to the built-in APIs of `window.location` and `history` carried over to route-based SPA navigation.
 
-⬥ There are two kinds of route link components: `<A>` and `<Area>` corresponding to the HTML link tags `<a>` and `<area>`.
+⬥ There are two kinds of route link components available out of the box: `<A>` and `<Area>` with the same props and semantics as the corresponding HTML link tags `<a>` and `<area>`.
 
 ## Optional link attributes
 
