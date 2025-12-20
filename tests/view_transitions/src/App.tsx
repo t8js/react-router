@@ -4,9 +4,11 @@ import { Intro } from "./Intro.tsx";
 import { Section } from "./Section.tsx";
 
 function renderViewTransition(render: () => void) {
-  document.startViewTransition(() => {
-    flushSync(render);
-  });
+  if (document.startViewTransition)
+    document.startViewTransition(() => {
+      flushSync(render);
+    });
+  else render();
 }
 
 export const App = () => {
