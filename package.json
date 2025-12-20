@@ -9,6 +9,7 @@
   "scripts": {
     "demo": "npx @t8/serve tests/routing --spa -b src/index.tsx",
     "demo-route-state": "npx @t8/serve tests/typed_route_state --spa -b src/index.tsx",
+    "demo-view-transitions": "npx @t8/serve tests/view_transitions --spa -b src/index.tsx",
     "preversion": "npx npm-run-all shape test",
     "shape": "npx codeshape",
     "test": "npx playwright test --project=chromium"
