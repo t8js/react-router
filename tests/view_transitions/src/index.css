@@ -21,13 +21,13 @@ main {
   view-transition-name: main;
 }
 main[data-id="intro"] {
-  background: moccasin;
+  background: lemonchiffon;
 }
 main[data-id="section-1"] {
-  background: palegreen;
+  background: mistyrose;
 }
 main[data-id="section-2"] {
-  background: powderblue;
+  background: palegreen;
 }
 h1 {
   font-size: 2em;
