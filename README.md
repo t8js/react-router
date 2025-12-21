@@ -150,7 +150,7 @@ This example shows some common examples of what can be handled with routing midd
 
 ⬥ The callback of both hooks is first called when the component gets mounted if the route is already in the navigation-complete state.
 
-⬥ The optional `callback` parameter of `useRoute(callback?)` can be used as middleware defining certain actions to be taken right before or after components get notified to re-render in response to a route change. One use case for this callback is [activating view transitions](#animated-view-transitions).
+⬥ The optional `callback` parameter of `useRoute(callback?)` can be used as middleware defining certain actions to be taken right before or after components get notified to re-render in response to a route change. One use case for this callback is activating [animated view transitions](#animated-view-transitions).
 
 ## URL parameters
 
@@ -426,9 +426,12 @@ Animated transitions between different routes can be achieved by using the brows
   import { A, useRoute } from "@t8/react-router";
 
 + function renderViewTransition(render) {
-+   document.startViewTransition(() => {
-+     flushSync(render);
-+   });
++   if (document.startViewTransition) {
++     document.startViewTransition(() => {
++       flushSync(render);
++     });
++   }
++   else render();
 + }
 
   export const App = () => {
@@ -443,21 +446,22 @@ Animated transitions between different routes can be achieved by using the brows
 
 [Live demo](https://codesandbox.io/p/sandbox/znvrmt?file=%252Fsrc%252FApp.tsx)
 
-In the example above, the `renderViewTransition()` function passed to `useRoute()` calls `document.startViewTransition()` from the View Transition API to start a view transition and React's `flushSync()` to apply the DOM changes synchronously within the view transition, with the visual effects defined with CSS.
+In the example above, the `renderViewTransition()` function passed to `useRoute()` calls `document.startViewTransition()` from the View Transition API to start a view transition and React's `flushSync()` to apply the DOM changes synchronously within the view transition, with the visual effects defined with CSS. We also check whether `document.startViewTransition` is supported by the browser and resort to regular rendering if it's not.
 
-Should we need to trigger a transition only with specific links, the `options` parameter of the `useRoute()` callback can be used to add a condition for the view transitions:
+Should we need to trigger a transition only with specific links, the `options` parameter of the `useRoute()` callback can be used to add a condition for the view transitions. In the example below, we'll only trigger a view transition with the links whose `data-id` attribute, available via `options.id`, is among the listed on `viewTransitionLinkIds`.
 
-```js
-let viewTransitionLinkIds = new Set([/* ... */]);
+```diff
++ let viewTransitionLinkIds = new Set([/* ... */]);
 
-function renderViewTransition(render, options) {
-  // `options.id` reflects the link's `data-id`
-  if (viewTransitionLinkIds.has(options.id))
-    document.startViewTransition(() => {
-      flushSync(render);
-    });
-  else render();
-}
+  function renderViewTransition(render, options) {
+-   if (document.startViewTransition) {
++   if (document.startViewTransition && viewTransitionLinkIds.has(options.id)) {
+      document.startViewTransition(() => {
+        flushSync(render);
+      });
+    }
+    else render();
+  }
 ```
 
 ## Converting HTML links to SPA route links
