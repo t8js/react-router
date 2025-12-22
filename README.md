@@ -117,7 +117,7 @@ Apart from the attributes inherited from regular HTML links, SPA route links can
 
 ## Middleware
 
-The `useNavigationStart()` and `useNavigationComplete()` hooks define routing *middleware*, that is intermediate actions to be done before and after the route navigation occurs:
+The `useNavigationStart()` and `useNavigationComplete()` hooks define routing *middleware*, that is optional intermediate actions to be done before and after the route navigation occurs:
 
 ```jsx
 import { useNavigationComplete, useNavigationStart } from "@t8/react-router";
@@ -151,6 +151,8 @@ let App = () => {
 ```
 
 This example shows some common examples of what can be handled with routing middleware: preventing navigation with unsaved user input, redirecting to another location, setting the page title based on the current location.
+
+⬥ The object passed to the middleware callback defines the current navigation mode. Its `href` and `referrer` values are the navigation destination and initial URLs. The rest of its properties are aligned with the [link props](#link-attributes) (with `id` corresponding to the link's `data-id` and with the `data-` prefix stripped from the attributes' names).
 
 ⬥ The callback of both hooks is first called when the component gets mounted if the route is already in the navigation-complete state.
 
