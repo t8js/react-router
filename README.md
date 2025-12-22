@@ -103,13 +103,17 @@ The route navigation API is largely aligned with the similar native JS APIs fami
 
 ⬥ There are two kinds of route link components available out of the box: `<A>` and `<Area>` with the same props and semantics as the corresponding HTML link tags `<a>` and `<area>`.
 
-## Optional link attributes
+## Link attributes
+
+Apart from the attributes inherited from regular HTML links, SPA route links can have a few special attributes related to SPA navigation:
 
 ⬥ `data-history="replace"` added to a link component changes its navigation mode, so that clicking the link replaces the current history navigation entry rather than keeps it as a previous record (similarly to calling `route.replace(url)`), effectively preventing the user from returning to the current URL by pressing the browser's *Back* button.
 
 ⬥ `data-spa="off"` turns off SPA navigation for the given link component and makes it act like an ordinary HTML link triggering a full-page reload.
 
 ⬥ `data-scroll="off"` turns off the default scrolling behavior when the link component with this attribute is clicked. By default, similarly to the behavior of regular HTML links, the page is scrolled either to the element whose `id` matches the link fragment (like `#example`) if the element is available or to the top of the page otherwise.
+
+⬥ Together with `href` and `target`, values of the attributes listed above shape the navigation mode of the given link component. These values are available as a callback parameter in the routing middleware discussed below.
 
 ## Middleware
 
