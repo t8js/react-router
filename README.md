@@ -62,6 +62,8 @@ While the component-, config-, and file-based approaches that many routers tend 
 
 ⬥ `at()` calls are independent from each other, they don't have to maintain a certain order, they shouldn't be necessarily grouped in a single component (although they can be, as in the example above). Components with route-based logic can be split like any other components.
 
+⬥ With a regular expression route pattern, `params` contains values of its capturing groups accessible by numeric indices; named capturing group values can also be retrieved by their names (like `params.id` in the example above).
+
 ⬥ Route-based rendering with the React's `<Activity>` component looks similar to what we've seen in the example above:
 
 ```jsx
