@@ -306,11 +306,27 @@ export const { url } = createURLSchema({
 
 Such a setup doesn't impose specific implicit relations between the routes (like parameter inheritance) ahead of time. The relations between the routes, as arbitrary as they can be, are seen and managed directly, allowing for fine-grained control, including sharing or filtering out certain parameters, without the need to work around implicit constraints.
 
-## Location provider
+## URL provider
 
-Server-side rendering and unit tests are the examples of the environments lacking a global location object (such as `window.location`). They are the prime use cases for the location provider, `<Router>`.
+In the browser, the routing hooks like `useRoute()` assume that the current URL is the browser's one (as exposed with `window.location`), by default. A custom initial URL value can be set with the `<Router>` component, which is useful for environments lacking a global URL value, like with server-side rendering or unit tests.
 
-Let's consider an *express* application route as an example:
+```jsx
+<Router href="/intro">
+  <App/>
+</Router>
+```
+
+Now that we've set up a URL context, both `route` and `at()` returned from `useRoute()` inside the `<App>` component operate based on the router's `href`:
+
+```jsx
+let { route, at } = useRoute();
+
+console.log(route.href); // returns based on the router's `href`
+```
+
+⬥ The `<Router>`'s `href` prop value can be either a string URL or an instance of the `Route` class. The latter option can be used to redefine the default routing behavior (see the [Custom routing behavior](#custom-routing-behavior) section). If the `href` prop value is omitted or `undefined`, `<Router>` falls back to the current URL in the browser.
+
+⬥ With SSR in an *express* application, the URL context setup can be similar to the following:
 
 ```jsx
 import { renderToString } from "react-dom/server";
@@ -327,23 +343,13 @@ app.get("/", (req, res) => {
 });
 ```
 
-Both `route` and `at()` returned from `useRoute()` operate based on the router's `href`:
-
-```jsx
-let { route, at } = useRoute();
-
-console.log(route.href); // returns based on the router's `href`
-```
-
-`<Router>` can be used with client-side rendering as well. In most cases, it is unnecessary since by default the route context takes the global location from `window.location` if it's available.
-
 ## Custom routing behavior
 
 The default URL-based routing behavior is what's used in most cases, but it's also conceivable to have routing based on the URL in a different way or not based on the browser's URL altogether. The `<Router>` component discussed above (or even multiple ones) can be used to set up customized routing behavior over a specific portion of the app (or the entire app).
 
 [Custom routing behavior example](https://codesandbox.io/p/sandbox/w7rsjl?file=%252Fsrc%252FApp.tsx)
 
-In this example, we've got a kind of a browser-in-browser component with its routing based on a text input rather than the URL. It's enabled by devising a custom extension of the `Route` class, `InputRoute`, configured to interact with a text input, and passing its instance to the `<Router>` component.
+In this example, we've got a kind of a browser-in-browser component with its routing based on a text input rather than the URL. It's enabled by devising a custom extension of the `Route` class, `InputRoute`, configured to interact with a text input, and passing its instance to the `href` prop of the `<Router>` component.
 
 This example also shows how the same routing code (of the `<Content>` component) can interact with either the URL or the text input element based on the closest `<Router>` context up the component tree.
 
