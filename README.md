@@ -158,7 +158,7 @@ This example shows some common examples of what can be handled with routing midd
 
 ⬥ The callback of both hooks is first called when the component gets mounted if the route is already in the navigation-complete state.
 
-⬥ The optional `callback` parameter of `useRoute(callback?)` can be used as middleware defining certain actions to be taken right before or after components get notified to re-render in response to a route change. One use case for this callback is activating [animated view transitions](#animated-view-transitions).
+⬥ The optional `callback` parameter of `useRoute(callback?)` can be used as middleware defining certain actions to be taken right before or after components get notified to re-render in response to a URL change. This callback receives the `render` function as a parameter that should be called at some point. Use cases for this callback include, for example, activating [animated view transitions](#animated-view-transitions) or (less likely in regular circumstances) skipping re-renders for certain URL changes.
 
 ## URL parameters
 
