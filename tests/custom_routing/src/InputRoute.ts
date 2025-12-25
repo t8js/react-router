@@ -35,7 +35,7 @@ export class InputRoute extends Route {
         event.key === "Enter"
       ) {
         event.preventDefault();
-        this._navigate({ href: element.value });
+        this.navigate({ href: element.value });
       }
     };
 

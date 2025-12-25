@@ -17,7 +17,7 @@ export function useLinkClick({ onClick }: AProps | AreaProps) {
 
       if (!event.defaultPrevented && isRouteEvent(event)) {
         event.preventDefault();
-        route._navigate(getNavigationOptions(event.currentTarget));
+        route.navigate(getNavigationOptions(event.currentTarget));
       }
     },
     [route, onClick],

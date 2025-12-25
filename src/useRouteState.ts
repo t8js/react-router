@@ -43,7 +43,7 @@ export function useRouteState<T extends LocationValue>(
     (update) => {
       let state = typeof update === "function" ? update(getState()) : update;
 
-      route._navigate({
+      route.navigate({
         ...options,
         href: route.compile(url, state),
       });

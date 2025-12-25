@@ -103,6 +103,12 @@ The route navigation API is largely aligned with the similar native JS APIs fami
 
 ⬥ The `route` object has: `.assign(url)`, `.replace(url)`, `.reload()`, `.href`, `.pathname`, `.search`, `.hash`, `.back()`, `.forward()`, `.go(delta)` — similar to the built-in APIs of `window.location` and `history` carried over to route-based SPA navigation.
 
+⬥ For a full-featured navigation, `route.navigate(options)` can be used instead of `route.assign(url)` and `route.replace(url)` serving as a handy drop-in replacement for the similar `window.location` methods. The `options` parameter is an object combining values corresponding to the link navigation props described below, with the `data-` prefix stripped from the prop names.
+
+```js
+route.navigate({ href: "/intro", history: "replace", scroll: "off" });
+```
+
 ⬥ There are two kinds of route link components available out of the box: `<A>` and `<Area>` with the same props and semantics as the corresponding HTML link tags `<a>` and `<area>`.
 
 ## Link props
@@ -115,7 +121,7 @@ Apart from the props inherited from regular HTML links, SPA route links can have
 
 ⬥ `data-scroll="off"` turns off the default scrolling behavior when the link component with this prop is clicked. By default, similarly to the behavior of regular HTML links, the page is scrolled either to the element whose `id` matches the link fragment (like `#example`) if the element is available or to the top of the page otherwise.
 
-⬥ Together with `href` and `target`, values of the props listed above shape the navigation mode of the given link component. These values are available as a callback parameter in the routing middleware discussed below.
+⬥ Together with `href` and `target`, values of the props listed above shape the navigation mode of the given link component. These values can be passed as a parameter to `route.navigate(options)` and they are available as a callback parameter in the routing middleware discussed below.
 
 ## Middleware
 
