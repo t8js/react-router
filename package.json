@@ -1,6 +1,6 @@
 {
   "name": "@t8/react-router",
-  "version": "1.3.6",
+  "version": "1.3.7",
   "description": "Concise router for React apps",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
