@@ -2,9 +2,11 @@
 
 Concise router for React apps
 
-[![npm](https://img.shields.io/npm/v/@t8/react-router?labelColor=345&color=46e)](https://www.npmjs.com/package/@t8/react-router) ![Lightweight](https://img.shields.io/bundlephobia/minzip/@t8/react-router?label=minzip&labelColor=345&color=46e) ![CSR ✓](https://img.shields.io/badge/CSR-✓-345?labelColor=345) ![SSR ✓](https://img.shields.io/badge/SSR-✓-345?labelColor=345)
+[![npm](https://img.shields.io/npm/v/@t8/react-router?labelColor=345&color=46e)](https://www.npmjs.com/package/@t8/react-router) ![Lightweight](https://img.shields.io/bundlephobia/minzip/@t8/react-router?label=minzip&labelColor=345&color=46e)
 
-**Why?** To simplify routing code. More specifically: To make URL-based rendering as simple as regular conditional rendering, which it essentially is, with a single approach for both components and prop values. To make use of the well-known built-in navigation APIs in the context of SPA navigation, also without reinventing an API for a link component. To manage URL parameters as state by following the React's state pattern. To keep SSR, routing middleware, and lazy routes simple. To make type safety an optional enhancement allowing for incremental adoption.
+**♥** No configuration or specific file structure as a prerequisite&nbsp;&middot; Concise API&nbsp;&middot; Familiar patterns&nbsp;&middot; No forced URL hierarchy&nbsp;&middot; Incrementally adoptable type safety with fallback typing
+
+**✓** Route matching&nbsp;&middot; SPA link component&nbsp;&middot; Middleware&nbsp;&middot; Type safe routing&nbsp;&middot; URL params as state&nbsp;&middot; CSR&nbsp;&middot; SSR&nbsp;&middot; Lazy routes&nbsp;&middot; View transitions
 
 ```diff
 // Core parts
