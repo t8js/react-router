@@ -4,9 +4,7 @@ Concise router for React apps
 
 [![npm](https://img.shields.io/npm/v/@t8/react-router?labelColor=345&color=46e)](https://www.npmjs.com/package/@t8/react-router) ![Lightweight](https://img.shields.io/bundlephobia/minzip/@t8/react-router?label=minzip&labelColor=345&color=46e)
 
-**♥** No configuration or specific file structure as a prerequisite&nbsp;&middot; Concise API&nbsp;&middot; Familiar patterns&nbsp;&middot; No forced URL hierarchy&nbsp;&middot; Incrementally adoptable type safety with fallback typing
-
-**✓** Route matching&nbsp;&middot; SPA link component&nbsp;&middot; Middleware&nbsp;&middot; Type safe routing&nbsp;&middot; URL params as state&nbsp;&middot; CSR&nbsp;&middot; SSR&nbsp;&middot; Lazy routes&nbsp;&middot; View transitions
+**Features:** No configuration or specific file structure as a prerequisite&nbsp;&middot; No forced URL hierarchy&nbsp;&middot; Concise and familiar routing APIs&nbsp;&middot; Incrementally adoptable route type safety with fallback typing&nbsp;&middot; useState-like URL params management&nbsp;&middot; Straightforward CSR/SSR&nbsp;&middot; Middleware&nbsp;&middot; Lazy routes&nbsp;&middot; View transitions
 
 ```diff
 // Core parts
