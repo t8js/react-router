@@ -4,8 +4,9 @@ Concise router for React apps
 
 [![npm](https://img.shields.io/npm/v/@t8/react-router?labelColor=345&color=46e)](https://www.npmjs.com/package/@t8/react-router) ![Lightweight](https://img.shields.io/bundlephobia/minzip/@t8/react-router?label=minzip&labelColor=345&color=46e)
 
-**Features:** No configuration or specific file structure as a prerequisite&nbsp;&middot; No forced URL hierarchy&nbsp;&middot; Concise and familiar routing APIs&nbsp;&middot; Incrementally adoptable route type safety with fallback typing&nbsp;&middot; useState-like URL params management&nbsp;&middot; Straightforward CSR/SSR&nbsp;&middot; Middleware&nbsp;&middot; Lazy routes&nbsp;&middot; View transitions
+**Features:** Concise API&nbsp;&middot; Incrementally adoptable route type safety with fallback typing&nbsp;&middot; useState-like URL params management&nbsp;&middot; Straightforward CSR/SSR&nbsp;&middot; Middleware&nbsp;&middot; Lazy routes&nbsp;&middot; View transitions
 
+<!-- docsgen-show-start --
 ```diff
 // Core parts
 
@@ -21,64 +22,37 @@ at("/", <Intro/>)
 - <a href="/">Intro</a>
 + <A href="/">Intro</A>
 ```
+-- docsgen-show-end -->
 
 Installation: `npm i @t8/react-router`
 
 ## Routing
 
-The following example runs through the essential parts of routing code. The `at(route, x, y)` function returns a value based on whether the `route` parameter matches the current URL. It acts similarly to the conditional operator `atRoute ? x : y` and is equally applicable to components and prop values. The route link component that is used for SPA navigation acts and looks similar to the HTML link tag.
+URL-based rendering with `at(route, x, y)` works similarly to conditional rendering with the ternary operator `atRoute ? x : y`, equally applicable to props, components and dynamic values:
 
 ```jsx
-import { A, useRoute } from "@t8/react-router";
-import { Intro } from "./Intro";
-import { Section } from "./Section";
+import { useRoute } from "@t8/react-router";
 
 let App = () => {
   let { at } = useRoute();
 
   return (
-    <>
-      <header className={at("/", "full", "compact")}>
-        <h1>App</h1>
-        <nav>
-          <A href="/">Intro</A>{" | "}
-          <A href="/sections/1">Section 1</A>
-        </nav>
-      </header>
-      {at("/", <Intro/>)}
-      {at(/^\/sections\/(?<id>\d+)\/?$/, ({ params }) => (
-        <Section id={params.id}/>
-      ))}
-    </>
+    <header className={at("/", "full", "compact")}>
+      <h1>App</h1>
+    </header>
+    {at("/", <Intro/>)}
+    {at(/^\/posts\/(?<id>\d+)\/?$/, ({ params }) => <Post id={params.id}/>)}
   );
 };
 ```
 
 [Live demo](https://codesandbox.io/p/sandbox/63xzd4?file=%252Fsrc%252FApp.tsx)
 
-⬥ As mentioned above, `at(route, x, y)` acts similarly to the ternary operator `atRoute ? x : y` often used with conditional rendering, which route-based rendering essentially is: it returns `x` if the current URL matches `route`, and `y` otherwise. Having the ternary function rather than the ternary conditional operator allows for additional flexibility, like omitting an `undefined` fallback parameter (as with `at("/", <Intro/>)` in the example above) or resolving as a dynamic value based on `params` extracted from the route pattern (as with `<Section id={params.id}/>` above).
-
-While the component-, config-, and file-based approaches that many routers tend to adopt are focused on component rendering, requiring an extra route matching hook for route-based prop values, `at(route, x, y)` works equally with both components and prop values (and with any other route-based values).
-
-⬥ `at()` calls are independent from each other, they don't have to maintain a certain order, they shouldn't be necessarily grouped in a single component (although they can be, as in the example above). Components with route-based logic can be split like any other components.
-
-⬥ With a regular expression route pattern, `params` contains values of its capturing groups accessible by numeric indices; named capturing group values can also be retrieved by their names (like `params.id` in the example above).
-
-⬥ Route-based rendering with the React's `<Activity>` component looks similar to what we've seen in the example above:
-
-```jsx
-// Without Activity
-{at("/about", <About/>)}
-
-// With Activity
-<Activity mode={at("/about", "visible", "hidden")}>
-  <About/>
-</Activity>
-```
+⬥ `params` in dynamic values contains the route pattern's capturing groups accessible by numeric indices. Named capturing group values can be accessed by their names, like `params.id` in the example above.
 
 ## Navigation
 
-The route navigation API is largely aligned with the similar native JS APIs familiar to most web developers, such as `<a href="/x">` and `window.location`:
+The SPA navigation API is largely aligned with the similar built-in APIs:
 
 ```diff
 + import { A, useRoute } from "@t8/react-router";
@@ -87,8 +61,8 @@ The route navigation API is largely aligned with the similar native JS APIs fami
 +   let { route } = useRoute();
 
     let handleClick = () => {
--     window.location.assign(signedIn ? "/profile" : "/login");
-+     route.assign(signedIn ? "/profile" : "/login");
+-     window.location.href = signedIn ? "/profile" : "/login";
++     route.href = signedIn ? "/profile" : "/login";
     };
 
     return (
@@ -101,38 +75,39 @@ The route navigation API is largely aligned with the similar native JS APIs fami
   };
 ```
 
-⬥ The `route` object has: `.assign(url)`, `.replace(url)`, `.reload()`, `.href`, `.pathname`, `.search`, `.hash`, `.back()`, `.forward()`, `.go(delta)` — similar to the built-in APIs of `window.location` and `history` carried over to route-based SPA navigation.
+⬥ `<A>` and `<Area>` are the two kinds of SPA route link components available out of the box. They have the same props and semantics as the corresponding HTML link elements `<a>` and `<area>`.
 
-⬥ For a full-featured navigation, `route.navigate(options)` can be used instead of `route.assign(url)` and `route.replace(url)` serving as a handy drop-in replacement for the similar `window.location` methods. The `options` parameter is an object combining values corresponding to the link navigation props described below, with the `data-` prefix stripped from the prop names.
+⬥ The `route` object returned from `useRoute()` has: `.assign(url)`, `.replace(url)`, `.reload()`, `.href`, `.pathname`, `.search`, `.hash`, `.back()`, `.forward()`, `.go(delta)`, resembling the built-in APIs of `window.location` and `history` carried over to SPA navigation.
+
+⬥ `route.navigate(options)` combines and extends `route.assign(url)` and `route.replace(url)` serving as a handy drop-in replacement for the similar `window.location` methods:
 
 ```js
 route.navigate({ href: "/intro", history: "replace", scroll: "off" });
 ```
 
-⬥ There are two kinds of route link components available out of the box: `<A>` and `<Area>` with the same props and semantics as the corresponding HTML link tags `<a>` and `<area>`.
+The `options` parameter is an object combining values corresponding to the link navigation props described in the [Link props](#link-props) section below, with the `data-` prefix stripped from the prop names.
 
 ## Link props
 
-Apart from the props inherited from regular HTML links, SPA route links can have a few optional props related to SPA navigation:
+In addition to the props inherited from regular HTML links:
 
-⬥ `data-history="replace"` added to a link component changes its navigation mode, so that clicking the link replaces the current history navigation entry rather than keeps it as a previous record (similarly to calling `route.replace(url)`), effectively preventing the user from returning to the current URL by pressing the browser's *Back* button.
+⬥ `data-history="replace"` prevents the user from returning to the current URL by pressing the browser's *Back* button after clicking a link with this prop.
 
-⬥ `data-spa="off"` turns off SPA navigation for the given link component and makes it act like an ordinary HTML link triggering a full-page reload.
+⬥ `data-spa="off"` turns off SPA navigation and triggers a full-page reload.
 
-⬥ `data-scroll="off"` turns off the default scrolling behavior when the link component with this prop is clicked. By default, similarly to the behavior of regular HTML links, the page is scrolled either to the element whose `id` matches the link fragment (like `#example`) if the element is available or to the top of the page otherwise.
-
-⬥ Together with `href` and `target`, values of the props listed above shape the navigation mode of the given link component. These values can be passed as a parameter to `route.navigate(options)` and they are available as a callback parameter in the routing middleware discussed below.
+⬥ `data-scroll="off"` turns off the default scrolling to the element matching the URL fragment or to the top of the page when the link is clicked.
 
 ## Middleware
 
-The `useNavigationStart()` and `useNavigationComplete()` hooks define routing *middleware*, that is optional intermediate actions to be done before and after the route navigation occurs:
+Routing middleware are optional actions to be done before and after a SPA navigation occurs.
+
+The code below shows some common examples of what can be handled with routing middleware: redirecting to another route, preventing navigation with unsaved user input, setting the page title based on the current URL.
 
 ```jsx
 import { useNavigationComplete, useNavigationStart } from "@t8/react-router";
 
 function setTitle({ href }) {
-  if (href === "/intro")
-    document.title = "Intro";
+  document.title = href === "/intro" ? "Intro" : "App";
 }
 
 let App = () => {
@@ -140,11 +115,10 @@ let App = () => {
   let [hasUnsavedChanges, setUnsavedChanges] = useState(false);
 
   let handleNavigationStart = useCallback(({ href }) => {
-    if (hasUnsavedChanges)
-      return false; // prevents navigation
+    if (hasUnsavedChanges) return false; // prevents navigation
 
     if (href === "/intro") {
-      route.assign("/"); // redirection
+      route.assign("/"); // redirects
       return false;
     }
   }, [hasUnsavedChanges, route]);
@@ -152,19 +126,15 @@ let App = () => {
   useNavigationStart(handleNavigationStart);
   useNavigationComplete(setTitle);
 
-  return (
-    // app content
-  );
+  // ...
 };
 ```
 
-This example shows some common examples of what can be handled with routing middleware: preventing navigation with unsaved user input, redirecting to another location, setting the page title based on the current location.
-
-⬥ The object passed to the middleware callback defines the current navigation mode. Its `href` and `referrer` values are the navigation destination and initial URLs. The rest of its properties are aligned with the [link props](#link-props) (with `id` corresponding to the link's `data-id` and with the `data-` prefix stripped from the props' names).
+⬥ The object passed to the middleware callback contains `href` and `referrer`, the navigation destination and initial URLs. The rest of the properties are aligned with the [link data-* props](#link-props), with the `data-` prefix stripped from the props' names.
 
 ⬥ The callback of both hooks is first called when the component gets mounted if the route is already in the navigation-complete state.
 
-⬥ The optional `callback` parameter of `useRoute(callback?)` can be used as middleware defining certain actions to be taken right before or after components get notified to re-render in response to a URL change. This callback receives the `render` function as a parameter that should be called at some point. Use cases for this callback include, for example, activating [animated view transitions](#animated-view-transitions) or (less likely in regular circumstances) skipping re-renders for certain URL changes.
+⬥ The optional `callback` parameter of `useRoute(callback?)` can be used as middleware defining actions to be taken right before or after components get notified to re-render in response to a URL change. This callback receives the `render` function as a parameter that should be called at some point. Use cases for this callback include, for example, activating [animated view transitions](#animated-view-transitions) or (less likely in regular circumstances) skipping re-renders for certain URL changes.
 
 ## URL parameters
 
@@ -200,11 +170,11 @@ URL parameters, as a portion of the app's state, can be managed in the React's `
 ```
 
 [Route state live demo](https://codesandbox.io/p/sandbox/sgvdfg?file=%252Fsrc%252FApp.tsx)<br>
-[Typed route state live demo](https://codesandbox.io/p/sandbox/qnd87w?file=%2Fsrc%2FShapeSection.tsx)
+[Type-safe route state live demo](https://codesandbox.io/p/sandbox/qnd87w?file=%2Fsrc%2FShapeSection.tsx)
 
 ## Type safety
 
-Type-safe routing is as an optional enhancement. It's enabled by supporting route patterns created with a type-safe URL builder like *url-shape* together with a schema created with a validation library implementing the [Standard Schema](https://github.com/standard-schema/standard-schema#readme) spec, like *zod*, *valibot*, *arktype*, or *yup*. This approach allows for gradual or partial adoption of type-safe routing in an application.
+Type-safe routing is as an optional enhancement, allowing for gradual or partial adoption. It's enabled by supporting route patterns created with a type-safe URL builder like *url-shape* together with a schema created with a validation library implementing the [Standard Schema](https://github.com/standard-schema/standard-schema#readme) spec, like *zod*, *valibot*, *arktype*, or *yup*.
 
 ```tsx
 import { A, useRoute } from "@t8/react-router";
@@ -213,7 +183,7 @@ import { z } from "zod";
 
 const { url } = createURLSchema({
   "/": z.object({}), // Goes without parameters
-  "/sections/:id": z.object({
+  "/posts/:id": z.object({
     // Path components
     params: z.object({
       id: z.coerce.number(),
@@ -231,13 +201,13 @@ let App = () => {
         <h1>App</h1>
         <nav>
           <A href={url("/")}>Intro</A>{" | "}
-          <A href={url("/sections/:id", { params: { id: 1 } })}>Start</A>
+          <A href={url("/posts/:id", { params: { id: 1 } })}>Start</A>
+                                    // ^ { params: { id: number } }
         </nav>
       </header>
       {at(url("/"), <Intro/>)}
-      {at(url("/sections/:id"), ({ params }) => (
-        <Section id={params.id}/>
-      ))}
+      {at(url("/posts/:id"), ({ params }) => <Post id={params.id}/>)}
+                             // ^ { params: { id: number } }
     </>
   );
 };
@@ -261,7 +231,7 @@ declare module "@t8/react-router" {
 
 Adding this type declaration to an app effectively disallows using `string` and `RegExp` values for routes and route patterns (such as in the route link `href` prop, `route.assign(location)`, and the routing function `at(routePattern, x, y)`), only allowing values returned from the URL builder with the same routing APIs.
 
-⬥ A URL builder pattern (like `url("/sections/:id")`) can also be used with `useRouteState(pattern)` and `useRouteMatch(pattern)` to manipulate [URL parameters](#url-parameters) in a type-safe manner.
+⬥ A URL builder pattern (like `url("/posts/:id")`) can also be used with `useRouteState(pattern)` and `useRouteMatch(pattern)` to manipulate [URL parameters](#url-parameters) in a type-safe manner.
 
 [Typed URL parameters state demo](https://codesandbox.io/p/sandbox/qnd87w?file=%2Fsrc%2FShapeSection.tsx)
 
@@ -269,9 +239,9 @@ Adding this type declaration to an app effectively disallows using `string` and 
 
 ## Nested routes
 
-Nested routes don't require special rendering rules. All routes are handled equally and independently from each other.
+Nested routes don't require special handling. All routes are handled equally and independently from each other.
 
-```js
+```jsx
 let App = () => {
   let { at } = useRoute();
 
@@ -296,10 +266,10 @@ let sectionParams = z.object({
 });
 
 export const { url } = createURLSchema({
-  "/sections/:sectionId": z.object({
+  "/posts/:sectionId": z.object({
     params: sectionParams,
   }),
-  "/sections/:sectionId/stories/:storyId": z.object({
+  "/posts/:sectionId/stories/:storyId": z.object({
     params: z.object({
       ...sectionParams.shape, // Shared params
       storyId: z.string(),
@@ -368,7 +338,7 @@ import { A, useRoute } from "@t8/react-router";
 
 const routeMap = {
   intro: "/intro",
-  sections: /^\/sections\/(?<id>\d+)\/?$/,
+  posts: /^\/posts\/(?<id>\d+)\/?$/,
 };
 
 const knownRoutes = Object.values(routeMap);
@@ -382,9 +352,7 @@ let App = () => {
         <A href={routeMap.intro}>Intro</A>
       </nav>
       {at(routeMap.intro, <Intro/>)}
-      {at(routeMap.sections, ({ params }) => (
-        <Section id={params.id}/>
-      ))}
+      {at(routeMap.posts, ({ params }) => <Post id={params.id}/>)}
       {at(knownRoutes, null, <Error/>)}
     </>
   );
@@ -439,7 +407,7 @@ In this example, the `<Projects>` component isn't loaded until the corresponding
 
 ## Animated view transitions
 
-Animated transitions between different routes can be achieved by using the browser's [View Transition API](https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API). The optional `callback` parameter of `useRoute()` can be used to set up such a transition.
+Animated transitions between different routes can be achieved by using the browser's [View Transition API](https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API) and the optional `callback` parameter of `useRoute()` can be used to set up such a transition.
 
 ```diff
 + import { flushSync } from "react-dom";
@@ -468,7 +436,7 @@ Animated transitions between different routes can be achieved by using the brows
 
 In the example above, the `renderViewTransition()` function passed to `useRoute()` calls `document.startViewTransition()` from the View Transition API to start a view transition and React's `flushSync()` to apply the DOM changes synchronously within the view transition, with the visual effects defined with CSS. We also check whether `document.startViewTransition` is supported by the browser and resort to regular rendering if it's not.
 
-Should we need to trigger a transition only with specific links, the `options` parameter of the `useRoute()` callback can be used to add a condition for the view transitions. In the example below, we'll only trigger a view transition with the links whose `data-id` attribute, available via `options.id`, is among the listed on `viewTransitionLinkIds`.
+To trigger a transition only with specific links, the `options` parameter of the `useRoute()` callback can be used to add a condition for the view transitions. In the example below, we'll only trigger a view transition with the links whose `data-id` attribute, available via `options.id`, is among the listed on `viewTransitionLinkIds`.
 
 ```diff
 + let viewTransitionLinkIds = new Set([/* ... */]);
