@@ -15,7 +15,11 @@ export function useLinkClick({ target, onClick }: AProps | AreaProps) {
     (event: ReactMouseEvent<HTMLAnchorElement & HTMLAreaElement>) => {
       onClick?.(event);
 
-      if (!event.defaultPrevented && isRouteEvent(event) && (!target || target === "_self")) {
+      if (
+        !event.defaultPrevented &&
+        isRouteEvent(event) &&
+        (!target || target === "_self")
+      ) {
         event.preventDefault();
         route.navigate(getNavigationOptions(event.currentTarget));
       }
