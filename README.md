@@ -2,8 +2,6 @@
 
 Concise router for React apps
 
-[![npm](https://img.shields.io/npm/v/@t8/react-router?labelColor=345&color=46e)](https://www.npmjs.com/package/@t8/react-router) ![Lightweight](https://img.shields.io/bundlephobia/minzip/@t8/react-router?label=minzip&labelColor=345&color=46e)
-
 **Features:** Concise API&nbsp;&middot; Incrementally adoptable route type safety with fallback typing&nbsp;&middot; useState-like URL params management&nbsp;&middot; Straightforward CSR/SSR&nbsp;&middot; Middleware&nbsp;&middot; Lazy routes&nbsp;&middot; View transitions
 
 <!-- docsgen-show-start --
@@ -23,8 +21,6 @@ at("/", <Intro/>)
 + <A href="/">Intro</A>
 ```
 -- docsgen-show-end -->
-
-Installation: `npm i @t8/react-router`
 
 ## Routing
 
