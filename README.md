@@ -44,7 +44,7 @@ let App = () => {
 
 [Live demo](https://codesandbox.io/p/sandbox/63xzd4?file=%252Fsrc%252FApp.tsx&h=320)
 
-⬥ `params` in dynamic values contains the route pattern's capturing groups accessible by numeric indices. Named capturing group values can be accessed by their names, like `params.id` in the example above.
+⬥ The `params` object in dynamic values contains the route pattern's capturing groups accessible by numeric indices. Named capturing group values can also be accessed by their names, like `params.id` in the example above.
 
 ## Navigation
 
