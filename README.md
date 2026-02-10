@@ -2,7 +2,7 @@
 
 Concise router for React apps
 
-**Features:** Concise API&nbsp;&middot; Incrementally adoptable route type safety with fallback typing&nbsp;&middot; useState-like URL params management&nbsp;&middot; Straightforward CSR/SSR&nbsp;&middot; Middleware&nbsp;&middot; Lazy routes&nbsp;&middot; View transitions
+**Features:** Concise routing API similar to regular conditional rendering&nbsp;&middot; Incrementally adoptable route type safety with fallback typing&nbsp;&middot; useState-like URL params management&nbsp;&middot; Straightforward CSR/SSR&nbsp;&middot; Middleware&nbsp;&middot; Lazy routes&nbsp;&middot; View transitions
 
 <!-- docsgen-show-start --
 ```diff
