@@ -42,7 +42,7 @@ let App = () => {
 };
 ```
 
-[Live demo](https://codesandbox.io/p/sandbox/63xzd4?file=%252Fsrc%252FApp.tsx)
+[Live demo](https://codesandbox.io/p/sandbox/63xzd4?file=%252Fsrc%252FApp.tsx&h=320)
 
 ⬥ `params` in dynamic values contains the route pattern's capturing groups accessible by numeric indices. Named capturing group values can be accessed by their names, like `params.id` in the example above.
 
@@ -165,8 +165,8 @@ URL parameters, as a portion of the app's state, can be managed in the React's `
   };
 ```
 
-[Route state live demo](https://codesandbox.io/p/sandbox/sgvdfg?file=%252Fsrc%252FApp.tsx)<br>
-[Type-safe route state live demo](https://codesandbox.io/p/sandbox/qnd87w?file=%2Fsrc%2FShapeSection.tsx)
+[Route state live demo](https://codesandbox.io/p/sandbox/sgvdfg?file=%252Fsrc%252FApp.tsx&h=360)<br>
+[Type-safe route state live demo](https://codesandbox.io/p/sandbox/qnd87w?file=%2Fsrc%2FShapeSection.tsx&h=450)
 
 ## Type safety
 
@@ -209,7 +209,7 @@ let App = () => {
 };
 ```
 
-[Type-safe routing live demo](https://codesandbox.io/p/sandbox/vgt64k?file=%2Fsrc%2FApp.tsx)
+[Type-safe routing live demo](https://codesandbox.io/p/sandbox/vgt64k?file=%2Fsrc%2FApp.tsx&h=320)
 
 ⬥ The `url()` function is a type-safe URL builder. It creates a URL with a URL pattern defined in the schema and typed parameters that are prevalidated against the given schema: typos and type mismatches are highlighted in a type-aware code editor. [See *url-shape*](https://github.com/t8js/url-shape#readme) for more details.
 
@@ -229,7 +229,7 @@ Adding this type declaration to an app effectively disallows using `string` and 
 
 ⬥ A URL builder pattern (like `url("/posts/:id")`) can also be used with `useRouteState(pattern)` and `useRouteMatch(pattern)` to manipulate [URL parameters](#url-parameters) in a type-safe manner.
 
-[Typed URL parameters state demo](https://codesandbox.io/p/sandbox/qnd87w?file=%2Fsrc%2FShapeSection.tsx)
+[Typed URL parameters state demo](https://codesandbox.io/p/sandbox/qnd87w?file=%2Fsrc%2FShapeSection.tsx&h=450)
 
 ⬥ Recap: It's using typed URL patterns (like from `url()` of *url-shape*) that enables type-safe route handling, which is an optional enhancement. Plain `string` routes and `RegExp` route patterns are handled with baseline typing sufficient in many cases.
 
@@ -274,7 +274,7 @@ export const { url } = createURLSchema({
 });
 ```
 
-[Live typed nested routes demo](https://codesandbox.io/p/sandbox/htfslv?file=%252Fsrc%252FApp.tsx)
+[Live typed nested routes demo](https://codesandbox.io/p/sandbox/htfslv?file=%252Fsrc%252FApp.tsx&h=360)
 
 Such a setup doesn't impose specific implicit relations between the routes (like parameter inheritance) ahead of time. The relations between the routes, as arbitrary as they can be, are seen and managed directly, allowing for fine-grained control, including sharing or filtering out certain parameters, without the need to work around implicit constraints.
 
@@ -319,7 +319,7 @@ app.get("/", (req, res) => {
 
 The default URL-based routing behavior is what's used in most cases, but it's also conceivable to have routing based on the URL in a different way or not based on the browser's URL altogether. The `<Router>` component discussed above (or even multiple ones) can be used to set up customized routing behavior over a specific portion of the app (or the entire app).
 
-[Custom routing behavior example](https://codesandbox.io/p/sandbox/w7rsjl?file=%252Fsrc%252FApp.tsx)
+[Custom routing behavior example](https://codesandbox.io/p/sandbox/w7rsjl?file=%252Fsrc%252FApp.tsx&h=500)
 
 In this example, we've got a kind of a browser-in-browser component with its routing based on a text input rather than the URL. It's enabled by devising a custom extension of the `Route` class, `InputRoute`, configured to interact with a text input, and passing its instance to the `href` prop of the `<Router>` component.
 
@@ -397,7 +397,7 @@ Enabling lazy routes doesn't require a specific routing setup. It's a combinatio
 + export const Projects = lazy(() => import("./Projects"));
 ```
 
-[Lazy routes live demo](https://codesandbox.io/p/sandbox/x75p5w?file=%2Fsrc%2FApp.jsx)
+[Lazy routes live demo](https://codesandbox.io/p/sandbox/x75p5w?file=%2Fsrc%2FApp.jsx&h=360)
 
 In this example, the `<Projects>` component isn't loaded until the corresponding `/projects` route is visited. When it's first visited, while the component is being fetched, `<p>Loading...</p>` shows up, as specified with the `fallback` prop of `<Suspense>`.
 
@@ -428,7 +428,7 @@ Animated transitions between different routes can be achieved by using the brows
   };
 ```
 
-[Live demo](https://codesandbox.io/p/sandbox/znvrmt?file=%252Fsrc%252FApp.tsx)
+[Live demo](https://codesandbox.io/p/sandbox/znvrmt?file=%252Fsrc%252FApp.tsx&h=380)
 
 In the example above, the `renderViewTransition()` function passed to `useRoute()` calls `document.startViewTransition()` from the View Transition API to start a view transition and React's `flushSync()` to apply the DOM changes synchronously within the view transition, with the visual effects defined with CSS. We also check whether `document.startViewTransition` is supported by the browser and resort to regular rendering if it's not.
 
