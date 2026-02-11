@@ -37,7 +37,7 @@ let App = () => {
       <h1>App</h1>
     </header>
     {at("/", <Intro/>)}
-    {at(/^\/posts\/(?<id>\d+)\/?$/, ({ params }) => <Post id={params.id}/>)}
+    {at(/^\/sections\/(?<id>\d+)\/?$/, ({ params }) => <Section id={params.id}/>)}
   );
 };
 ```
@@ -187,7 +187,7 @@ import { z } from "zod";
 
 const { url } = createURLSchema({
   "/": z.object({}), // Goes without parameters
-  "/posts/:id": z.object({
+  "/sections/:id": z.object({
     // Path components
     params: z.object({
       id: z.coerce.number(),
@@ -205,13 +205,13 @@ let App = () => {
         <h1>App</h1>
         <nav>
           <A href={url("/")}>Intro</A>{" | "}
-          <A href={url("/posts/:id", { params: { id: 1 } })}>Start</A>
-                                    // ^ { params: { id: number } }
+          <A href={url("/sections/:id", { params: { id: 1 } })}>Start</A>
+                                       // ^ { params: { id: number } }
         </nav>
       </header>
       {at(url("/"), <Intro/>)}
-      {at(url("/posts/:id"), ({ params }) => <Post id={params.id}/>)}
-                             // ^ { params: { id: number } }
+      {at(url("/sections/:id"), ({ params }) => <Section id={params.id}/>)}
+                                // ^ { params: { id: number } }
     </>
   );
 };
@@ -235,7 +235,7 @@ declare module "@t8/react-router" {
 
 Adding this type declaration to an app effectively disallows using `string` and `RegExp` values for routes and route patterns (such as in the route link `href` prop, `route.assign(location)`, and the routing function `at(routePattern, x, y)`), only allowing values returned from the URL builder with the same routing APIs.
 
-⬥ A URL builder pattern (like `url("/posts/:id")`) can also be used with `useRouteState(pattern)` and `useRouteMatch(pattern)` to manipulate [URL parameters](#url-parameters) in a type-safe manner.
+⬥ A URL builder pattern (like `url("/sections/:id")`) can also be used with `useRouteState(pattern)` and `useRouteMatch(pattern)` to manipulate [URL parameters](#url-parameters) in a type-safe manner.
 
 [Typed URL parameters state demo](https://codesandbox.io/p/sandbox/qnd87w?file=%2Fsrc%2FShapeSection.tsx&h=450)
 
@@ -270,10 +270,10 @@ let sectionParams = z.object({
 });
 
 export const { url } = createURLSchema({
-  "/posts/:sectionId": z.object({
+  "/sections/:sectionId": z.object({
     params: sectionParams,
   }),
-  "/posts/:sectionId/stories/:storyId": z.object({
+  "/sections/:sectionId/stories/:storyId": z.object({
     params: z.object({
       ...sectionParams.shape, // Shared params
       storyId: z.string(),
@@ -342,7 +342,7 @@ import { A, useRoute } from "@t8/react-router";
 
 const routeMap = {
   intro: "/intro",
-  posts: /^\/posts\/(?<id>\d+)\/?$/,
+  sections: /^\/sections\/(?<id>\d+)\/?$/,
 };
 
 const knownRoutes = Object.values(routeMap);
@@ -356,7 +356,7 @@ let App = () => {
         <A href={routeMap.intro}>Intro</A>
       </nav>
       {at(routeMap.intro, <Intro/>)}
-      {at(routeMap.posts, ({ params }) => <Post id={params.id}/>)}
+      {at(routeMap.sections, ({ params }) => <Section id={params.id}/>)}
       {at(knownRoutes, null, <Error/>)}
     </>
   );
