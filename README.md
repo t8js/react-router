@@ -24,7 +24,7 @@ at("/", <Intro/>)
 
 ## Routing
 
-URL-based rendering with `at(route, x, y)` works similarly to conditional rendering with the ternary operator `atRoute ? x : y`, equally applicable to props, components and dynamic values:
+URL-based rendering with `at(route, x, y)` shown below works similarly to conditional rendering with the ternary operator `atRoute ? x : y`. It's equally applicable to props, components and dynamic values:
 
 ```jsx
 import { useRoute } from "@t8/react-router";
