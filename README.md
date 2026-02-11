@@ -81,7 +81,7 @@ The SPA navigation API is largely aligned with the similar built-in APIs:
 route.navigate({ href: "/intro", history: "replace", scroll: "off" });
 ```
 
-The `options` parameter is an object combining values corresponding to the link navigation props described in the [Link props](#link-props) section below, with the `data-` prefix stripped from the prop names.
+The `options` parameter takes the shape of the [navigation options](#navigation-options).
 
 ## Link props
 
@@ -92,6 +92,12 @@ In addition to the props inherited from regular HTML links:
 ⬥ `data-spa="off"` turns off SPA navigation and triggers a full-page reload.
 
 ⬥ `data-scroll="off"` turns off the default scrolling to the element matching the URL fragment or to the top of the page when the link is clicked.
+
+⬥ `data-id="..."` is available as `options.id` in routing middleware, so it can be used as a way to distinguish certain links requiring special handling inside the middleware (unlike `id`, `data-id` doesn't have to be strictly unique).
+
+### Navigation options
+
+The imperative navigation APIs like `route.navigate(options)`, `useRouteState(url, options?)` and routing middleware make use of the navigation options similar to the link props outlined above, with the `data-` prefix stripped from their names: `{ history, spa, scroll, id }`. On top of these, the navigation options can include `href` and `referrer`, the navigation destination and initial URLs, as well as `target`, equivalent to the HTML link `target` attribute.
 
 ## Middleware
 
@@ -126,7 +132,7 @@ let App = () => {
 };
 ```
 
-⬥ The object passed to the middleware callback contains `href` and `referrer`, the navigation destination and initial URLs. The rest of the properties are aligned with the [link data-* props](#link-props), with the `data-` prefix stripped from the props' names.
+⬥ The object passed to the middleware callback has the shape of the [navigation options](#navigation-options).
 
 ⬥ The callback of both hooks is first called when the component gets mounted if the route is already in the navigation-complete state.
 
@@ -167,6 +173,8 @@ URL parameters, as a portion of the app's state, can be managed in the React's `
 
 [Route state live demo](https://codesandbox.io/p/sandbox/sgvdfg?file=%252Fsrc%252FApp.tsx&h=360)<br>
 [Type-safe route state live demo](https://codesandbox.io/p/sandbox/qnd87w?file=%2Fsrc%2FShapeSection.tsx&h=450)
+
+⬥ `useRouteState(url, options?)` has an optional second parameter in the shape of the [navigation options](#navigation-options). For example, we might want to pass `{ scroll: "off" }` as `options` if we'd like to opt out from the default scroll-to-the-top behavior when the URL changes.
 
 ## Type safety
 
